@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>搜索栏特效</title>
+	<style type="text/css">
+		body {
+			padding: 0;
+			margin: 0;
+			background-color: #e74c3c;
+		}
+		.search-box {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+
+			background-color: #30336b;
+			height: 40px;
+			border-radius: 40px;
+			padding: 10px;
+		}
+		.search-box:hover > .search-txt {
+			width: 240px;
+			padding: 0 6px;
+		}
+		.search-box:hover > .search-btn {
+			color: white;
+			background-color: #e74c3c;
+		}
+		.search-txt {
+			background: none;
+			border: none;
+			outline: none;
+			color: white;
+
+			float: left;
+			line-height: 40px;
+			font-size: 16px;
+			transition: .4s;
+			/*隐藏搜索框*/
+			width: 0;
+		}
+		.search-btn {
+			float: right;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+
+			color: #e74c3c;
+
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-decoration: none;
+			transition: .4s;
+		}
+	</style>
+	<!-- 图标引入 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+<body>
+	<main class="search-box">
+		<input type="text" name="" class="search-txt" placeholder="Type to search">
+		<a href="" class="search-btn">
+			<!-- 搜索图标 -->
+			<i class="fas fa-search"></i>
+		</a>
+	</main>
+</body>
+</html>

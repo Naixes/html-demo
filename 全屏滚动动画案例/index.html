@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!--引入jquery和fullpage全屏滚动插件-->
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/jquery.fullPage.min.js"></script>
+
+  <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<div id="fullpage">
+  <div class="section first">
+    <div class="logo">
+      <img src="./img/logo.png" alt="">
+    </div>
+    <div class="text">
+      <img src="./img/text_1.png" alt="">
+      <img src="./img/text_2.png" alt="">
+      <img src="./img/text_3.png" alt="">
+      <img src="./img/text_4.png" alt="">
+      <img src="./img/text_5.png" alt="">
+      <img src="./img/text_6.png" alt="">
+      <img src="./img/text_7.png" alt="">
+      <img src="./img/text_8.png" alt="">
+    </div>
+    <div class="intro">
+      <img src="./img/info_1.png" alt="">
+    </div>
+  </div>
+  <div class="section second">
+    <div class="shield">
+      <img src="./img/shield_1.png" alt="">
+      <img src="./img/shield_2.png" alt="">
+      <img src="./img/shield_3.png" alt="">
+      <img src="./img/shield_4.png" alt="">
+      <img src="./img/shield_5.png" alt="">
+      <img src="./img/shield_6.png" alt="">
+      <img src="./img/shield_7.png" alt="">
+      <img src="./img/shield_8.png" alt="">
+      <img src="./img/shield_9.png" alt="">
+    </div>
+    <div class="info">
+      <img src="./img/info_2.png" alt="">
+    </div>
+  </div>
+  <div class="section">第三屏</div>
+  <div class="section">第四屏</div>
+</div>
+
+<script>
+  $(function(){
+    $('#fullpage').fullpage({
+      sectionsColor: ['#0da5d6', '#2ab561', '#de8910', '#16ba9d', '#0da5d6'],
+      afterLoad: function (anchorLink, index) {
+        $('.section').removeClass('current')
+        setTimeout(function () {
+          $('.section').eq(index-1).addClass('current')
+        }, 100)
+      }
+    })
+  })
+</script>
+</body>
+</html>

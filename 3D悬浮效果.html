@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3d悬浮效果</title>
+	<style type="text/css">
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		.container {
+			height: 100vh;
+			width: 100%;
+			/*居中*/
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.layer {
+			position: relative;
+			margin-top: 100px;
+			height: 444px;
+			width: 250px;
+			background-color: rgba(0,0,0,.1);
+			transform: rotate(-30deg) skew(25deg) scale(1);
+			transition: .5s;
+		}
+		.music {
+			width: 100%;
+			/*让图片重叠*/
+			position: absolute;
+			transition: .5s;
+		}
+		.layer:hover img:nth-child(5) {
+			transform: translate(100px, -100px);
+		} 
+		.layer:hover img:nth-child(4) {
+			transform: translate(80px, -80px);
+			opacity: .8;
+		} 
+		.layer:hover img:nth-child(3) {
+			transform: translate(60px, -60px);
+			opacity: .6;
+		} 
+		.layer:hover img:nth-child(2) {
+			transform: translate(40px, -40px);
+			opacity: .4;
+		} 
+		.layer:hover img:nth-child(1) {
+			transform: translate(20px, -20px);
+			opacity: .2;
+		} 
+	</style>
+</head>
+<body>
+	<main class="container">
+		<div class="layer">
+			<img class="music" src="./img/music-01.jpg">
+			<img class="music" src="./img/music-01.jpg">
+			<img class="music" src="./img/music-01.jpg">
+			<img class="music" src="./img/music-01.jpg">
+			<img class="music" src="./img/music-01.jpg">
+		</div>
+	</main>
+</body>
+</html>
