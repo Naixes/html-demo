@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>完整版Promise</title>
+</head>
+<body>
+	<a href="https://juejin.im/post/5c88e427f265da2d8d6a1c84#heading-17"></a>
+</body>
+<script type="text/javascript">
+	// 创建了三个常量用于表示状态，对于经常使用的一些值都应该通过常量来管理，便于开发及后期维护
+	const PENDING = "pedding"
+	const FULLFILLED = "fullfilled"
+	const REJECTED = "rejected"
+
+	// 接受一个立即执行函数
+	function MyPromise(fn) {
+		// 在函数体内部首先创建了常量that，因为代码可能会异步执行，用于获取正确的 this 对象
+		const that = this
+
+		that.state = PENDING
+		// value 变量用于保存 resolve 或者 reject 中传入的值
+		that.value = null
+		// 用于保存 then 中的回调，因为当执行完 Promise 时状态可能还是等待中，这时候应该把 then 中的回调保存起来用于状态改变时使用
+		that.resolvedCallbacks = []
+		that.rejectedCallbacks = []
+
+		function resolve(value) {
+			// 要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。否则如果立即执行的是同步操作会让Promise失效，因为是执行完成之后才绑定的函数。
+			setTimeout(
+				function() {
+					if (that.state === PENDING) {
+						that.state = RESOLVED
+						that.value = value
+						// 遍历回调数组并执行，回调对应onFullfilled函数
+						that.resolvedCallbacks.map(cb=>cb(that.value))
+					}
+				}
+			)
+		}
+
+		function reject(reason) {
+			setTimeout(
+				function() {
+					if (that.state === PENDING) {
+					that.state = REJECTED
+					that.value = reason
+					// 执行回调
+					that.rejectedCallbacks.map(cb=>cb(that.value))
+					}
+				}
+			)
+			
+		}
+
+		// 执行这个立即执行函数
+		try{
+			fn(resolve, reject)
+		}catch(e){
+			reject(e)
+		}
+	}
+	MyPromise.prototype.then = function (onFullfilled,onRejected) {
+		// 绑定异步成功或失败的函数
+		// 规范规定then要返回一个promise对象，所以以下代码达不到需求
+		// this.resolvedCallbacks.push(onFullfilled)
+		// this.rejectedCallbacks.push(onRejected)
+		const that = this
+		const promise2
+		// 判断参数是否为函数，如果不是需要创建一个函数传递参数，把then的实参留空且让值可以穿透到后面
+		onFullfilled = typeof onFullfilled === 'function' ? onFullfilled : v => v
+		onRejected = typeof onRejected === 'function' ? onRejected : r => {throw r}
+
+		if (that.state === FULLFILLED) {
+			return promise2 = new MyPromise((resolve,reject) => {
+				try{
+					// 需要在then里面执行onResolved或者onRejected，并根据返回值来确定promise2的结果，并且，如果onResolved/onRejected返回的是一个Promise，promise2将直接取这个Promise的结果
+					const x = onRejected(that.value)
+					resolutionProcedure(promise2, x, resolve, reject)
+				}catch(e) {
+					reject(e)
+				}
+			})
+		}
+		if (that.state === REJECTED) {
+			return promise2 = new MyPromise((resolve,reject) => {
+				try{
+					const x = onRejected(that.value)
+					resolutionProcedure(promise2, x, resolve, reject)
+				}catch(e) {
+					reject(e)
+				}
+			})
+		}
+
+
+		if (that.state === PENDING) {
+			// 如果当前的Promise还处于pending状态，我们并不能确定调用onResolved还是onRejected，只能等到Promise的状态确定后，才能确实如何处理。所以我们需要把我们的两种情况的处理逻辑做为callback放入promise1(此处即this/self)的回调数组里
+			return promise2 = new MyPromise((resolve,reject) => {
+				that.resolvedCallbacks.push(() => {
+					try{
+						const x = onFullfilled(that.value)
+						resolutionProcedure(promise2, x, resolve, reject)
+					}catch(e) {
+						reject(e)
+					}				
+				})
+				that.rejectedCallbacks.push(() => {
+					try{
+						const x = onRejected(that.value)
+						resolutionProcedure(promise2, x, resolve, reject)
+					}catch(e) {
+						reject(e)
+					}
+				})
+			})
+		}
+		// 兼容多种 Promise
+		function resolutionProcedure(promise2, x, resolve, reject) {
+			// 如果 promise2 和 x 相等，那么 reject promise with a TypeError
+		    if (promise2 === x) {
+		        reject(new TypeError('Chaining cycle'));
+		    }
+			// 判断是否返回Promise，如果返回Promise则作为promise2的返回
+			if (x instanceof MyPromise) {
+			    x.then(function(value) {
+			        resolutionProcedure(promise2, value, resolve, reject)
+			    }, reject)
+			}
+			// 如果 x 是一个 object 或者 是一个 function
+			let called = false
+			if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
+			  try {
+			    let then = x.then
+			    if (typeof then === 'function') {
+			      then.call(
+			        x,
+			        y => {
+			          if (called) return
+			          called = true
+			          resolutionProcedure(promise2, y, resolve, reject)
+			        },
+			        e => {
+			          if (called) return
+			          called = true
+			          reject(e)
+			        }
+			      )
+			    } else {
+			      resolve(x)
+			    }
+			  } catch (e) {
+			    if (called) return
+			    called = true
+			    reject(e)
+			  }
+			} else {
+			  resolve(x)
+			}
+		}	
+	}
+
+	// 测试
+	var p1 = new MyPromise(resolve=>{
+		// 这里是异步代码，就算是同步的也会被转换为异步代码
+		setTimeout(()=>{
+			resolve(1)
+		}, 2000)
+	})
+
+	p1.then(a=>{
+		console.log(a)
+	})
+	// 注意以上代码还没有完成不同Promise之间的交互
+</script>
+</html>

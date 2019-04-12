@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>排序算法</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	// 冒泡排序：从第一个元素开始，用当前元素与下一个元素比较，当前元素大就交换位置
+	// 1，判断是否数组
+	// 2，从0循环取出当前元素
+	// 3，从i循环对比当前元素与余下的元素
+	// 4，当前元素较大时交换元素
+	function bubble(arr) {
+		// checkArray(arr)
+		if (!arr instanceof Array) return
+		// 循环取出当前元素,注意for-in里的i是字符串
+		for (let i = 0; i < arr.length; i++) {
+			// 循环比较当前元素和余下的元素
+			for (let j = arr.length; j > i; j--) {
+				if (arr[i] > arr[j]) {
+					swap(arr, i, j)
+				}
+			}
+		}
+	}
+
+	// 插入排序：从1取出当前元素和之前的元素进行比较，插入到大于自己的元素之前
+	// 1,假设0是已经排序的，从1循环取出当前元素
+	// 2,循环比较当前元素和之前的元素，当前元素小时交换
+	function insert(arr) {
+		// checkArray()
+		if (!arr instanceof Array) return
+		for (let i = 1; i < arr.length; i++) {
+			for (let j = i - 1; j >= 0; j--) {
+				// 比较当前元素和之前的元素，小时交换
+				if (arr[j+1] < arr[j]) {
+					swap(arr, j, j+1)
+				}
+			}
+		}
+	}
+
+	// 选择排序：从0开始循环当前元素，得到最小元素的序号与当前元素交换
+	function selection(arr) {
+		if (!arr instanceof Array) return
+		for (let i = 0; i < arr.length; i++) {
+			// 假设当前元素最小
+			let minIndex = i
+			for (let j = i + 1; j < arr.length; j++) {
+				// 比较之后的元素与当前元素
+				if (arr[j] < arr[minIndex]) {
+					// 找出最小元素记录序号
+					minIndex = j
+				}
+			}
+			// 交换最小元素与当前元素
+			swap(arr, i, minIndex)
+		}
+	}
+	
+	// 交换顺序
+	function swap(arr, a, b) {
+		// checkArray(arr)
+		if (!arr instanceof Array) return
+		[arr[a], arr[b]] = [arr[b], arr[a]]
+	}
+
+	// 归并排序
+	// 分割数组
+	function mergeSort(a) {
+	  // 结束递归的条件：长度为1结束递归
+	  if (a.length === 1) return a;
+	  // 将数组进行分割
+	  // ~~表示去除小数
+	  var mid = ~~(a.length / 2)
+	    , left = a.slice(0, mid)
+	    , right = a.slice(mid);
+	  // 递归，返回排序好的数组
+	  return merge(mergeSort(left), mergeSort(right));
+	}
+	// 将分割的数组进行排序
+	function merge(left, right) {
+	  var tmp = [];
+	  while (left.length && right.length) {
+	    if (left[0] < right[0])
+	      tmp.push(left.shift());
+	    else
+	      tmp.push(right.shift());
+	  }
+	  return tmp.concat(left, right);
+	}
+
+	// 快速排序
+	function quickSort(a) {
+	  if (a.length <= 1) return a;
+	  //选出基准值
+	  var mid = ~~(a.length / 2)
+	    , midItem = a.splice(mid, 1)[0]
+	    , left = []
+	    , right = [];
+	  //将大于基准值的放在右边，小于基准值放在的左边
+	  a.forEach(function(item) {
+	    if (item <= midItem)
+	      left.push(item);
+	    else 
+	      right.push(item);
+	  });
+	  //对左右两边进行排序
+	  var _left = quickSort(left)
+	    , _right = quickSort(right);
+	  //排序完之后返回
+	  return _left.concat(midItem, _right);
+	}
+
+	function quickSort3Way(a) {
+	  if (a.length <= 1) return a;
+	  var last = a.pop()
+	    , left = []
+	    , right = []
+	    , mid = [last];
+	  a.forEach(function(item) {
+	    if (item < last)
+	      left.push(item);
+	    else if (item > last)
+	      right.push(item);
+	    else
+	      mid.push(item);
+	  });
+	  var _left = quickSort3Way(left)
+	    , _right = quickSort3Way(right);
+	  return _left.concat(mid, _right);
+	}
+
+	// 测试
+	let arr = [10,30,20,90,80,22,30,15,99]
+	// swap(arr, 0, 1)
+	// bubble(arr)
+	// insert(arr)
+	// selection(arr)
+	// arr = mergeSort(arr)
+	arr = quickSort(arr)
+	console.log(arr)
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>简易版Promise</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	// 定义状态常量
+	const PENDING = 'pending'
+	const RESOLVED = 'resolved'
+	const REJECT = 'reject'
+
+	// 接受一个立即执行函数
+	function MyPromise(fn) {
+		const that = this
+		const value = null
+		const state = PENDING
+		const that.resolveCallBacks = []
+		const that.rejectCallBacks = []
+
+		function resolve(value) {
+			// 注意这里需要异步执行
+			setTimeout(function() {
+				if (that.state === PENDING) {
+					that.state = RESOLVED
+					that.valeu = value
+					that.resolveCallBacks.map(cb=>cb(that.value))
+				}
+			})
+		}
+		function reject(value) {
+			setTimeout(function () {
+				if (that.state === PENDING) {
+					that.state = REJECT
+					that.valeu = value
+					that.rejectCallBacks.map(cb=>cb(that.value))
+				}
+			})
+		}
+		try{
+			fn(resolve, reject)
+		}catch(e) {
+			reject(e)
+		}
+	}
+	MyPromise.prototype.then = function(onResolve, onReject) {
+		const that = this
+		// 当不为方法时创建方法传递参数
+		onResolve = typeof onResolve === 'function' ? onResolve : v => v
+		onReject = typeof onReject === 'function' ? onReject : m => m	
+		// 判断状态
+		// 按照规范应该返回新的Promise实现链式，这里为简易做法
+		if (that.state === PENDING) {
+			that.resolveCallBacks.push(onResolve)
+			that.rejectCallBacks.push(onReject)
+		}
+		if (that.state === RESOLVED) {
+			onResolve(that.value)
+		}
+		if (that.state === REJECT) {
+			onReject(that.value)
+		}
+	}
+</script>
+</html>

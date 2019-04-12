@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>数组去重</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	function cutArr(arr) {
+		let newArr = []
+		for (var i = 0; i < arr.length; i++) {
+			// // 方法一遍历数组判断复制数组各项发现已经存在时忽略，ie8以下不支持indexOf方法
+			// if (newArr.indexOf(arr[i]) === -1) {
+			// 	newArr.push(arr[i])
+			// }
+			// // 方法二下标判断法：判断第一次出现的下标等于当前下标时添加
+			// if (arr.indexOf(arr[i]) === i) {
+			// 	newArr.push(arr[i])
+			// }
+			// // 方法三判断从前后开始数下标相同添加
+			// if (arr.indexOf(arr[i]) === arr.lastIndexOf(arr[i])) {
+			// 	newArr.push(arr[i])
+			// }
+			// 方法四优化遍历数组
+			for (var i = 0; i < arr.length; i++) {
+				for (var j = i+1; j < arr.length; j++) {
+					// 当检测到相等时终止当前循环进入下一层循环
+					if (arr[i] === arr[j]) {++i}
+				}
+				newArr.push(arr[i])
+			}
+		}
+		return newArr
+	}
+</script>
+</html>

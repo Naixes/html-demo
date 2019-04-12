@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>可拖拽div</title>
+	<style type="text/css">
+		#move {
+			height: 100px;
+			width: 100px;
+			border: 1px solid red;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="move"></div>
+</body>
+<script type="text/javascript">
+	const moveDiv = document.getElementById('move')
+	// 初始化
+	let dragging = false
+	let position = null
+	// 鼠标按下事件记录当前位置，将标志改为true	
+	moveDiv.addEventListener('mousedown', function (e) {
+		dragging = true
+		position = [e.clientX, e.clientY]
+	})
+
+	// 鼠标移动事件,要注册到document上
+	document.addEventListener('mousemove', function (e) {
+		if (!dragging) {return}
+		// 获得鼠标当前位置,数字
+		const x = e.clientX
+		const y = e.clientY
+		// console.log("x:"+x+"y:"+y)
+		// 计算移动位置
+		const moveX = x - position[0]
+		const moveY = y - position[1]
+		// console.log("moveX:"+moveX+"moveY:"+moveY)
+		// 注意这里获取的是字符串
+		const top = parseInt(moveDiv.style.top) || 0
+		const left = parseInt(moveDiv.style.left) || 0
+		// console.log("top:"+top+"left:"+left)
+		// 改变样式
+		moveDiv.style.top = top + moveY + 'px'
+		moveDiv.style.left = left + moveX + 'px'
+		// 重置position
+		position = [x, y]
+	})
+
+	// 鼠标抬起事件
+	document.addEventListener('mouseup', function (e) {
+		dragging = false
+	})
+</script>
+</html>

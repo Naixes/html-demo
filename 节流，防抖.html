@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>节流，防抖</title>
+</head>
+<body>
+	<button id="btn">按钮</button>
+</body>
+<script type="text/javascript">
+	// 节流：规定在一段时间内只能触发一次函数
+	function throttle (fn, delay) {
+		// 执行标志
+		let canUse = true
+		return function () {
+			if (canUse) {
+				canUse = false
+				fn.call(this, arguments)
+				setTimeout(()=>canUse = true, delay)
+			}
+		}
+	}
+	const btn = document.getElementById('btn')
+	btn.addEventListener('click', throttle(function () {
+		alert(1)
+	}, 3000))
+	// 防抖：将多个信号合并为一个信号，在事件触发后的n秒回调，在n秒中再触发会重新计算
+	function debounce (fn, delay) {
+		let timerId = null
+		return function() {
+			// 将计时器停止
+			if(timerId) window.clearTimeout(timerId)
+			// n秒后执行回调
+			timerId = setTimeout(()=>{
+				fn.call(this, arguments)
+				// 清除计时器
+				timerId = null
+			}, delay)
+		}
+	}
+	const btn = document.getElementById('btn')
+	btn.addEventListener('click', debounce(function () {
+		alert(1)
+	}, 3000))
+
+
+	// function throttle (fn, delay) {
+	// 	let canUse = true 
+	// 	return function() {
+	// 		if (canUse) {
+	// 			canUse = false
+	// 			fn.call(this, arguments)
+	// 			setTimeout(()=> {
+	// 				canUse = true
+	// 			}, delay)
+	// 		}
+	// 	}
+	// }
+	// function debounce (fn, delay) {
+	// 	let timerId = null
+	// 	return function () {
+	// 		if(timerId) window.clearTimeout(timerId)
+	// 		setTimeout(()=> {
+	// 			fn.call(this, arguments)
+	// 			timerId = null
+	// 		}, delay)
+	// 	}
+	// }
+</script>
+</html>

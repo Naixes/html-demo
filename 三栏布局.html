@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>三栏布局</title>
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		section {
+			height: 300px;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<h3>定位实现三栏布局：脱离了文档流，可能对其他元素有影响</h3>
+	<style type="text/css">
+		section.position>div {
+			position: absolute;
+			height: 300px;
+		}
+		.left.position {
+			width: 100px;
+			background-color: yellow;
+			left: 0;
+		}
+		.main.position {
+			background-color: green;
+			left: 100px;
+			right: 200px;
+		}
+		.right.position {
+			width: 200px;
+			background-color: blue;
+			right: 0;
+		}
+	</style>
+	<section class="position">
+		<div class="position left"></div>
+		<div class="position main"></div>
+		<div class="position right"></div>
+	</section>
+	<h3>浮动实现三栏布局：有时需要清除浮动，宽度太窄时会掉下去；兼容性好</h3>
+	<style type="text/css">
+		section.float>div {
+			height: 300px;
+		}
+		.left.float {
+			width: 100px;
+			background-color: yellow;
+			float:left;
+		}
+		.main.float {
+			background-color: green;
+			/*空出左右的空间*/
+			margin-left: 100px;
+			margin-right: 200px;
+		}
+		.right.float {
+			width: 200px;
+			background-color: blue;
+			float: right;
+		}
+	</style>
+	<section class="float">
+		<div class="left float"></div>
+		<div class="right float"></div>
+		<!-- 中间部分必须放到最后 -->
+		<div class="main float"></div>
+	</section>
+	<h3>flex实现三栏布局：兼容性不好；不收高度影响</h3>
+	<style type="text/css">
+		section.flex {
+			display: flex;
+		}
+		section.flex>div {
+			/*不用设置高度*/
+			/*height: 300px;*/
+		}
+		.left.flex {
+			width: 100px;
+			background-color: yellow;
+		}
+		.main.flex {
+			/*中间自适应*/
+			flex: 1;
+			background-color: green;
+		}
+		.right.flex {
+			width: 200px;
+			background-color: blue;
+		}
+	</style>
+	<section class="flex">
+		<div class="left flex"></div>
+		<div class="main flex"></div>
+		<div class="right flex"></div>
+	</section>
+	<h3>grid网格实现三栏布局：兼容性</h3>
+	<style type="text/css">
+		section.grid {
+			display: grid;
+			grid-template-rows: 300px;
+			grid-template-columns: 100px auto 200px;
+		}
+		section.grid>div {
+		}
+		.left.grid {
+			background-color: yellow;
+		}
+		.main.grid {
+			background-color: green;
+		}
+		.right.grid {
+			background-color: blue;
+		}
+	</style>
+	<section class="grid">
+		<div class="left grid"></div>
+		<div class="main grid"></div>
+		<div class="right grid"></div>
+	</section>
+	<h3>table网格实现三栏布局：兼容性好</h3>
+	<style type="text/css">
+		section.table {
+			/*必须指定宽度*/
+			width: 100%;
+			display: table;
+		}
+		section.table>div {
+			display: table-cell;
+		}
+		.left.table {
+			background-color: yellow;
+			width: 100px;
+		}
+		.main.table {
+			background-color: green;
+		}
+		.right.table {
+			background-color: blue;
+			width: 200px;
+		}
+	</style>
+	<section class="table">
+		<div class="left table"></div>
+		<div class="main table"></div>
+		<div class="right table"></div>
+	</section>
+	<h3>flex网格实现不居中三栏布局：兼容性好</h3>
+	<style type="text/css">
+		section.uflex {
+			display: flex;
+			justify-content: space-between;
+		}
+		section.uflex>div {
+			margin: 20px;
+		}
+		.left.uflex {
+			background-color: yellow;
+			width: 100px;
+		}
+		.main.uflex {
+			background-color: green;
+			margin-left: 400px;
+			width: 100px;
+		}
+		.right.uflex {
+			background-color: blue;
+			width: 100px;
+		}
+	</style>
+	<section class="uflex">
+		<div class="left uflex"></div>
+		<div class="main uflex"></div>
+		<div class="right uflex"></div>
+	</section>
+</body>
+</html>

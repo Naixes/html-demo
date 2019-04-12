@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>拷贝</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	// 浅拷贝
+	function simpleCopy(source) {
+		let target = Array.isArray(source) ? [] : {}
+		if(source && typeof source === 'object') {
+			for(const key in source) {
+			target[key] = source[key]
+			}
+		}
+	}
+
+	// 深拷贝
+	function deepCopy(source) {
+		let target = Array.isArray(source) ? [] : {}
+		if (source && typeof source === 'object') {
+			// 防止相互引用
+			const prop = source[key]
+			if (prop == source) {
+				// 如果发生相互引用退出当前循环
+				continue
+			}
+			for(key in source) {
+				// 不拷贝原型
+				if (source.hasOwnProperty(key)) {
+					// 判断是否引用类型
+					if (source[key] && typeof source[key] === 'object') {
+						// 递归
+						target[key] = deepCopy(source[key])
+					}else {
+						target[key] = source[key]
+					}
+
+				}
+			}
+		}
+		return target
+	}
+</script>
+</html>
