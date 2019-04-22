@@ -1,0 +1,349 @@
+/*
+* Ã¦Ë†â€˜Ã¤Â»Â¬Ã§Å¡â€žÃ¨â€¡ÂªÃ¥Â®Å¡Ã¤Â¹â€°Ã¦Â Â·Ã¥Â¼Â
+* @Author: sin_h
+* @Date:   2018-02-27 21:45
+* @Last Modified by:   sin_h
+* @Last Modified time: 2018-02-27 21:45
+*/
+
+/*
+Ã§ÂºÂ¦Ã¥Â®Å¡Ã¯Â¼Å¡1 Ã¦Â Â·Ã¥Â¼ÂÃ©â‚¬Å¡Ã¨Â¿â€¡idÃ©â„¢ÂÃ¥Â®Å¡
+     2 Ã¥Â¤Å¡Ã¤Â½Â¿Ã§â€Â¨Ã§â€ºÂ´Ã¦Å½Â¥Ã¥Â­ÂÃ¤Â»Â£Ã©â‚¬â€°Ã¦â€¹Â©Ã¥â„¢Â¨
+ */
+
+/*
+* Ã¥â€¦Â¬Ã¥â€¦Â±Ã¦Â Â·Ã¥Â¼Â
+*/
+body {
+    font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+}
+/*Ã¥Â£Â°Ã¦ËœÅ½Ã¥Â­â€”Ã¤Â½â€œ*/
+@font-face {
+    font-family: 'sinfont';
+    src: url('../font/MiFie-Web-Font.eot') format('embedded-opentype'),
+    url('../font/MiFie-Web-Font.svg') format('svg'),
+    url('../font/MiFie-Web-Font.ttf') format('truetype'),
+    url('../font/MiFie-Web-Font.woff') format('woff');
+}
+/*Ã©â‚¬Å¡Ã©â€¦ÂÃ©â‚¬â€°Ã¦â€¹Â©Ã¥â„¢Â¨*/
+[class^='icon-'],[class*=' icon-'] {
+    font-family: sinfont;
+    font-style: normal;
+}
+.icon-mobilephone::before {
+    content: "\e908";
+    font-size: 13px;
+}
+
+.icon-telephone::before {
+    content: "\e909";
+    font-size: 15px;
+}
+
+.icon-logo::before {
+    content: "\e93e";
+}
+
+.icon-icon::before {
+    content: "\e920";
+}
+/*Ã¦â€°Â©Ã¥Â±â€¢Ã¦Â Â·Ã¥Â¼Â*/
+.navbar-mynavbar {
+    background-color: #fff;
+    border-color: #f5f5f5;
+    margin-bottom: 0;
+}
+.navbar-mynavbar .navbar-brand {
+    color: #777;
+    height: 80px;
+}
+.navbar-mynavbar .navbar-brand:hover,
+.navbar-mynavbar .navbar-brand:focus {
+    color: #5e5e5e;
+    background-color: transparent;
+}
+.navbar-mynavbar .navbar-text {
+    color: #777;
+}
+.navbar-mynavbar .navbar-nav > li > a {
+    color: #777;
+    line-height: 48px;
+}
+.navbar-mynavbar .navbar-nav > li > a:hover,
+.navbar-mynavbar .navbar-nav > li > a:focus {
+    color: #333;
+    background-color: transparent;
+    border-bottom: 2px solid #c9302c;
+}
+.navbar-mynavbar .navbar-nav > .active > a,
+.navbar-mynavbar .navbar-nav > .active > a:hover,
+.navbar-mynavbar .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: transparent;
+    border-bottom: 2px solid #c9302c;
+}
+.navbar-mynavbar .navbar-nav > .disabled > a,
+.navbar-mynavbar .navbar-nav > .disabled > a:hover,
+.navbar-mynavbar .navbar-nav > .disabled > a:focus {
+    color: #ccc;
+    background-color: transparent;
+}
+.navbar-mynavbar .navbar-toggle {
+    border-color: #ddd;
+    margin-top: 23px;
+}
+.navbar-mynavbar .navbar-toggle:hover,
+.navbar-mynavbar .navbar-toggle:focus {
+    background-color: #ddd;
+}
+.navbar-mynavbar .navbar-toggle .icon-bar {
+    background-color: #888;
+}
+.navbar-mynavbar .navbar-collapse,
+.navbar-mynavbar .navbar-form {
+    border-color: #e7e7e7;
+}
+.navbar-mynavbar .navbar-nav > .open > a,
+.navbar-mynavbar .navbar-nav > .open > a:hover,
+.navbar-mynavbar .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #e7e7e7;
+}
+@media (max-width: 767px) {
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+        background-color: transparent;
+    }
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .active > a:hover,
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #555;
+        background-color: #e7e7e7;
+    }
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .disabled > a,
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+    .navbar-mynavbar .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+        color: #ccc;
+        background-color: transparent;
+    }
+}
+.navbar-mynavbar .navbar-link {
+    color: #777;
+}
+.navbar-mynavbar .navbar-link:hover {
+    color: #333;
+}
+.navbar-mynavbar .btn-link {
+    color: #777;
+}
+.navbar-mynavbar .btn-link:hover,
+.navbar-mynavbar .btn-link:focus {
+    color: #333;
+}
+.navbar-mynavbar .btn-link[disabled]:hover,
+fieldset[disabled] .navbar-mynavbar .btn-link:hover,
+.navbar-mynavbar .btn-link[disabled]:focus,
+fieldset[disabled] .navbar-mynavbar .btn-link:focus {
+    color: #ccc;
+}
+/*
+* Ã¥Â¤Â´Ã©Æ’Â¨
+*/
+/*#header {*/
+/*height: 200px;*/
+/*background-color: #ccc;*/
+/*}*/
+#header > .topbar {
+    height: 40px;
+    border-bottom: 1px solid #c0c0c0;
+    line-height: 40px;
+}
+#header > .topbar > .container {
+    height: 40px;
+}
+#header > .topbar > .container > .row > div {
+    height: 40px;
+    font-size: 12px;
+    color: #888;
+}
+/*Ã¥Å Â Ã¥ÂÂ·Ã©â‚¬â€°Ã¦â€¹Â©Ã¥â„¢Â¨Ã¯Â¼Å¡Ã¦Â»Â¡Ã¨Â¶Â³Ã¦ÂÂ¡Ã¤Â»Â¶Ã§Å¡â€ždiv1Ã¥ÂÅ½Ã§Å¡â€ždiv2*/
+#header > .topbar > .container > .row > div + div{
+    border-left: 1px solid #c0c0c0;
+}
+#header .mobile-link {
+    font-size: 12px;
+    color: #888;
+}
+#header .mobile-link > img {
+    display: none;
+}
+#header .mobile-link:hover {
+    text-decoration: none;
+}
+#header .mobile-link:hover > img {
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -60px;
+    top: 28px;
+    z-index: 1001;
+}
+#header .icon-icon {
+    color: #c9302c;
+    font-size: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+}
+#header .icon-logo {
+    font-size: 32px;
+    color: #555;
+    line-height: 50px;
+    vertical-align: middle;
+}
+/*
+* Ã¦Âµâ€¹Ã¨Â¯â€¢
+*/
+/*section {*/
+    /*height: 200px;*/
+    /*background-color: #fff;*/
+/*}*/
+/*section:nth-of-type(2n) {*/
+    /*background-color: #ddd;*/
+/*}*/
+
+/*
+* Ã¨Â½Â®Ã¦â€™Â­
+*/
+#main_ad {
+
+}
+#main_ad > .carousel-inner > .item {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+/*Ã¥Ë†Â©Ã§â€Â¨Ã¥Âªâ€™Ã¤Â½â€œÃ¦Å¸Â¥Ã¨Â¯Â¢Ã¦Å½Â§Ã¥Ë†Â¶Ã§â€ºâ€™Ã¥Â­ÂÃ©Â«ËœÃ¥ÂºÂ¦*/
+@media (min-width: 768px) {
+    #main_ad > .carousel-inner > .item {
+        height: 410px;
+    }
+}
+#main_ad > .carousel-inner > .item >img {
+    width: 100%;
+}
+/*
+* Ã§â€°Â¹Ã¨â€°Â²
+*/
+.icon-uniE907:before {
+    content: "\e907";
+}
+#feature {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 50px 0;
+}
+#feature i {
+    font-size: 35px;
+}
+#feature a {
+    color: #333;
+    text-decoration: none;
+}
+#feature a:hover {
+    color: #c9302c;
+}
+#feature > .container > .row > div{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /*background-color: #2aabd2;*/
+}
+/*#feature > .row > div:nth-of-type(2n){*/
+    /*height: 50px;*/
+    /*background-color: #ffff00;*/
+/*}*/
+
+/*
+* Ã©Â¢â€žÃ§ÂºÂ¦
+*/
+.icon-uniE906:before {
+    content: "\e906";
+}
+.icon-uniE905:before {
+    content: "\e905";
+}
+#order {
+    border-bottom: 1px solid #c0c0c0;
+    padding: 20px 0;
+}
+#order >.container > p {
+    /*line-height: 50px;*/
+    font-size: 14px;
+    margin-bottom: 0;
+}
+#order >.container > .pull-left > span {
+    color: #c9302c;
+}
+#order >.container > p > a {
+    color: #333;
+    text-decoration: none;
+}
+#order >.container > .pull-left > a {
+    color: #c9302c;
+    text-decoration: none;
+    border-bottom: 1px dashed #c9302c;
+}
+.panel-myPanel {
+    border-color: #ddd;
+}
+.panel-myPanel > .panel-heading {
+    color: #333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+.panel-myPanel > .panel-heading + .panel-collapse > .panel-body {
+    border-top-color: #ddd;
+}
+.panel-myPanel > .panel-heading .badge {
+    color: #f5f5f5;
+    background-color: #333;
+}
+.panel-myPanel > .panel-footer + .panel-collapse > .panel-body {
+    border-bottom-color: #ddd;
+}
+#products > .container > .tab-content {
+    padding: 20px 0;
+}
+/*#order > */
+/*
+* Ã¦Å½Â¨Ã¨ÂÂ
+*/
+#products {
+    background-color: #f0f0f0;
+    padding: 40px 0;
+}
+#products > .container > .nav-tabs {
+    padding-left: 20px;
+}
+#products > .container > .nav-tabs > li >a {
+    background-color: transparent;
+    border: 0;
+    font-size: 16px;
+    color: #333;
+}
+#products > .container > .nav-tabs > li.active >a {
+border-bottom: 2px solid #c9302c;
+}
+/*
+* Ã¦â€“Â°Ã©â€”Â»
+*/
+
+/*
+* Ã¥ÂË†Ã¤Â½Å“
+*/
+
+/*
+* Ã¨â€žÅ¡Ã¦Â³Â¨
+*/

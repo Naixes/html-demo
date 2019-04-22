@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ECharts 入门示例</title>
+	<script type="text/javascript" src="./js/echarts.min.js"></script>
+</head>
+<body>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width: 600px;height: 600px"></div>
+	<div id="pie" style="width: 600px;height: 600px"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    const mainChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    const mainOption = {
+        title: {
+            text: 'ECharts 入门示例',
+            subtext: '我是副标题',
+            show: true, // 默认显示
+            left: 20, // 像素值，也可以是'center'等
+            borderColor: 'red',
+            borderWidth: 2,
+            textStyle: {
+            	fontSize: 20
+            }
+        },
+        // 工具箱
+        toolbox: {
+        	show: true,
+        	feature: {
+        		// 数据视图，可修改数据
+        		dataView: {
+        			show: true
+        		},
+        		// 还原到初始数据
+        		restore: {
+        			show: true
+        		},
+        		// 区域缩放及还原
+        		dataZoom: {
+        			show: true
+        		},
+        		saveAsImage: {
+        			show: true
+        		},
+        		// 动态切换
+        		magicType: {
+        			type: ['line', 'bar']
+        		}
+        	}
+        },
+        // 弹窗
+        tooltip: {
+        	show: true, // 默认为true
+        	// 触发类型，默认为item，还有none
+        	// 坐标轴触发
+        	trigger: 'axis'
+        },
+        // 图例
+        legend: {
+        	// 和series的name对应
+            data:['销量', '产量']
+        },
+        // x坐标轴
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        // y坐标轴
+        yAxis: {},
+        // 数据
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20],
+            // 标记点和标记线
+            markPoint: {
+            	data: [
+            		{type: 'max', name: '最大值'},
+            		{type: 'min', name: '最小值'}
+            	]
+            },
+            markLine: {
+            	data: [
+            		{type: 'average', name: '平均值'}
+            	]
+            }
+        },{
+            name: '产量',
+            type: 'line',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    mainChart.setOption(mainOption)
+
+    // 其他常用图
+    // 饼图
+    const pieChart = echarts.init(document.getElementById('pie'))
+    const pieOption = {
+    	backgroundColoe: '#2c343c',
+    	title: {
+    		text: 'Pie',
+	        left: 20,
+	        top: 20,
+	        textStyle: {
+	            color: '#000'
+	        }
+    	},
+    	tooltip: {
+    		trigger: 'item',
+        	formatter: "{a} <br/>{b} : {c} ({d}%)"
+    	},
+
+    	// 视觉映射
+	    visualMap: {
+	        show: false,
+	        // 映射的定义域：即数据是80的明暗度为0
+	        min: 80,
+	        max: 600,
+	        // 视觉元素范围
+	        inRange: {
+	        	// 颜色的明暗度映射
+	            colorLightness: [0, 1]
+	        }
+	    },
+    	legend: {
+    		data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
+    		// 图例排列方式
+    		orient: 'vertical'
+    	},
+    	series: [
+    		{
+    			name: '访问来源',
+    			type: 'pie',
+    			radius: '55%',
+    			center: ['50%', '60%'],
+    			data: [
+	                {value:335, name:'直接访问'},
+	                {value:310, name:'邮件营销'},
+	                {value:274, name:'联盟广告'},
+	                {value:235, name:'视频广告'},
+	                {value:400, name:'搜索引擎'}
+    			].sort(function (a, b) {return a.value - b.value}),
+    			// 是否展示成南丁格尔图，通过半径区分数据大小。
+    			// 扇区圆心角展现数据的百分比，半径展现数据的大小
+    			roseType: 'radius',
+    			// 所有扇区圆心角相同，仅通过半径展现数据大小。
+    			// roseType: 'area',
+    			// 标签
+	            label: {
+	                normal: {
+	                    textStyle: {
+	                        color: '#2c343c'
+	                    }
+	                }
+	            },
+	            // 标签线
+	            labelLine: {
+	                normal: {
+	                    lineStyle: {
+	                        color: '#2c343c'
+	                    },
+	                    smooth: .1,
+	                    // 第一段视觉引导线的长度
+	                    length: 10,
+	                    length2: 20
+	                }
+	            },
+	            // 图形样式
+	            itemStyle: {
+	                normal: {
+	                    color: '#c23531',
+	                    shadowBlur: 0,
+	                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                }
+	            },
+
+	            animationType: 'scale',
+	            animationEasing: 'elasticOut',
+	            animationDelay: function (idx) {
+	            	// 随机延迟显示
+	                return Math.random() * 200;
+	                // 越往后延迟越多，即按顺序同间隔显示
+	                // return idx * 1000;
+	            }
+    		}
+    	]
+    }
+    pieChart.setOption(pieOption)
+</script>
+</body>
+</html>

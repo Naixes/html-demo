@@ -1,0 +1,11 @@
+// less没有循环
+// 给函数的执行附加条件
+.adapter(@index) when(@index > 0) {
+  // extract获取数组里的值
+  @media(min-width: extract(@adapterDeviceList, @index)) {
+    html {
+      font-size: @baseFontSize / @designWidth * extract(@adapterDeviceList, @index);
+    }
+  }
+  .adapter(@index - 1)
+}

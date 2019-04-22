@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Title</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+    </style>
+    <script src="../canvas/bower_components/konva/konva.js"></script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <script>
+        var stage = new Konva.Stage({
+            container: 'container',
+            width:     window.innerWidth,
+            height:    window.innerHeight
+        });
+
+    var layer = new Konva.Layer();
+    stage.add(layer);
+
+    var cenX = stage.width() / 2; // Konva库中获取数据都是方法
+    var cenY = stage.height() / 2;
+
+    var x = 1/8 * stage.width();
+    var y = cenY;
+    var height = 1/12 * stage.height();
+    var maxWidth = 3/4 * stage.width();
+    var innerRect = new Konva.Rect({
+        x: x,
+        y: y,
+        height: height,
+        width: 100,
+        fill: 'lightBlue',
+        opacity: .7,
+        cornerRadius: height / 2
+
+    });
+    layer.add(innerRect);
+
+    var outerRect = new Konva.Rect({
+        x: x,
+        y: y,
+        height: height,
+        width: maxWidth,
+        stroke: 'lightBlue',
+        strokeWidth: 4,
+        cornerRadius: height / 2
+    });
+    layer.add(outerRect);
+
+    layer.draw();
+
+    var imagArray = ['img01','img02'];
+    var loadImgIndex = 0;
+    for(var i=0; i < imagArray.length; i++){
+        var img = new Image;
+        img.src = imagArray[i];
+        img.onload(function () {
+            loadImgIndex += 1;
+            innerRect.to({
+                width: maxWidth * (loadImgIndex / imagArray.length),
+                duration: 2,
+                easing: Konva.Easings.BackEaseIn
+            });
+        });
+    };
+
+    </script>
+</body>
+</html>

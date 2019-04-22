@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <canvas id='demo' width='600' height='600'>
+        你的浏览器不支持canvas，请升级
+    </canvas>
+
+    <script>
+        var canvas = document.getElementById('demo');
+        var ctx = canvas.getContext('2d'); //3d是：webgl
+
+        canvas.style.border = "1px solid #ccc";
+
+        ctx.moveTo(100,100);
+        ctx.lineTo(200,200);
+        ctx.lineTo(300,400);
+        ctx.closePath();
+
+        ctx.strokeStyle = 'rgba(233,233,2,.8)'
+        ctx.lineWidth  = 4;
+        ctx.fillStyle = 'red';
+        ctx.stroke();
+        ctx.fill();
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>frame</title>
+</head>
+<body>
+    <canvas id="demo" width="600" height="600">
+        请升级
+    </canvas>
+    <button id="button_left">←</button>
+    <button id="button_right">→</button>
+    <button id="button_up">↑</button>
+    <button id="button_down">↓</button>
+
+    <script>
+        var canvas = document.getElementById('demo');
+        var ctx = canvas.getContext('2d');
+
+        canvas.style.border = '1px solid #ccc';
+
+        var img = new Image();
+        var frameIndex = 0;
+        var dirIndex = 0;
+
+        img.src = '../canvas/imgs/gameImgs/DMMban.png';
+        img.onload = function(){
+            setInterval(function () {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.drawImage(img,frameIndex * 40,dirIndex * 65,40,65,200,200,80,130);
+                frameIndex++;
+                frameIndex %= 4;
+            },1000/5);
+        }
+
+        var btnLeft = document.getElementById('button_left');
+        var btnRight = document.getElementById('button_right');
+        var btnUp = document.getElementById('button_up');
+        var btnDown = document.getElementById('button_down');
+
+        btnDown.onclick = function () {
+            dirIndex = 0;
+        }
+        btnLeft.onclick = function () {
+            dirIndex = 1;
+        }
+        btnRight.onclick = function () {
+            dirIndex = 2;
+        }
+        btnUp.onclick = function () {
+            dirIndex = 3;
+        }
+    </script>
+</body>
+</html>

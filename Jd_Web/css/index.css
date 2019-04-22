@@ -1,0 +1,138 @@
+/* banner */
+.banner {
+	height: 140px;
+	position: relative;
+}
+.logo {
+	width: 190px;
+	height: 170px;
+	overflow: hidden;
+	position: absolute;
+	background: url(../img/logo.gif) no-repeat;
+	top: -31px;
+	box-shadow: 0 -12px 10px 0 rgba(0, 0, 0, 0.3)
+}
+.logo a {
+	/* 扩大点击范围 */
+	display: block;
+	width: 100%;
+	height: 100%;
+	text-indent: -2em;
+}
+.search {
+	width: 550px;
+	height: 35px;
+	position: absolute;
+	top: 25px;
+	left: 320px;
+	background-color:red;
+}
+.search > input {
+	border: 1px solid #fff;
+	outline: 0;
+	width: 493px;
+	height: 33px;
+	padding-left: 5px;
+	/* 由于行内块元素之间会有缝隙，加上浮动清除缝隙 */
+	float: left;
+}
+.search > span {
+	position: absolute;
+	width: 19px;
+	height: 15px;
+	top:10px;
+	right: 60px;
+	background: url(../img/sprite-search.png) no-repeat 0 0;
+}
+.search > span:hover {
+	background-position: -30px 0;
+	cursor: pointer;
+}
+.search > button {
+	border: 0;
+	width: 50px;
+	height: 35px;
+	float: left;
+	background-color: #f10215;
+}
+.search > button > i {
+	font-family: 'icomoon';
+	font-size: 20px;
+	color: #fff;
+}
+.hot {
+  position: absolute;
+  left: 320px;
+  top: 70px;
+}
+.hot a {
+  color: #999;
+  margin-right: 10px;
+}
+.hot a:hover {
+  color: #f10215;
+}
+.hot a:first-of-type {
+  color: #f10215;
+  margin-right: 15px;
+}
+.cart {
+  width: 188px;
+  height: 33px;
+  line-height: 33px;
+  position: absolute;
+  top: 25px;
+  right: 100px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+.cart > i {
+  font-family: 'icomoon';
+  color: #f10215;
+}
+.cart > a {
+  color: #f10215;
+}
+.cart > span {
+  height: 16px;
+  line-height: 16px;
+  position: absolute;
+  top: 5px;
+  left: 140px;
+  border-radius: 8px;
+  color: #fff;
+  background-color: #f10215;
+  padding: 0 4px;
+}
+.navitems {
+  position: absolute;
+  left: 200px;
+  bottom: 0;
+  font-size: 14px;
+  color: #333;
+}
+.navitems > ul {
+  float: left;
+}
+.navitems > ul a {
+  color: #999;
+  height: 40px;
+  line-height: 40px;
+}
+.navitems > ul > li {
+  float: left;
+  padding-left: 30px;
+}
+.navitems > .spacer {
+  float: left;
+  margin: 15px -10px 0 20px;
+}
+.coupon {
+  position: absolute;
+  width: 190px;
+  height: 40px;
+  right: 0;
+  top: 90px;
+  background: url(../img/coupon.png) no-repeat;
+}

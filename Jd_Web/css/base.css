@@ -1,0 +1,180 @@
+/* 版心 */
+.w {
+	width: 1190px;
+	margin: 0 auto;
+}
+.fr {
+	float: right;
+}
+.fl {
+	float: left;
+}
+li {
+	list-style: none;
+}
+i, em {
+	font-style: normal;
+}
+ul, h1, h5, input, button {
+	margin: 0;
+	padding: 0;
+}
+input, button {
+	padding: 0;
+}
+a {
+	text-decoration: none; 
+}
+.color-red {
+	color: #c81623!important;
+}
+.clearfix::before, .clearfix::after {
+	content: '';
+	display: table;
+}
+.clearfix::after {
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+/* 字体声明 */
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?w4dyfe');
+  src:  url('../fonts/icomoon.eot?w4dyfe#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?w4dyfe') format('truetype'),
+    url('../fonts/icomoon.woff?w4dyfe') format('woff'),
+    url('../fonts/icomoon.svg?w4dyfe#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+html {
+	background-color: #f0f3ef;
+	font-size: 12px;
+}
+/* header */
+header {
+	background-color: rgb(212, 2, 13);
+}
+header a {
+	display: block;
+	height: 80px;
+	background: url('../img/top.jpg') no-repeat;
+	position: relative;
+	z-index: 30;
+}
+header a i {
+	font: normal normal 15px 'icomoon';
+	color: rgba(255, 255, 255, 0.3);
+	text-align: center;
+	line-height: 20px;
+	background-color: rgba(0, 0, 0, 0.1);
+	position: absolute;
+	height: 20px;
+	width: 20px;
+	right: 5px;
+	top: 5px;
+}
+
+/* nav */
+nav {
+	background-color: #e3e4e5;
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #ddd;
+	color: #999;
+}
+.pos {
+	font-size: 14px;
+	font-family: 'icomoon';
+	color: #f10215;
+}
+.nav > .fl li {
+	margin-left: 200px;
+}
+.nav > .fr {
+	margin-right: 15px;
+}
+.nav > .fr > li {
+	float: left;
+}
+.spacer {
+	width: 1px;
+	height: 10px;
+	background-color: #ccc;
+	margin: 10px 15px 0;
+}
+.nav > .fr a {
+	color: #999;
+}
+.nav > .fr a:hover {
+	color: #c81623;
+}
+.dropdown {
+	padding-right: 15px;
+	position: relative;
+}
+.dropdown > i {
+	font-family: 'icomoon';
+	font-size: 16px;
+	/* 由于基线对齐产生偏差，使用定位 */
+	position: absolute;
+	top: -3px;
+}
+.nav li:last-of-type {
+	position: relative;
+}
+.qr-code {
+	border: 1px solid #999;
+	padding: 3px;
+	position: absolute;
+	top: 31px;
+	right: -10px;
+}
+.qr-code > img {
+	/* 去除图片底边空隙 */
+	vertical-align: middle;
+} 
+/* footer */
+footer {
+  height: 560px;
+}
+.service {
+	padding: 29px 0;
+  height: 42px;
+  border-bottom: 1px solid #999; 
+}
+.service li {
+  float: left;
+	width: 297px;
+}
+.service-unit {
+	margin: 0 auto;
+	position: relative;
+	padding-left: 45px;
+}
+.service h5 {
+  width: 36px;
+  height: 42px;
+  position: absolute;
+	background: url(../img/ico_service.png) no-repeat 0 0;
+	text-indent: -1em;
+	overflow: hidden;
+}
+.service .service-kuai {
+	background-position-y: -43px;
+}
+.service .service-hao {
+	background-position-y: -86px;
+}
+.service .service-sheng {
+	background-position-y: -129px;
+}
+.service-txt {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 42px;
+  margin: 0 45px;
+}
+

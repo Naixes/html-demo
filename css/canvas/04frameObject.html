@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/04sprite.js"></script>
+    <title>frame</title>
+</head>
+<body>
+<canvas id="demo" width="600" height="600">
+    请升级
+</canvas>
+<button id="button_left">←</button>
+<button id="button_right">→</button>
+<button id="button_up">↑</button>
+<button id="button_down">↓</button>
+
+<script>
+    var canvas = document.getElementById('demo');
+    var ctx = canvas.getContext('2d');
+
+    canvas.style.border = '1px solid #ccc';
+
+    var s = new Sprite({
+        width : 40,
+        height : 65,
+        drWidth : 90,
+        drHeight : 130,
+        X : 200,
+        Y : 200,
+        fps : 10,
+
+        _imgSrc : '../canvas/imgs/gameImgs/DMMban.png'
+    });
+
+    var btnLeft = document.getElementById('button_left');
+    var btnRight = document.getElementById('button_right');
+    var btnUp = document.getElementById('button_up');
+    var btnDown = document.getElementById('button_down');
+
+    s.render(ctx);
+
+    btnDown.onclick = function () {
+        s.changeDir("down");
+    };
+    btnLeft.onclick = function () {
+        s.changeDir("left");
+    };
+    btnRight.onclick = function () {
+        s.changeDir("right");
+    };
+    btnUp.onclick = function () {
+        s.changeDir("up");
+    };
+</script>
+</body>
+</html>
