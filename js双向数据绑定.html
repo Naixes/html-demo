@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>双向数据绑定</title>
+</head>
+<body>
+<input type="text" id="txt">
+	<p id="show">请输入。。</p>
+</body>
+<script type="text/javascript">
+	// 存储数据的对象
+	// const obj = {}
+	// Object.defineProperty(obj, 'txt', {
+	// 	get: function () {
+	// 		return obj
+	// 	},
+	// 	set: function (val) {
+	// 		// document.getElementById('txt').value = val
+	// 		// 数据改变时触发，修改页面
+	// 		document.getElementById('show').innerHTML = val
+	// 	}
+	// })
+	// // 监听页面，修改数据
+	// document.addEventListener('keyup', function (e) {
+	// 	obj.txt = e.target.value
+	// })
+
+	const obj = {}
+	Object.defineProperty(obj, 'txt', {
+		get: function () {
+			return obj
+		},
+		set: function (val) {
+			document.getElementById('show').innerHTML = val
+		}
+	})
+	document.addEventListener('keyup', function (e) {
+		obj.txt = e.target.value
+	})
+</script>
+</html>

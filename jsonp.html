@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jsonp</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	// function jsonp(option) {
+	// 	// 参数初始化
+	// 	option.data = option.data || {}
+	// 	option.key = option.key || "callback" 
+	// 	option.callback = option.callback || function() {}
+	//  option.data[option.key] = '__getData__'
+
+	// 	// 创建script标签
+	// 	let script = document.createElement('script')
+	// 	// 定义全局函数将数据传递给回调
+	//  window[__getData__] = function (data) {
+	// 		option.callback(data)
+	//  }
+	// 	// 拼接url
+	// 	let query = []
+	// 	for(const key in option.data) {
+	// 		src.push(`${key}=${encodeURLComponent(option.data[key])}`)
+	// 	}
+	// 	let src = `${option.url}?${query.join('&')}`
+	// 	// 添加标签
+	// 	document.head.appendChild(script)
+	// 	document.head.removeChild(script)
+	// }
+	// 调用
+	jsonp({
+		url: '',
+		key: 'jsonpcb',
+		data: {},
+		callback: function(result) {
+			consol.log(result)
+		}
+	})
+
+	function jsonp(option) {
+		// 初始化参数
+		option.key = option.key || 'callback',
+		option.data = option.data || {},
+		option.callback = option.callback || function() {}
+		option.data[option.key] = '__getData__'
+		// 创建标签
+		let script = document.createElement('script')
+		// 创建全局函数，获取数据执行回调
+		window[__getData__] = function (data) {
+			option.callback(data)
+		}
+		// 拼接url
+		let query = []
+		for(const key in option.data) {
+			query.push(`${key}=${encodeURLComponent(option.data[key])}`)
+		}
+		if (JSON.stringify(option.data) !== '{}') {
+			let src = `${option.url}?${query.join('&')}`
+		}
+		// 添加标签，删除标签
+		document.head.appendChild(script)
+		document.head.removeChild(script)
+	}
+</script>
+</html>
