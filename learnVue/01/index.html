@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue</title>
+</head>
+<body>
+  <div id="app">
+    Hello
+    <!-- 插值表达式，可以是运算，取值，三元 -->
+    info: {{info.address}}
+    arr: {{arr}}
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      // template: "<div>这里的内容会覆盖app里的内容，{{msg}}</div>",
+      // 可以驱动视图的数据
+      data: {
+        msg: "我是可以驱动视图的数据",
+        info: { xxx: "xxx" },
+        arr: [1, 2, 3]
+      }
+    })
+
+    // ***实例上的常见方法
+    // 不起作用，要使用vm.$set
+    vm.info.address = "a"
+    vm.$set(vm.info, "address", "addrA")
+    // 不起作用，要使用数组的方法
+    vm.arr.lenrth--
+    vm.arr.push(4)
+
+    vm.arr = [5, 6, 7]
+    // 如果频繁更新数据会有性能问题,vue是延迟更新的,即视图更新是异步操作,这里在控制台观察的可能不是最新数据,需要使用$nextTick
+    vm.arr = [7, 8, 9]
+    vm.$nextTick(() => {
+      // 更新完视图后打印
+      console.log(vm.$el)
+      // 实例上的设置项
+      console.log(vm.$options)
+    })
+
+    vm.$watch("info.address", function(newValue, oldValue) {
+      console.log(newValue, oldValue)
+    })
+    vm.info.address = "addrB"
+    vm.info.address = "addrC"
+  </script>
+</body>
+</html>
