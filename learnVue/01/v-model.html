@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 没有参数时不要写括号，因为有默认参数事件对象
+            有参数时要将事件参数作为第一个参数$event传递 -->
+        <input type="text" :value="msg" @input="input">
+        <br />
+        <!-- v-model是v-bind和@input的语法糖 -->
+        <input type="text" v-model="msg">
+        <br />
+        {{msg}}
+        <br />
+        <!-- v-model在表单上的应用 -->
+        <!-- select -->
+        <select v-model="selectVal">
+            <option value="" disabled>请选择</option>
+            <!-- value是表单提交的值 -->
+            <!-- 不要将index作为key的值 -->
+            <!-- <option 
+                v-for="(item, index) in selectList" 
+                :key="index"
+                :value="index" 
+            >{{item}}</option> -->
+            <option 
+                v-for="item in selectList" 
+                :key="item.id"
+                :value="item.id" 
+            >{{item.val}}</option>
+        </select>
+        {{selectVal}}
+        <br />
+        <!-- radio -->
+        性别： 
+        <!-- 选中时触发change事件 -->
+        <input type="radio" value="cxk" v-model="radioVal" @change="cxk">cxk
+        <input type="radio" value="b" v-model="radioVal">男
+        <input type="radio" value="w" v-model="radioVal">女
+        <br />
+        {{radioVal}}
+        <br />
+        <!-- checkbox -->
+        爱好：
+        <!-- v-if包含多个元素时，可以使用template，template不会被渲染成真实的DOM，show不支持template -->
+        <template v-if="radioVal === 'cxk'">
+            <input type="checkbox" value="sing" v-model="selectVals" disabled>唱
+            <input type="checkbox" value="dance" v-model="selectVals" disabled>跳
+            <input type="checkbox" value="rap" v-model="selectVals" disabled>rap
+            <input type="checkbox" value="basket" v-model="selectVals" disabled>篮球
+        </template>
+        <template v-else>
+            <input type="checkbox" value="skate" v-model="selectVals">滑板
+        </template>
+        <br />
+        {{selectVals}}
+        <br />
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            // el: "#app",
+            data: {
+                // 这里的this是window，所以在这里定义的方法获取不到实例
+                msg: "input",
+                // 这里是选项的value值
+                selectVal: "",
+                // selectList: ["选项1", "选项2","选项3","选项4"]
+                selectList: [
+                    { id: 1, val: "选项1" },
+                    { id: 2, val: "选项2" },
+                    { id: 3, val: "选项3" },
+                    { id: 4, val: "选项4" }
+                ],
+                radioVal: "b",
+                selectVals: []
+            },
+            methods: {
+                // 这里的this是vm，注意在这里不要使用箭头函数
+                input(e) {
+                    this.msg = e.target.value
+                },
+                cxk() {
+                    this.selectVals = ["sing", "dance", "rap", "basket"]
+                }
+            }
+        }).$mount("#app")
+    </script>
+</body>
+</html>
