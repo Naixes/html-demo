@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>vue</title>
+	<style>
+		.title {
+			width:100px;
+			border: 1px solid red; 
+		}
+	</style>
+</head>
+<body>
+  <div id="app">
+		<collapse>
+			<collapse-item title="react">react</collapse-item>
+			<collapse-item title="vue">vue</collapse-item>
+			<collapse-item title="node">node</collapse-item>
+		</collapse>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+		Vue.component("Collapse", {
+			// 会直接替换，要使用插槽保留另外一个组件的位置
+			// 插槽默认名称是default，使用具名插槽时可以结合template使用，简写成#
+			template: `<div class='wrap'>
+				<slot></slot>
+			</div>`,
+			methods: {
+				cut(id) {
+					// this.$children：所有的子组件实例，并不保证顺序，也不是响应式的。
+					this.$children.forEach(e => {
+						if(e._uid !== id) {
+							e.show = false
+						}
+					});
+				}
+			}
+		})
+		Vue.component("CollapseItem", {
+			data() {
+				return {
+					show: false
+				}
+			},
+			props: {
+				title: {
+					type: String,
+					default: ""
+				}
+			},
+			template: `<div>
+				<div class='title' @click="toggle">{{title}}</div>
+				<div v-show="show">
+					<slot></slot>
+				</div>
+			</div>`,
+			methods: {
+				toggle() {
+					// this._uid是组件id，是惟一的
+					// this.$parent：父组件实例
+					this.$parent.cut(this._uid)
+					this.show = !this.show
+				}
+			}
+		})
+    const vm = new Vue({
+        el: "#app",
+        data: {}
+    })
+  </script>
+</body>
+</html>

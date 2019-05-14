@@ -14,7 +14,7 @@
     <!-- <sub-button :num="2" @click.native="subBtnClick"></sub-button> -->
     <!-- 如果要给子组件的某一元素绑定事件有三种方法: -->
     <!-- 注意:事件名不能使用驼峰 -->
-    <sub-button :num="2" @sub-click="subBtnClick" @mouseup="subBtnClick"></sub-button>
+    <sub-button :num="2" @sub-click="subBtnClick" a="1" b="2" @mouseup="subBtnClick"></sub-button>
   </div>
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script>
@@ -37,13 +37,22 @@
                     }
 
                 },
+								// 默认情况下父作用域的不被认作 props 的特性绑定 (attribute bindings) 将会“回退”且作为普通的 HTML 特性应用在子组件的根元素上。通过设置 inheritAttrs 到 false，这些默认行为将会被去掉。而通过 (同样是 2.4 新增的) 实例属性 $attrs 可以让这些特性生效。
+								inheritAttrs:false,
                 // vm.$listeners:包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 v-on="$listeners" 传入内部组件
                 // vm.$attrs:包含了父作用域中不作为 prop 被识别 (且获取) 的特性绑定 (class 和 style 除外)。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，并且可以通过 v-bind="$attrs" 传入内部组件
                 template: `<div>
                     <button @click="change">{{num}}</button>
                     <button @click="$listeners['sub-click']()">{{num}}</button>
                     <button v-on="$listeners">{{num}}</button>
+										<my v-bind="$attrs"></my>
                     </div>`,
+								components: {
+									"my": {
+										props: ["a", "b"],
+										template: "<span>{{a}} {{b}}</span>"
+									}
+								},
                 methods: {
                     change() {
                         console.log(this.$listeners)
