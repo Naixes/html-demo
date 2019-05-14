@@ -27,10 +27,10 @@
     })
 
     // ***实例上的常见方法
-    // 不起作用，要使用vm.$set
+    // 不起作用，不能设置没有声明过的属性，可以使用vm.$set
     vm.info.address = "a"
     vm.$set(vm.info, "address", "addrA")
-    // 不起作用，要使用数组的方法
+    // 不起作用，不能利用length改变数组长度，要使用数组的方法
     vm.arr.lenrth--
     vm.arr.push(4)
 

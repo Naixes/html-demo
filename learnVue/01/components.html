@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue</title>
+</head>
+<body>
+  <div id="app">
+    Hello {{msg}}
+    <!-- 不用数据绑定时属性值都是字符串 -->
+    <!-- 要在父组件中绑定原生的事件给子组件要用.native,否则只是一个普通的属性,事件会绑定到子组件的最外层 -->
+    <!-- <sub-button :num="2" @click.native="subBtnClick"></sub-button> -->
+    <!-- 如果要给子组件的某一元素绑定事件有三种方法: -->
+    <!-- 注意:事件名不能使用驼峰 -->
+    <sub-button :num="2" @sub-click="subBtnClick" @mouseup="subBtnClick"></sub-button>
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "我是可以驱动视图的数据",
+        },
+        components: {
+            "sub-button": {
+                props: {
+                    num: {
+                        type: Number,
+                        default: 1,
+                        // 属性校验,val就是传过来的值
+                        // 不通过时会在控制台警告不会影响画面渲染
+                        validator(val) {
+                            return val <= 3
+                        }
+                    }
+
+                },
+                // vm.$listeners:包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 v-on="$listeners" 传入内部组件
+                // vm.$attrs:包含了父作用域中不作为 prop 被识别 (且获取) 的特性绑定 (class 和 style 除外)。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定 (class 和 style 除外)，并且可以通过 v-bind="$attrs" 传入内部组件
+                template: `<div>
+                    <button @click="change">{{num}}</button>
+                    <button @click="$listeners['sub-click']()">{{num}}</button>
+                    <button v-on="$listeners">{{num}}</button>
+                    </div>`,
+                methods: {
+                    change() {
+                        console.log(this.$listeners)
+                        console.log(this.$attrs)
+                        // 通过$emit执行父组件的方法
+                        this.$emit('sub-click')
+                    }
+                }
+            }
+        },
+        methods: {
+            subBtnClick() {
+                alert(1)
+            }
+        }
+    })
+  </script>
+</body>
+</html>

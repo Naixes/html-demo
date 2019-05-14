@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue</title>
+</head>
+<body>
+  <div id="app">
+    Hello {{msg}}
+  </div>
+  <script src="../node_modules/vue/dist/vue.js"></script>
+  <script>
+    const vm = new Vue({
+        el: "#app",
+        data: {
+        msg: "我是可以驱动视图的数据"
+        },
+        // 初始化事件和生命周期函数
+        beforeCreate() {
+            console.log("beforeCreate")
+        },
+        // 初始化响应式数据和方法
+        // 可以在这里获取数据
+        created() {
+            // 可以在这里获取数据
+            // 可以操作数据和方法,比如节流等
+            console.log("created")
+        },
+        //   判断是否有el选项
+        // -有：判断有没有template选项--有：将模板编译进render函数；--没有：将外部模板作为模板；
+        // -没有：当vm.$mount(el)被调用后判断有没有template选项
+        beforeMount() {
+            console.log("beforeMount")
+        },
+        // 创建vm.$el，并用它替换el
+        // render() {
+        //     console.log("render")
+        // },
+        mounted() {
+            // 可以在这里获取数据
+            // 可以在这里操作DOM
+            console.log("mounted")
+        },
+        // data改变
+        beforeUpdate() {
+            console.log("beforeUpdate")
+        },
+        // 重新渲染
+        updated() {
+            console.log("updated")
+        },
+        // vm.$destroy()被调用
+        beforeDestroy() {
+            // 可以在这里清除定时器，图表等
+            console.log("beforeDestroy")
+        },
+        // 监视器，子组件，事件监听器销毁
+        destroyed() {
+            console.log("destroyed")
+        }
+    
+    })
+  </script>
+</body>
+</html>
