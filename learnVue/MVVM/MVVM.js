@@ -43,6 +43,21 @@ class Compiler{
         })
 
     }
+    // 编译文本节点
+    compileTextNode(node) {
+        // test：返回布尔值
+        // node.textContent：文本内容
+        if(/\{\{(.+?)\}\}/.test(node.textContent)) {
+            // expr[0]：{{xx.xx}};expr[1]：xx.xx
+            let expr = node.textContent.match(/\{\{(.+?)\}\}/)
+            // 获取数据
+            let value = this.CompileUtil.getVal(this.vm, expr[1])
+            // console.log(typeof node.textContent, expr[0], value)
+            // 替换数据
+            node.textContent.replace(expr[0], value)
+            // console.log(node.textContent)
+        }
+    }
     // 编译工具
     CompileUtil = {
         model(node, expr, vm) {
@@ -71,21 +86,6 @@ class Compiler{
     // 判断是否为指令
     isDirective(name) {
         return name.startsWith("v-")
-    }
-    // 编译文本节点
-    compileTextNode(node) {
-        // test：返回布尔值
-        // node.textContent：文本内容
-        if(/\{\{(.+?)\}\}/.test(node.textContent)) {
-            // expr[0]：{{xx.xx}};expr[1]：xx.xx
-            let expr = node.textContent.match(/\{\{(.+?)\}\}/)
-            // 获取数据
-            let value = this.CompileUtil.getVal(this.vm, expr[1])
-            // console.log(typeof node.textContent, expr[0], value)
-            // 替换数据
-            node.textContent.replace(expr[0], value)
-            // console.log(node.textContent)
-        }
     }
     // 判断是否为元素节点
     isElementNode(node) {
