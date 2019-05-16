@@ -1,6 +1,47 @@
+// 观察者(包含发布订阅模式)
+// 实现发布订阅
+class Dep {
+    constructor() {
+        // 存放所有的watcher
+        this.subs = []
+    }
+    // 订阅
+    addSub(watcher) {
+        this,subs.push(watcher)
+    }
+    // 发布
+    notify() {
+        this.subs.forEach(watcher => {
+            watcher.update()
+        })
+    }
+}
 // 观察者
 class Watcher {
-
+    constructor(vm, expr, cb) {
+        this.vm = vm
+        this.expr = expr
+        this.cb = cb
+        // 先保存旧值
+        this.oldVal = this.get()
+    }
+    get() {
+        // 记录下当前的watcher
+        Dep.target = this
+        // 保存旧值
+        // 这里会调用数据的get方法，会将当前的watcher加入到subs当中
+        const value = CompileUtil.getVal(this.vm, this.expr)
+        // 要将当前target清空，否则在其他地方获取数据时也会重复加入当前的观察者
+        Dep.target = null
+        return value
+    }
+    // 数据更新时执行的方法
+    update() {
+        let newVal = CompileUtil.getVal(this.vm, this.expr)
+        if(newVal !== this.oldVal) {
+            this.cb(newVal)
+        }
+    }
 }
 
 // 模板编译
@@ -44,7 +85,7 @@ class Compiler {
             if(this.isDirective(name)) {
                 let [, directive] = name.split("-")
                 // 编译
-                this.CompileUtil[directive](node, expr, this.vm)
+                CompileUtil[directive](node, expr, this.vm)
             }
         })
 
@@ -68,48 +109,7 @@ class Compiler {
         // }
 
         if(/\{\{(.+?)\}\}/.test(content)) { // content:xxx{{}} {{}}
-            this.CompileUtil["text"](node, content, this.vm)
-        }
-    }
-    // 编译工具
-    CompileUtil = {
-        model(node, expr, vm) {
-            const fn = this.updater["modelUpdate"]
-            let value = this.getVal(vm, expr)
-            fn(node, value)
-        },
-        html() {},
-        text(node, expr, vm) {
-            const fn = this.updater["textUpdate"]
-            let content = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
-                // ...args: 匹配到的内容，括号中的内容，开始的索引，原始字符串
-                // 这里会对匹配到的内容进行循环
-                // console.log(...args)
-                return this.getVal(vm, args[1])
-            })
-            // console.log(content)
-            fn(node, content)
-        },
-        updater: {
-            modelUpdate(node, value) {
-                node.value = value
-            },
-            htmlUpdate() {
-
-            },
-            // 处理文本更新
-            // 参数：节点，文本内容
-            textUpdate(node, value) {
-                node.textContent = value
-            }
-        },
-        // 获取模板中表达式的值
-        getVal(vm, expr) {
-            // expr:stu.name
-            // data就是给的初始值vm.$data，以及每一轮的返回值
-            return expr.split(".").reduce((data, current)=>{
-                return data[current]
-            }, vm.$data)
+            CompileUtil["text"](node, content, this.vm)
         }
     }
     // 判断是否为指令
@@ -145,23 +145,28 @@ class Observer {
     }
     observer(data) {
         // 校验传入的参数
-        if(datda && typeof data === "object") {
-            for(key in data) {
+        if(data && typeof data === "object") {
+            for(const key in data) {
                 this.defineReactive(data, key, data[key])
             }
         }
     }
     defineReactive(data, key, value) {
         // 如果该值也是一个对象，对这个对象也进行劫持
-        observer(data[key])
+        this.observer(data[key])
+        // 给每一个属性增加发布订阅的功能
+        let dep = new Dep()
         Object.defineProperty(data, key, {
             get() {
+                // 获取属性值时判断是否有新的观察者并将它添加到subs中
+                Dep.target && dep.subs.push(Dep.target)
                 return value
             },
-            set(newVal) {
+            set:(newVal) => {
                 // 如果新值也是一个对象，对这个对象也进行劫持
-                observer(newVal)
+                this.observer(newVal)
                 value = newVal
+                dep.notify()
             }
         })
     }
@@ -179,5 +184,83 @@ class Vue {
             // 根据数据编译模板
             new Compiler(this.$el, this)
         }
+    }
+}
+
+// 编译工具
+CompileUtil = {
+    model(node, expr, vm) {
+        const modelUpdate = this.updater["modelUpdate"]
+
+        // 加入观察者
+        // 会调用watcher的get方法
+        new Watcher(vm, expr, (newVal) => {
+            modelUpdate(node, newVal)
+        })
+
+        // 双向绑定，实现画面改变数据：添加事件
+        node.addEventListener("input", (e) => {
+            this.setVal(vm, expr, e.target.value)
+        })
+
+        let value = this.getVal(vm, expr)
+        modelUpdate(node, value)
+    },
+    html() {},
+    text(node, expr, vm) {
+        const textUpdate = this.updater["textUpdate"]
+        // 获取替换过后的文本
+        let content = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+
+            // 给每一个{{}}加上观察者
+            // 会调用watcher的get方法
+            new Watcher(vm, args[1], (newVal) => {
+                textUpdate(node, this.getTextContentValue(vm, expr))
+            })
+
+            // ...args: 匹配到的内容，括号中的内容，开始的索引，原始字符串
+            // 这里会对匹配到的内容进行循环
+            // console.log(...args)
+            return this.getVal(vm, args[1])
+        })
+        // console.log(content)
+        textUpdate(node, content)
+    },
+    updater: {
+        modelUpdate(node, value) {
+            node.value = value
+        },
+        htmlUpdate() {
+
+        },
+        // 处理文本更新
+        // 参数：节点，文本内容
+        textUpdate(node, value) {
+            node.textContent = value
+        }
+    },
+    // 获取存在插值表达式的文本的值
+    getTextContentValue(vm, expr) {
+        return expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+            return this.getVal(vm, args[1])
+        })
+    },
+    // 获取模板中表达式的值
+    getVal(vm, expr) {
+        console.log(expr)
+        // expr:stu.name
+        // data就是给的初始值vm.$data，以及每一轮的返回值
+        return expr.split(".").reduce((data, current)=>{
+            return data[current]
+        }, vm.$data)
+    },
+    // 修改数据
+    setVal(vm, expr, value) {
+        expr.split(".").reduce((data, current, index, arr) => {
+            if(index === arr.length - 1) {
+                return data[current] = value
+            }
+            return data[current]
+        }, vm.$data)
     }
 }
