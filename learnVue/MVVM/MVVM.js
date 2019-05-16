@@ -181,8 +181,19 @@ class Vue {
             // 数据劫持：将所有的数据转化为Object.defineProperty()
             // Object.defineProperty()
             new Observer(this.$data)
+            // 将取值操作都代理到$data上
+            this.proxyVm(this.$data)
             // 根据数据编译模板
             new Compiler(this.$el, this)
+        }
+        proxyVm(data) {
+            for(let key in data) {
+                Object.defineProperty(this, key, {
+                    get() {
+                        return data[key]
+                    }
+                })
+            }
         }
     }
 }
