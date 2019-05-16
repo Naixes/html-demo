@@ -186,14 +186,14 @@ class Vue {
             // 根据数据编译模板
             new Compiler(this.$el, this)
         }
-        proxyVm(data) {
-            for(let key in data) {
-                Object.defineProperty(this, key, {
-                    get() {
-                        return data[key]
-                    }
-                })
-            }
+    }
+    proxyVm(data) {
+        for(let key in data) {
+            Object.defineProperty(this, key, {
+                get() {
+                    return data[key]
+                }
+            })
         }
     }
 }
