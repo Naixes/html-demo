@@ -1,4 +1,10 @@
-class Compiler{
+// 观察者
+class Watcher {
+
+}
+
+// 模板编译
+class Compiler {
     constructor(el, vm) {
         // 校验参数
 
@@ -132,15 +138,46 @@ class Compiler{
     }
 }
 
+// 数据劫持
+class Observer {
+    constructor(data) {
+        this.observer(data)
+    }
+    observer(data) {
+        // 校验传入的参数
+        if(datda && typeof data === "object") {
+            for(key in data) {
+                this.defineReactive(data, key, data[key])
+            }
+        }
+    }
+    defineReactive(data, key, value) {
+        // 如果该值也是一个对象，对这个对象也进行劫持
+        observer(data[key])
+        Object.defineProperty(data, key, {
+            get() {
+                return value
+            },
+            set(newVal) {
+                // 如果新值也是一个对象，对这个对象也进行劫持
+                observer(newVal)
+                value = newVal
+            }
+        })
+    }
+}
+
 // Vue基类
 class Vue {
     constructor(options) {
         this.$el = options.el
         this.$data = options.data
         if(this.$el) {
+            // 数据劫持：将所有的数据转化为Object.defineProperty()
+            // Object.defineProperty()
+            new Observer(this.$data)
             // 根据数据编译模板
             new Compiler(this.$el, this)
         }
     }
-
 }
