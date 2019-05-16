@@ -48,17 +48,20 @@ class Compiler{
         // test：返回布尔值
         // node.textContent：文本内容
         let content = node.textContent
-        if(/\{\{(.+?)\}\}/.test(content)) { // content:xxx{{}} {{}}
-            // 自己写的，没有起作用
-            // // expr[0]：{{xx.xx}};expr[1]：xx.xx
-            // let expr = node.textContent.match(/\{\{(.+?)\}\}/)
-            // // 获取数据
-            // let value = this.CompileUtil.getVal(this.vm, expr[1])
-            // // console.log(typeof node.textContent, expr[0], value)
-            // // 替换数据
-            // node.textContent.replace(expr[0], value)
-            // // console.log(node.textContent)
+        // // 自己写的，功能没有分离
+        // while(/\{\{(.+?)\}\}/.test(node.textContent)) { // content:xxx{{}} {{}}
+        //     // expr[0]：{{xx.xx}};expr[1]：xx.xx
+        //     let expr = node.textContent.match(/\{\{(.+?)\}\}/)
+        //     console.log(expr)
+        //     // 获取数据
+        //     let value = this.CompileUtil.getVal(this.vm, expr[1])
+        //     // console.log(typeof node.textContent, expr[0], value)
+        //     // 替换数据
+        //     node.textContent = node.textContent.replace(expr[0], value)
+        //     // console.log(node.textContent)
+        // }
 
+        if(/\{\{(.+?)\}\}/.test(content)) { // content:xxx{{}} {{}}
             this.CompileUtil["text"](node, content, this.vm)
         }
     }
