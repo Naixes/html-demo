@@ -23,6 +23,11 @@
                     name: "sin",
                     age: 18
                 }
+            },
+            computed: {
+                school() {
+                    return this.stu.msg + this.stu.age
+                }
             }
         })
     </script>
