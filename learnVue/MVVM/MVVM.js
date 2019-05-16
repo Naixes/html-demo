@@ -47,15 +47,19 @@ class Compiler{
     compileTextNode(node) {
         // test：返回布尔值
         // node.textContent：文本内容
-        if(/\{\{(.+?)\}\}/.test(node.textContent)) {
-            // expr[0]：{{xx.xx}};expr[1]：xx.xx
-            let expr = node.textContent.match(/\{\{(.+?)\}\}/)
-            // 获取数据
-            let value = this.CompileUtil.getVal(this.vm, expr[1])
-            // console.log(typeof node.textContent, expr[0], value)
-            // 替换数据
-            node.textContent.replace(expr[0], value)
-            // console.log(node.textContent)
+        let content = node.textContent
+        if(/\{\{(.+?)\}\}/.test(content)) { // content:xxx{{}} {{}}
+            // 自己写的，没有起作用
+            // // expr[0]：{{xx.xx}};expr[1]：xx.xx
+            // let expr = node.textContent.match(/\{\{(.+?)\}\}/)
+            // // 获取数据
+            // let value = this.CompileUtil.getVal(this.vm, expr[1])
+            // // console.log(typeof node.textContent, expr[0], value)
+            // // 替换数据
+            // node.textContent.replace(expr[0], value)
+            // // console.log(node.textContent)
+
+            this.CompileUtil["text"](node, content, this.vm)
         }
     }
     // 编译工具
@@ -66,12 +70,28 @@ class Compiler{
             fn(node, value)
         },
         html() {},
+        text(node, expr, vm) {
+            const fn = this.updater["textUpdate"]
+            let content = expr.replace(/\{\{(.+?)\}\}/g, (...args) => {
+                // ...args: 匹配到的内容，括号中的内容，开始的索引，原始字符串
+                // 这里会对匹配到的内容进行循环
+                // console.log(...args)
+                return this.getVal(vm, args[1])
+            })
+            // console.log(content)
+            fn(node, content)
+        },
         updater: {
             modelUpdate(node, value) {
                 node.value = value
             },
             htmlUpdate() {
 
+            },
+            // 处理文本更新
+            // 参数：节点，文本内容
+            textUpdate(node, value) {
+                node.textContent = value
             }
         },
         // 获取模板中表达式的值
