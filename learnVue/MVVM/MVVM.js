@@ -238,7 +238,10 @@ CompileUtil = {
         let value = this.getVal(vm, expr)
         modelUpdate(node, value)
     },
-    html() {},
+    // 处理v-html指令
+    html(node, html, vm) {
+        node.innerHTML = html
+    },
     // 处理绑定事件
     on(node, method, vm, eventName) {
         console.log(vm)
