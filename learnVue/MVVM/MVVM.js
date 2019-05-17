@@ -1,3 +1,41 @@
+// Vue基类
+class Vue {
+    constructor(options) {
+        this.$el = options.el
+        this.$data = options.data
+        let computed = options.computed
+        if(this.$el) {
+            // 数据劫持：将所有的数据转化为Object.defineProperty()
+            // Object.defineProperty()
+            new Observer(this.$data)
+            // 实现computed
+            for(let key in computed) {
+                // 将computed代理到$data上
+                Object.defineProperty(this.$data, key, {
+                    // 访问computed中的属性时返回方法的结果
+                    get:() => {
+                        console.log(this)
+                        return computed[key].call(this)
+                    }
+                })
+            }
+            // 将取值操作都代理到$data上
+            this.proxyVm(this.$data)
+            // 根据数据编译模板
+            new Compiler(this.$el, this)
+        }
+    }
+    proxyVm(data) {
+        for(let key in data) {
+            Object.defineProperty(this, key, {
+                get() {
+                    return data[key]
+                }
+            })
+        }
+    }
+}
+
 // 观察者(包含发布订阅模式)
 // 实现发布订阅
 class Dep {
@@ -172,32 +210,6 @@ class Observer {
     }
 }
 
-// Vue基类
-class Vue {
-    constructor(options) {
-        this.$el = options.el
-        this.$data = options.data
-        if(this.$el) {
-            // 数据劫持：将所有的数据转化为Object.defineProperty()
-            // Object.defineProperty()
-            new Observer(this.$data)
-            // 将取值操作都代理到$data上
-            this.proxyVm(this.$data)
-            // 根据数据编译模板
-            new Compiler(this.$el, this)
-        }
-    }
-    proxyVm(data) {
-        for(let key in data) {
-            Object.defineProperty(this, key, {
-                get() {
-                    return data[key]
-                }
-            })
-        }
-    }
-}
-
 // 编译工具
 CompileUtil = {
     model(node, expr, vm) {
@@ -258,7 +270,7 @@ CompileUtil = {
     },
     // 获取模板中表达式的值
     getVal(vm, expr) {
-        console.log(expr)
+        // console.log(expr)
         // expr:stu.name
         // data就是给的初始值vm.$data，以及每一轮的返回值
         return expr.split(".").reduce((data, current)=>{

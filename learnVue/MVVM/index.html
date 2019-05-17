@@ -11,6 +11,8 @@
         请输入内容： <input type="text" v-model="msg">
         <div>{{msg}}</div>
         <div>hello {{stu.name}} {{stu.age}}</div>
+        <div>{{school}} {{stu.age}}</div>
+        <button v-on:click="change">改变数据</button>
     </div>
     <!-- <script src="../node_modules/vue/dist/vue.js"></script> -->
     <script src="./MVVM.js"></script>
@@ -26,7 +28,12 @@
             },
             computed: {
                 school() {
-                    return this.stu.msg + this.stu.age
+                    return this.stu.name + this.stu.age
+                }
+            },
+            methods: {
+                change() {
+                    this.stu.age = 25
                 }
             }
         })
