@@ -3,6 +3,7 @@ class Vue {
     constructor(options) {
         this.$el = options.el
         this.$data = options.data
+        this.$methods = options.methods
         let computed = options.computed
         if(this.$el) {
             // 数据劫持：将所有的数据转化为Object.defineProperty()
@@ -10,16 +11,20 @@ class Vue {
             new Observer(this.$data)
             // 实现computed
             for(let key in computed) {
-                // 将computed代理到$data上
+                // 将computed代理到$data上，形成依赖关系
                 Object.defineProperty(this.$data, key, {
                     // 访问computed中的属性时返回方法的结果
                     get:() => {
-                        console.log(this)
+                        // 执行实例中的函数时注意this的指向
                         return computed[key].call(this)
                     }
                 })
             }
-            // 将取值操作都代理到$data上
+
+            // 将$methods取值操作都代理到实例上
+            this.proxyVm(this.$methods)
+
+            // 将$data取值操作都代理到实例上
             this.proxyVm(this.$data)
             // 根据数据编译模板
             new Compiler(this.$el, this)
@@ -121,9 +126,12 @@ class Compiler {
             // console.log("attrs",sttr.value)
             let {name, value:expr} = sttr
             if(this.isDirective(name)) {
-                let [, directive] = name.split("-")
-                // 编译
-                CompileUtil[directive](node, expr, this.vm)
+                // name:v-model
+                let [, directive] = name.split("-") 
+                // directive: on:click, name: v-on:click
+                let [directiveName, method] = directive.split(":")
+                // 编译 directiveName: model, html, on
+                CompileUtil[directiveName](node, expr, this.vm, method)
             }
         })
 
@@ -179,6 +187,7 @@ class Compiler {
 // 数据劫持
 class Observer {
     constructor(data) {
+        // 对data的数据进行劫持
         this.observer(data)
     }
     observer(data) {
@@ -230,6 +239,14 @@ CompileUtil = {
         modelUpdate(node, value)
     },
     html() {},
+    // 处理绑定事件
+    on(node, method, vm, eventName) {
+        console.log(vm)
+        node.addEventListener(eventName, (e) => {
+            // 注意这里的this指向
+            vm[method].call(vm, e)
+        })
+    },
     text(node, expr, vm) {
         const textUpdate = this.updater["textUpdate"]
         // 获取替换过后的文本
