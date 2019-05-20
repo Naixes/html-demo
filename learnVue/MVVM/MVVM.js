@@ -1,4 +1,5 @@
 // Vue基类
+// 数据劫持，数据代理和编译
 class Vue {
     constructor(options) {
         this.$el = options.el
