@@ -32,10 +32,12 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
+    // 配置 requir 或i mport 时可以省略的后缀名
     extensions: ['.js', '.vue', '.json'],
+    // 别名：在 requir 或i mport 时会用到
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      '@': resolve('src')
     }
   },
   module: {
