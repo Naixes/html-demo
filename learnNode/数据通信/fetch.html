@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script>
+		window.onload = function() {
+			let btn = document.getElementById('btn')
+			let img = document.getElementById('img')
+			btn.onclick = async function() {
+				// 请求
+				let res = await fetch('data/f0.png')
+				// 解析数据
+				// 二进制数据
+				let data = await res.blob()
+				// 将二进制数据转换为url
+				let url = URL.createObjectURL(data)
+				img.src = url
+			}
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="获取数据" id="btn">
+	<img src="" alt="" id="img">
+</body>
+</html>

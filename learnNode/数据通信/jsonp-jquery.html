@@ -1,0 +1,27 @@
+  <!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script src="../../lib/jquery.js"></script>
+		<script>
+			$(function() {
+				$("#txt").on("input", function() {
+					$.ajax({
+						url: "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+						data: { wd: $(this).val() },
+						dataType: "jsonp",
+						jsonp: "cb"
+					}).then(({s}) => {
+						console.log(s)
+					}, res => {
+						alert("失败")
+					})
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<input type="text" id="txt">
+	</body>
+	</html>

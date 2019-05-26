@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<script>
+		window.onload = function() {
+			const form = document.querySelector("#form")
+			form.onsubmit = function() {
+				let formdata = new FormData(form)
+
+				let xhr = new XMLHttpRequest()
+				xhr.open(formdata.method, formdata.action, true)
+				xhr.send(formdata)
+
+				xhr.onreadystatechange
+
+				return false
+			}
+		}
+	</script>
+</head>
+<body>
+	<form action="http://localhost:8080" id="form">
+		账号：<input type="text" name="account"><br/>
+		<input type="file" name="file"><br/>
+		<input type="submit" id="submit" value="提交">
+	</form>
+</body>
+</html>
