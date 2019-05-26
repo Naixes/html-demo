@@ -7,15 +7,26 @@
 	<title>Document</title>
 	<script>
 		window.onload = function() {
-			const form = document.querySelector("#form")
-			form.onsubmit = function() {
-				let formdata = new FormData(form)
+			let oForm = document.querySelector("#form")
+
+			oForm.onsubmit = function() {
+				let formdata = new FormData(oForm)
 
 				let xhr = new XMLHttpRequest()
-				xhr.open(formdata.method, formdata.action, true)
+
+				// 这里使用form中的数据
+				xhr.open(oForm.method, oForm.action, true)
 				xhr.send(formdata)
 
-				xhr.onreadystatechange
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == 4) {
+						if(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+							alert("成功")
+						}else {
+							alert("失败")
+						}
+					}
+				}
 
 				return false
 			}
@@ -23,7 +34,7 @@
 	</script>
 </head>
 <body>
-	<form action="http://localhost:8080" id="form">
+	<form action="http://localhost:8080" method="POST" id="form">
 		账号：<input type="text" name="account"><br/>
 		<input type="file" name="file"><br/>
 		<input type="submit" id="submit" value="提交">
