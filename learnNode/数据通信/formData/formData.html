@@ -12,10 +12,18 @@
 			oForm.onsubmit = function() {
 				let formdata = new FormData(oForm)
 
+				// 脱离表单使用formdata，不推荐
+				// formdata.append("username", document.querySelector("#user"))
+				// formdata.append("file", document.querySelector("#file").files[0])
+
 				let xhr = new XMLHttpRequest()
 
 				// 这里使用form中的数据
 				xhr.open(oForm.method, oForm.action, true)
+
+				// 脱离表单使用formdata
+				// xhr.open("post", "http://localhost:8080", true)
+
 				xhr.send(formdata)
 
 				xhr.onreadystatechange = function() {
@@ -35,7 +43,7 @@
 </head>
 <body>
 	<form action="http://localhost:8080" method="POST" id="form">
-		账号：<input type="text" name="account"><br/>
+		账号：<input type="text" name="account" id="user"><br/>
 		<input type="file" name="file"><br/>
 		<input type="submit" id="submit" value="提交">
 	</form>
