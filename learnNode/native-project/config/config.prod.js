@@ -1,7 +1,13 @@
+const path = require('path')
+
 module.exports = {
-	DB_HOST: '21,34,78.22',
-	DB_PORT: '3309',
-	DB_USER: 'root',
-	DB_PASS: 'admin',
-	DB_NAME: 'yyy'
+	DB_HOST: 'localhost',
+	DB_PORT: '3306',
+	DB_USER: 'admin',
+	DB_PASS: 'root',
+	DB_NAME: 'node',
+
+	HTTP_PORT: 8080,
+	HTTP_ROOT: path.resolve(__dirname, '../static'),
+	HTTP_UPLOAD: path.resolve(__dirname, '../static/upload')
 }
