@@ -11,7 +11,8 @@ http.createServer((req, res) => {
 	let {pathname, query} = url.parse(req.url, true)
 
 	res.writeJson = function (json) {
-		res.write(JSON.parse(json))
+		res.setHeader('content-type', 'application/json')
+		res.write(JSON.stringify(json))
 	}
 
 	if(req.method == 'POST') {
@@ -22,7 +23,7 @@ http.createServer((req, res) => {
 				arr.push(buffer)
 			})
 			req.on('end', () => {
-				let post = querystring.parse(Buffer.cancat(arr).toString())
+				let post = querystring.parse(Buffer.concat(arr).toString())
 
 				// 路由
 				handle(req.method, pathname, query, post, {})
@@ -33,11 +34,11 @@ http.createServer((req, res) => {
 			})
 			form.parse(req)
 			let post = {}
-			let file = {}
+			let files = {}
 			form.on('field', (name, value) => {
 				post[name] = value
 			})
-			form.on('file', (name, file) => {
+			form.on('file', (name, files) => {
 				files[name] = value
 			})
 			form.on('error', err => {
@@ -55,6 +56,7 @@ http.createServer((req, res) => {
 
 	async function handle(method, url, get, post, files){
 		let fn = router.findRouter(method, url)
+		console.log(method, url)
 
 		if(!fn) {
 			// 文件
@@ -63,6 +65,7 @@ http.createServer((req, res) => {
 				if(err) {
 					res.writeHeader(404)
 					res.write('Not Found')
+					// res.write(err.toString())
 					res.end()
 				}else {
 					let rs = fs.createReadStream(filepath)
@@ -71,6 +74,7 @@ http.createServer((req, res) => {
 					rs.on('error', () => {})
 
 					res.setHeader('content-encoding', 'gzip')
+					// pipe中封装处理各种事件
 					rs.pipe(gz).pipe(res)
 				}
 			})
@@ -81,6 +85,7 @@ http.createServer((req, res) => {
 			} catch (error) {
 				res.writeHeader(500)
 				res.write('Internal Server error')
+				res.write(error.toString())
 				res.end()
 			}
 		}
