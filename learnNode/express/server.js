@@ -29,6 +29,10 @@ server.get('/aa', (req, res, next) => {
     res.send('end')
 })
 
+server.post('/reg', (req, res) => {
+    console.log(req.body)
+})
+
 // 静态服务
 // server.use('/public/', express.static('./static/'))
 server.use(express.static('./static/'))
