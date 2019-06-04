@@ -12,3 +12,6 @@ const routers = require('./routers')
 // 数据库回滚
 // db.query('start transaction'; SELECT....; 'commit()')
 
+const process = require('process')
+// 可以用来获取 -- 后面的参数，使用不同的配置文件
+console.log(process.argv)

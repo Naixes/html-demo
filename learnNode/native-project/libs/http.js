@@ -92,4 +92,7 @@ http.createServer((req, res) => {
 
 	}
 
-}).listen(HTTP_PORT)
+}).listen(HTTP_PORT, () => {
+	console.log(`server started at ${HTTP_PORT}`)
+})
+
