@@ -1,22 +1,23 @@
-import { createContext } from "vm";
-
 // 两种传参方式
 // urlencoed：顺序灵活，可省略，不利于SEO
+const Koa = require('koa')
+const Router = require('koa-router')
 
-// server.context相当于ctx的原型
-// 可以放一些全局参数
+let server = new Koa()
+server.listen(8080)
 
-// ctx.request
-// ctx.response
-// ctx.method
-// ctx.url
-// ctx.path
-// ctx.query
-// ctx.ip        客户端ip
-// ctx.headers
+let router = new Router()
+router.get('/a', ctx => {
+    ctx.body = ctx.query.id
+})
+// 可添加多个
+router.get('/a/:id', async (ctx, next) => {
+    ctx.body = ctx.params.id
+    await next()
+})
+router.get('/a/123', (ctx, next) => {
+    let {id} = ctx.params
+    ctx.body += id
+})
 
-// ctx.throw(code, msg)
-// ctx.assert(condition, code, msg)
-// ctx.state = 305
-// ctx.redirect()
-// ctx.attachment()       下载文件
+server.use(router.routes())
