@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser')
 let server = express()
 server.listen(8080)
 
-server.use(cookieParser())
+server.use(cookieParser('naixes1995'))
 
 server.get('/a', (req, res) => {
 
@@ -16,10 +16,14 @@ server.get('/a', (req, res) => {
         // domain: 'aaa.com',
         // path 可以往上访问不能向下访问，一般设为'/'根
         path: '/',
-        maxAge: 14*86400*1000
+        maxAge: 14*86400*1000,
+        // 签名
+        signed: true
     })
 
-    console.log(req.cookies)
+    console.log('cookies', req.cookies)
+    // 签名cookie
+    console.log('signedCookies', req.signedCookies)
 
     res.send('ok')
 })
