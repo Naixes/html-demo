@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <style>
+    .wrapper {
+        border: 1px solid #ccc;
+        /* height: 500px; */
+        /* 还可以创建BFC */
+        display: grid;
+        /* 通过 **grid-template-columns** 和 **grid-template-rows** 属性来定义网格中的行和列。
+        这些属性定义了网格的轨道。一个网格轨道就是网格中任意两条线之间的空间。 */
+        /* grid-template-columns: 200px 200px 200px; */
+
+        /* 新的`fr`单位代表网格容器中可用空间的一等份。 */
+        /* grid-template-columns: 1fr 1fr 1fr; */
+
+        /* 有着多轨道的大型网格可使用 repeat() 标记来重复部分或整个轨道列表 */
+        /* grid-template-columns: 100px repeat(3, 1fr); */
+        /* 有规律的重复 */
+        /* 注意逗号 */
+        grid-template-columns: repeat(2, 1fr 2fr);
+
+        /* grid-template-rows/columns没有定义时，网格将会在隐式网格中创建行和列。按照默认，这些轨道将自动定义尺寸，所以会根据它里面的内容改变尺寸。 */
+        /* 可以在隐式网格中用 grid-auto-rows 和 grid-auto-columns 属性来定义一个设置大小尺寸的轨道。 */
+        /* grid-auto-rows: 200px; */
+        grid-auto-rows: minmax(200px, auto);
+
+        /* 网格间距 */
+        /* 在两个网格单元之间的 网格横向间距  或 网格纵向间距  可使用 grid-column-gap 和 grid-row-gap 属性来创建，或者直接使用两个合并的缩写形式 grid-gap。 */
+        /* grid-column-gap: 10px;
+        grid-row-gap: 20px; */
+        /* 简写：row column */
+        grid-gap: 20px 10px;
+
+    }
+    .item,
+    .content {
+        /* height: 100px; */
+        border: 1px solid #000;
+        margin: 10px;
+        background-color: #ccc;
+    }
+    /* 网格线 */
+    /* 跨轨道放置元素 */
+    
+    /* 当我们定义网格时，我们定义的是网格轨道，而不是网格线。
+    Grid 会为我们创建编号的网格线来让我们来定位每一个网格元素 */
+    .item:nth-child(1) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        
+        /* 嵌套网格 */
+        /* 和父级没有关系不会继承 */
+        display: grid;
+        grid-template-rows: 1fr 2fr 1fr;
+    }
+    .item:nth-child(2) {
+        grid-column-start: 3;
+        /* 超出以最大为准 */
+        /* grid-column-end: 6; */
+        grid-column-end: 5;
+        grid-row-start: 1;
+        grid-row-end: 3;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="item">
+            <div class="content">1</div>
+            <div class="content">2</div>
+            <div class="content">3</div>
+        </div>
+        <div class="item">item2</div>
+        <div class="item">item3</div>
+        <div class="item">item4</div>
+        <div class="item">item5</div>
+        <div class="item">item6</div>
+    </div>
+    <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Grid_Layout/Basic_Concepts_of_Grid_Layout">参照</a>
+</body>
+</html>

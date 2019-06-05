@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    .colorful {
+        width: 300px;
+        height: 300px;
+        background: conic-gradient(
+            #9ED110,
+            #50B517,
+            #179067,
+            #476EAF,
+            #9f49ac,
+            #CC42A2,
+            #FF3BA7,
+            #FF5800,
+            #FF8100,
+            #FEAC00,
+            #FFCC00,
+            #EDE604
+        );
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.5s ease;
+    }
+    .colorful:hover {
+        /* filter：滤镜 */
+        /* blur()：调整模糊度 */
+        /* contrast()：调整对比度 */
+        /* brightness()：调整亮度 */
+        /* drop-shadow()：调整阴影 */
+        /* hue-rotate（）：色调旋转 */
+        /* grayscale()：转换为灰度 */
+        filter: hue-rotate(180deg)
+    }
+    </style>
+</head>
+<body>
+    <div class="colorful"></div>
+</body>
+</html>
