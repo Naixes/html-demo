@@ -6,19 +6,26 @@ const body = require('koa-better-body')
 const fs = require('fs')
 const ejs = require('koa-ejs')
 const static = require('./routers/static')
+// 引入配置项
+const config = require('./config')
 
 let server = new Koa()
 server.listen(8080)
 
 // 数据库
+// 使用ctx.xxx
 server.context.db = require('./lib/database')
+// 加入全局配置项
+server.context.config = config
 
 // 中间件
+// 使用ctx.request.fields
 server.use(body({
-    uploadDir: path.resolve(__dirname, './static/upload')
+    uploadDir: config.UPLOAD_DIR
 }))
 
 server.keys = fs.readFileSync('.keys').toString().split('\n')
+// 使用ctx.session
 server.use(session({
     maxAge: 20*60*1000,
     renew: true
