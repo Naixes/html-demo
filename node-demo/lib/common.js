@@ -1,4 +1,5 @@
 const crypto = require('crypto')
+const fs = require('fs')
 
 module.exports = {
     md5(buffer) {
@@ -7,5 +8,16 @@ module.exports = {
         obj.update(buffer)
         // hex:十六进制
         return obj.digest('hex')
-    }
+		},
+		unlink(path) {
+			return new Promise((resolve, reject) => {
+				fs.unlink(path, (err) => {
+					if(err) {
+						reject(err)
+					}else {
+						resolve()
+					}
+				})
+			})
+		}
 }

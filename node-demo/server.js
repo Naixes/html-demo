@@ -21,6 +21,7 @@ server.context.config = config
 // 中间件
 // 使用ctx.request.fields
 server.use(body({
+		// 配置上传路径
     uploadDir: config.UPLOAD_DIR
 }))
 
