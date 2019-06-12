@@ -4,7 +4,7 @@ module.exports = {
     DB_HOST: 'localhost',
     DB_USER: 'admin',
     DB_PASS: 'root',
-    DN_NAME: 'node',
+    DB_NAME: 'cpts',
 
     PORT: 8080,
 		HTTP_ROOT: 'http://localhost:8080',

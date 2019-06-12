@@ -6,7 +6,7 @@ let conn = mysql.createPool({
     host: conf.DB_HOST,
     user: conf.DB_USER,
     password: conf.DB_PASS,
-    database: conf.DN_NAME
+    database: conf.DB_NAME
 })
 
 let db = co(conn)

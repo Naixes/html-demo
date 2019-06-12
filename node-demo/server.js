@@ -44,14 +44,14 @@ ejs(server, {
 let router = new Router()
 
 // 统一处理
-router.use(async (ctx, next) => {
-    try {
-        await next()
-    } catch (error) {
-        ctx.throw(500, 'Internal Server Erro')
-        console.log(error)
-    }
-})
+// router.use(async (ctx, next) => {
+//     try {
+//         await next()
+//     } catch (error) {
+//         ctx.throw(500, 'Internal Server Erro')
+//         console.log(error)
+//     }
+// })
 
 router.use('/admin', require('./routers/admin'))
 router.use('/api', require('./routers/api'))
