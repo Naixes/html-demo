@@ -26,14 +26,25 @@ export default {
   },
   computed: {
     // 将vuex的state映射到computed
-    ...mapState(['a', 'b'])
+    ...mapState(['a', 'b']),
     // 相当于
     // a () {
     //   return this.$store.state.a
     // },
     // b () {
     //   return this.$store.state.b
-    // }
+		// }
+
+		// 利用对象起别名
+		...mapState({
+			str_a(state) {
+				return state.a
+			}
+		}),
+		// 简写
+		...mapState({
+			str_a: state => state.a
+		})
   },
   methods: {
     // 将vuex的actions映射到methods
