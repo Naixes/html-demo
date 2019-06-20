@@ -1,6 +1,7 @@
 <template>
     <div>
         <!-- vue动画 -->
+        <h1>过渡类名实现动画</h1>
         <input
             type="button"
             value="显示隐藏"
@@ -12,12 +13,12 @@
         </transition>
         <hr>
         <!-- vue动画 -->
+        <h1>钩子函数实现半场动画</h1>
         <input
             type="button"
             value="显示隐藏"
             @click="show2=!show2"
         >
-        <!-- 使用 transition 将需要过渡的元素包裹起来，name是类名的前缀，没有时是v- -->
         <transition
             @before-enter="beforeEnter"
             @enter="enter"
@@ -27,6 +28,7 @@
         </transition>
         <hr>
         <!-- vue动画 -->
+        <h1>列表渲染动画</h1>
         <input
             type="text"
             v-model="txt"
