@@ -2,13 +2,13 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './routers';
 
-//axios
+// axios
 /*import Axios from 'axios';
 import VueAxios from 'vue-axios';
 
 Vue.use(VueAxios, Axios);*/
 
-//vue-resouce
+// vue-resouce
 /*import VueResource from 'vue-resource';
 
 Vue.use(VueResource);*/

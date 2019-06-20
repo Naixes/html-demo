@@ -1,7 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import modC from './modC'
+
 Vue.use(Vuex)
+
+let modA = {
+  state: {
+    sta_a: 0,
+    sta_b: 0
+  }
+}
+let modB = {
+  state: {
+    sta_a: 0,
+    sta_b: 0
+  }
+}
 
 export default new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
@@ -42,5 +57,11 @@ export default new Vuex.Store({
       return state.a + state.b
     }
   },
-  modules: {}
+  modules: {
+    modA,
+    modB,
+    // 不能这样引入
+    // modC: () => import('./modC')
+    modC
+  }
 })
