@@ -72,14 +72,93 @@
     <!-- 文本 -->
     <text x="50" y="25">Hello World</text>
 </svg>
-<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
     <circle id="myCircle" cx="5" cy="5" r="4"/>
     
     <!-- 用于复制一个形状 -->
-    <!-- x属性和y属性是<use>左上角的坐标。另外，还可以指定width和height坐标。 -->
+    <!-- 用到了shadow-root -->
+    <!-- x属性和y属性是<use>左上角的坐标。另外，还可以指定width和height坐标。？？？ -->
     <use href="#myCircle" x="10" y="0" fill="blue" />
     <use href="#myCircle" x="20" y="0" fill="white" stroke="blue" />
-    <use href="#myCircle" x="20" y="10" width="20" height="20" fill="white" stroke="blue" />
-  </svg>
+    <use href="#myCircle" x="10" y="10" fill="white" stroke="blue" />
+</svg>
+<svg width="300" height="100">
+    <!-- 组 -->
+    <g id="myOtherCircle">
+        <text x="25" y="20">圆形</text>
+        <circle cx="50" cy="50" r="20"/>
+    </g>
+
+    <use href="#myOtherCircle" x="100" y="0" fill="blue" />
+    <use href="#myOtherCircle" x="200" y="0" fill="white" stroke="blue" />
+</svg>
+<h4>defs:自定义形状：不会展示仅用于引用</h4>
+<svg width="300" height="100">
+    <!-- 自定义形状：不会展示仅用于引用 -->
+  <defs>
+    <g id="myCircle">
+      <text x="25" y="20">圆形</text>
+      <circle cx="50" cy="50" r="20"/>
+    </g>
+  </defs>
+
+  <use href="#myCircle" x="0" y="0" />
+  <use href="#myCircle" x="100" y="0" fill="blue" />
+  <use href="#myCircle" x="200" y="0" fill="white" stroke="blue" />
+</svg>
+
+<svg width="500" height="500">
+    <defs>
+        <!-- <pattern>标签用于自定义一个形状，该形状可以被引用来平铺一个区域。 -->
+        <!-- <pattern>标签将一个圆形定义为dots模式 -->
+        <!-- patternUnits="userSpaceOnUse"表示<pattern>的宽度和长度是实际的像素值。然后，指定这个模式去填充下面的矩形。 -->
+        <pattern id="dots" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+            <circle fill="#bee9e8" cx="50" cy="50" r="35" />
+        </pattern>
+    </defs>
+    <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)" />
+</svg>
+
+<svg viewBox="0 0 100 100" width="100" height="100">
+    <!-- 用于插入图片 -->
+    <!-- <image>的xlink:href属性表示图像的来源。 -->
+    <image xlink:href="../node-demo/static/images/icon.png" width="50%" height="50%"/>
+</svg>
+
+<svg width="500px" height="500px">
+    <rect x="0" y="0" width="100" height="100" fill="#feac5e">
+        <!-- 动画效果 -->
+        <!-- 可定义多个 -->
+        <animate attributeName="x" from="0" to="500" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="width" to="500" dur="2s" repeatCount="indefinite" />
+    </rect>
+</svg>
+<svg width="500px" height="500px">
+    <rect x="250" y="250" width="50" height="50" fill="#4bc0c8">
+        <!-- 变形 -->
+        <!-- <animate>标签对 CSS 的transform属性不起作用，如果需要变形，就要使用<animateTransform>标签。 -->
+        <!-- <animateTransform>的效果为旋转（rotate），这时from和to属性值有三个数字，角度值，第二个和第三个值是旋转中心的坐标。from="0 200 200"表示开始时，角度为0，围绕(200, 200)开始旋转；to="360 400 400"表示结束时，角度为360，围绕(400, 400)旋转。 -->
+        <!-- begin="0s"表示立刻开始 -->
+        <animateTransform attributeName="transform" type="rotate" begin="0s" dur="20s" from="0 200 200" to="360 400 400" repeatCount="indefinite" />
+    </rect>
+</svg>
+<div id="canvas"></div>
 </body>
+<script>
+var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'))
+console.log(svgString)
+// SVG 图像转为 Canvas 图像
+var img = new Image();
+var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+
+var DOMURL = self.URL || self.webkitURL || self;
+var url = DOMURL.createObjectURL(svg);
+
+img.src = url;
+img.onload = function () {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+};
+</script>
 </html>
