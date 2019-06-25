@@ -3,7 +3,7 @@
         {{msg}}
         <life-comp></life-comp>
         <router-link to='/lifecircle/comp'>to comp</router-link>
-        <div @click="toComp">to comp</div>
+        <div @click="toSelf">to self</div>
     </div>
 </template>
 
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    toComp () {
+    toSelf () {
       // 在当前路由改变，但是该组件被复用时调用beforeRouteUpdate
       this.$router.replace({path: '/lifecircle', query: {t: '1'}})
     }
