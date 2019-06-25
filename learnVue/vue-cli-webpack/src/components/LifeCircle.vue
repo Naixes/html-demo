@@ -25,6 +25,7 @@ export default {
   // 可以访问组件实例 `this`
   beforeRouteUpdate (to, from, next) {
     console.log('beforeRouteUpdate')
+    next()
   },
   beforeRouteLeave (to, from, next) {
     console.log('beforeRouteLeave')
@@ -44,7 +45,8 @@ export default {
   },
   methods: {
     toComp () {
-      this.$router.replace({path: '/lifecircle/comp', query: 1})
+      // 在当前路由改变，但是该组件被复用时调用beforeRouteUpdate
+      this.$router.replace({path: '/lifecircle', query: {t: '1'}})
     }
   },
   created () {
