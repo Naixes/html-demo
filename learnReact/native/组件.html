@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="react.development.js" charset="utf-8"></script>
+    <script src="react-dom.development.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/babel">
+let root = document.getElementById("div")
+
+// 组件
+class Comp extends React.Component{
+    constructor(...args){
+        super(...args)
+        // 状态
+        this.state = {
+
+        }
+    }
+}
+
+ReactDOM.render(
+    <div className="box">
+        <div>aaa</div>
+        <div>bbb</div>
+        <div>
+            <label htmlFor="user">用户名：</label>
+            <input id="user" type="text" />
+        </div>
+    </div>,
+    root
+)
+</script>
+</html>
