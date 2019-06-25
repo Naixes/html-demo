@@ -34,23 +34,32 @@
     <circle cx="90" cy="30" r="50" class="red"></circle>
     <circle cx="150" cy="30" r="50" class="fancy"></circle>
 </svg>
+
+<h5>折线</h5>
 <svg width="300" height="180">
     <!-- 折线 -->
     <polyline points="3,3 30,28 3,53" fill="none" stroke="black" />
 </svg>
+
+<h5>矩形</h5>
 <svg width="300" height="180">
     <!-- 矩形 -->
     <rect x="0" y="0" height="100" width="200" style="stroke: #dd524b; fill: #70d5dd" />
 </svg>
+
+<h5>椭圆</h5>
 <svg width="300" height="180">
     <!-- 椭圆 -->
     <ellipse cx="60" cy="60" ry="40" rx="20" stroke="black" stroke-width="5" fill="silver"/>
 </svg>
+
+<h5>多边形</h5>
 <svg width="300" height="180">
     <!-- 多边形 -->
     <polygon fill="green" stroke="orange" stroke-width="1" points="0,0 100,0 100,100 0,100 0,0"/>
 </svg>
 
+<h5>路径</h5>
 <svg width="300" height="180">
     <!-- 路径 -->
     <!-- <path>的d属性表示绘制顺序，它的值是一个长字符串，每个字母表示一个绘制动作，后面跟着坐标。 -->
@@ -68,10 +77,14 @@
         Z
     "></path>
 </svg>
+
+<h5>文本</h5>
 <svg width="300" height="180">
     <!-- 文本 -->
     <text x="50" y="25">Hello World</text>
 </svg>
+
+<h5>复制</h5>
 <svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg">
     <circle id="myCircle" cx="5" cy="5" r="4"/>
     
@@ -82,6 +95,8 @@
     <use href="#myCircle" x="20" y="0" fill="white" stroke="blue" />
     <use href="#myCircle" x="10" y="10" fill="white" stroke="blue" />
 </svg>
+
+<h5>组</h5>
 <svg width="300" height="100">
     <!-- 组 -->
     <g id="myOtherCircle">
@@ -92,7 +107,8 @@
     <use href="#myOtherCircle" x="100" y="0" fill="blue" />
     <use href="#myOtherCircle" x="200" y="0" fill="white" stroke="blue" />
 </svg>
-<h4>defs:自定义形状：不会展示仅用于引用</h4>
+
+<h5>defs:自定义形状：不会展示仅用于引用</h5>
 <svg width="300" height="100">
     <!-- 自定义形状：不会展示仅用于引用 -->
   <defs>
@@ -107,6 +123,7 @@
   <use href="#myCircle" x="200" y="0" fill="white" stroke="blue" />
 </svg>
 
+<h5>平铺自定义形状</h5>
 <svg width="500" height="500">
     <defs>
         <!-- <pattern>标签用于自定义一个形状，该形状可以被引用来平铺一个区域。 -->
@@ -119,12 +136,14 @@
     <rect x="0" y="0" width="100%" height="100%" fill="url(#dots)" />
 </svg>
 
+<h5>插入图片</h5>
 <svg viewBox="0 0 100 100" width="100" height="100">
     <!-- 用于插入图片 -->
     <!-- <image>的xlink:href属性表示图像的来源。 -->
     <image xlink:href="../node-demo/static/images/icon.png" width="50%" height="50%"/>
 </svg>
 
+<h5>动画</h5>
 <svg width="500px" height="500px">
     <rect x="0" y="0" width="100" height="100" fill="#feac5e">
         <!-- 动画效果 -->
@@ -133,6 +152,8 @@
         <animate attributeName="width" to="500" dur="2s" repeatCount="indefinite" />
     </rect>
 </svg>
+
+<h5>变形</h5>
 <svg width="500px" height="500px">
     <rect x="250" y="250" width="50" height="50" fill="#4bc0c8">
         <!-- 变形 -->
@@ -142,22 +163,25 @@
         <animateTransform attributeName="transform" type="rotate" begin="0s" dur="20s" from="0 200 200" to="360 400 400" repeatCount="indefinite" />
     </rect>
 </svg>
-<div id="canvas"></div>
+
+<h5>转canvas</h5>
+<canvas id="canvas"></canvas>
 </body>
 <script>
+// 读取svg源码
 var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'))
 console.log(svgString)
 // SVG 图像转为 Canvas 图像
-var img = new Image();
-var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+let img = new Image();
+let svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
 
-var DOMURL = self.URL || self.webkitURL || self;
-var url = DOMURL.createObjectURL(svg);
+let DOMURL = self.URL || self.webkitURL || self;
+let url = DOMURL.createObjectURL(svg);
 
 img.src = url;
 img.onload = function () {
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
   ctx.drawImage(img, 0, 0);
 };
 </script>
