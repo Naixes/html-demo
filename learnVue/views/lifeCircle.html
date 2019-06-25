@@ -9,23 +9,63 @@
 <body>
   <div id="app">
     Hello {{msg}}
+    <comp/>
   </div>
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script>
+        // 子组件的生命周期
+        // 必须在父组件之前定义
+        Vue.component('comp', {
+            template: `<div>comp{{msg}}</div>`,
+            data() {
+                console.log('comp data')
+                return {
+                    msg: ' : this is comp msg'
+                }
+            },
+            beforeCreate() {
+                console.log("comp beforeCreate")
+            },
+            created() {
+                console.log('comp data', this.msg)
+                console.log("comp created")
+            },
+            beforeMount() {
+                console.log("comp beforeMount")
+            },
+            // render() {
+            //     console.log("render")
+            // },
+            mounted() {
+                console.log("comp mounted")
+            },
+            beforeUpdate() {
+                console.log("comp beforeUpdate")
+            },
+            updated() {
+                console.log("comp updated")
+            },
+            beforeDestroy() {
+                console.log("comp beforeDestroy")
+            },
+            destroyed() {
+                console.log("comp destroyed")
+            }
+        })
     const vm = new Vue({
         el: "#app",
         data: {
-        msg: "我是可以驱动视图的数据"
+            msg: "我是可以驱动视图的数据"
         },
         // 初始化事件和生命周期函数
         beforeCreate() {
             console.log("beforeCreate")
         },
         // 初始化响应式数据和方法
-        // 可以在这里获取数据
         created() {
             // 可以在这里获取数据
             // 可以操作数据和方法,比如节流等
+            console.log(this.msg)
             console.log("created")
         },
         //   判断是否有el选项
@@ -42,6 +82,7 @@
             // 可以在这里获取数据
             // 可以在这里操作DOM
             console.log("mounted")
+            this.msg = 'change'
         },
         // data改变
         beforeUpdate() {
@@ -50,6 +91,7 @@
         // 重新渲染
         updated() {
             console.log("updated")
+            vm.$destroy()
         },
         // vm.$destroy()被调用
         beforeDestroy() {
@@ -60,7 +102,6 @@
         destroyed() {
             console.log("destroyed")
         }
-    
     })
   </script>
 </body>
