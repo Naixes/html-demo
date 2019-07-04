@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="react.development.js" charset="utf-8"></script>
+    <script src="react-dom.development.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/babel">
+let root = document.getElementById("div")
+
+// 组件
+class Comp extends React.Component{
+    constructor(...args){
+        super(...args)
+        this.state = {
+            a: 2
+        }
+    }
+    fn(){
+        // 必须使用setState更新state
+        this.setState({
+            a: this.state.a + 1
+        })
+    }
+    // props是只读的
+    render() {
+        return (
+            <div>
+                <input type="button" value="+1" onClick={this.fn.bind(this)} />
+                {this.state.a}
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+    <div className="box">
+        <div>
+            <Comp/>
+        </div>
+    </div>,
+    root
+)
+</script>
+</html>

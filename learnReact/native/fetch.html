@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="react.development.js" charset="utf-8"></script>
+    <script src="react-dom.development.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/babel">
+let root = document.getElementById("div")
+// 父组件向子组件传值，子组件可修改
+
+class Comp extends React.Component{
+    constructor(...args){
+        super(...args)
+        this.state = {
+            a: 0
+        }
+    }
+    render() {
+        return (
+            <div>
+                {this.state.a}
+            </div>
+        )
+    }
+    async componentDidMount() {
+        try {
+            let res = await fetch('./data/data.json')
+            let {data} = await res.json()
+            console.log(data)
+        } catch (error) {
+            alert('请求数据失败')
+        }
+    }
+}
+
+ReactDOM.render(
+    <div className="box">
+        <div>
+            <Comp/>
+        </div>
+    </div>,
+    root
+)
+</script>
+</html>

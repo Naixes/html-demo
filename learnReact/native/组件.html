@@ -17,20 +17,67 @@ let root = document.getElementById("div")
 class Comp extends React.Component{
     constructor(...args){
         super(...args)
-        // 状态
+        this.name = 'blue'
+        // 状态：constructor中初始化，要用setState({})修改更新后会重新渲染
         this.state = {
-
+            name: 'state_blue'
         }
+    }
+    fn() {
+        return 'aaa'
+    }
+    render() {
+        let div = <div>bbb</div>
+        // {}：jsx语法在html中写入js代码
+        return (
+            <div>
+                <h4>jsx语法</h4>
+                <div>{this.name}</div>
+                <div>{this.state.name}</div>
+                {this.fn()}
+                {div}
+            </div>
+        )
+    }
+}
+
+// 循环渲染
+class List extends React.Component{
+    constructor(...args){
+        super(...args)
+        this.state = {
+        }
+    }
+    render() {
+        let data = [
+            {name: 'blue', age: '1'},
+            {name: 'blue2', age: '2'},
+            {name: 'blue3', age: '3'},
+            {name: 'blue4', age: '4'}
+        ]
+        return (
+            <div>
+                <h4>循环渲染</h4>
+                <ul>
+                    {data.map((e, i) => (
+                        <li key={i}>
+                            姓名：{e.name}
+                            年龄：{e.age}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        )
     }
 }
 
 ReactDOM.render(
     <div className="box">
-        <div>aaa</div>
-        <div>bbb</div>
         <div>
             <label htmlFor="user">用户名：</label>
             <input id="user" type="text" />
+            <Comp/>
+            <List/>
         </div>
     </div>,
     root
