@@ -1,29 +1,50 @@
 import React, {Component} from 'react';
 import Comp from './Comp'
 
-// redux
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
-
-// 状态对象
-// 初始化和每次更新状态对象时都会执行
-// 传入旧的状态返回新的状态
-function reducer(state={}, action) {
-  // 返回新的state
-  return state
-}
-// 创建存储对象
-const store = createStore(reducer)
+// 状态映射，合并冲突
+import {connect} from 'react-redux'
 
 class App extends Component {
+  constructor(...args) {
+    super(...args)
+    this.state = {
+      name: 'three'
+    }
+  }
+  changeAge() {
+    this.props.setAge(20)
+  }
   render() {
     return (
       <div className="App">
-        root
+        name：{this.state.name}<br/>
+        desc: {this.props.desc}<br/>
+        age: {this.props.age}
+        {/* 注意绑定this */}
+        <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
         <Comp/>
       </div>
     )
   }
 }
 
-export default App;
+// export default App;
+// connect(fn1, {})
+// fn1：解决冲突，state：reducer中的state，props组件接收的的参数
+// {}：action
+export default connect(function (state, props) {
+  console.log(state, props)
+  // 结果冲突，混合state和props
+  return state
+}, {
+  // 可以当作组件的一部分，props中可以访问
+  setAge(newAge) {
+    // 必须return，返回为action
+    return {
+      // 用来区分不同的操作
+      type: 'set_age',
+      // 新值
+      newAge
+    }
+  }
+})(App)

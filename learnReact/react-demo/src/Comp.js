@@ -14,7 +14,7 @@ class Comp extends Component {
             // let res = await fetch('/data/data.json')
             // let data = await res.json()
             let {data} = await axios('/data/data.json')
-            console.log(data)
+            // console.log(data)
             this.setState({
                 users: data
             })
