@@ -24,6 +24,8 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import {calc} from './util/index'
+
 const App = () => {
   return (
     <Fragment>
@@ -33,6 +35,13 @@ const App = () => {
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
           <Header />
+          <Text>flex布局也是可以用的</Text>
+          {/* rr可以重新渲染，样式不可以继承 */}
+          <View style={{flexDirection: 'row', justifyContent: 'center', height: calc(50), backgroundColor: 'red'}}>
+            <Text style={{flex:1, color: '#fff', lineHeight: calc(50)}}>欢迎~</Text>
+            <Text style={{flex:1}}>来到</Text>
+            <Text style={{flex:1}}>RN</Text>
+          </View>
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
