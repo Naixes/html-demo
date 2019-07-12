@@ -8,7 +8,7 @@ let server=new koa();
 server.listen(8080);
 
 //
-let conn=mysql.createConnection({host: 'localhost', user: 'root', password: '', database: 'test'});
+let conn=mysql.createConnection({host: 'localhost', user: 'admin', password: 'root', database: 'db4reactminipro'});
 let db=wrapper(conn);
 server.context.db=db;
 

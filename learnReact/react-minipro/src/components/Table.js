@@ -10,6 +10,10 @@ class Table extends Component{
     this.props.del_callback && this.props.del_callback(ID);
   }
 
+componentDidMount() {
+
+}
+
   render(){
     return (
       <table className="table">
@@ -22,14 +26,14 @@ class Table extends Component{
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>xxx衣服</td>
-            <td>￥39.6</td>
-            <td>537</td>
-            <td>
-              <a href="#" className="glyphicon glyphicon-trash">删除</a>
-            </td>
-          </tr>
+          {this.props.items.map(i => (
+            <tr key={i.ID}>
+              <td>{i.name}</td>
+              <td>￥{i.price}</td>
+              <td>{i.count}</td>
+            </tr>
+            ))
+          }
         </tbody>
       </table>
     );

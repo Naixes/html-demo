@@ -1,14 +1,20 @@
 
 // redux
-import {createStore, combineReducers} from 'redux'
-import user from './user'
-import company from './company'
+import {createStore} from 'redux'
 
-// 将多个reducer合并
-let arr = combineReducers({
-    user,
-    company
-})
+import {GET_LIST} from '../actions'
+
+function reducer(state={items: []}, actions) {
+    switch(actions.type) {
+        case GET_LIST: 
+            return {
+                ...state,
+                items: actions.items
+            }
+        default: 
+            return state
+    }
+}
 
 // 创建存储对象
-export default createStore(arr)
+export default createStore(reducer)

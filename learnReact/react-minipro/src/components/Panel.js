@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import './Panel.css';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import Data from '../data';
-// import {ADD_ITEM} from '../actions';
+import Ajax from '../ajax';
+import {ADD_ITEM} from '../actions';
 
 class Panel extends Component{
   constructor(...args){
     super(...args);
+    this.state ={
+
+    }
   }
 
   async addItem(){
@@ -15,9 +18,12 @@ class Panel extends Component{
     let price=this.refs.price.value;
     let count=this.refs.count.value;
 
-    let {data}=await Data.get(`add/${name}/${price}/${count}`);
+    let {data}=await Ajax.get(`add/${name}/${price}/${count}`);
+    console.log(this.props)
 
-    this.props.addItem(data);
+    // this.props.history.push('/')
+
+    // this.props.addItem(data);
   }
 
   render(){
@@ -53,7 +59,7 @@ class Panel extends Component{
               </div>
               <div className="form-group">
                 <div className="col-sm-10 col-sm-offset-2">
-                  <button type="button" className="btn btn-primary form-control">提交</button>
+                  <button type="button" className="btn btn-primary form-control" onClick={this.addItem.bind(this)}>提交</button>
                 </div>
               </div>
             </form>

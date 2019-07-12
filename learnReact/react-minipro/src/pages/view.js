@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Table from '../components/Table';
 import Dialog from '../components/Dialog';
-// import {DEL_ITEM} from '../actions';
+import {DEL_ITEM} from '../actions';
 import {connect} from 'react-redux';
 import data from '../data';
 
@@ -14,7 +14,6 @@ class View extends Component{
   }
 
   fn_del(ID){
-    console.log(this.refs);
     let del_dialog=this.refs.del_dialog;
 
     del_dialog.open(async index=>{
@@ -45,10 +44,10 @@ class View extends Component{
 export default connect(function (state, props){
   return state;
 }, {
-  // delItem(ID){
-  //   return {
-  //     type: DEL_ITEM,
-  //     ID
-  //   }
-  // }
+  delItem(ID){
+    return {
+      type: DEL_ITEM,
+      ID
+    }
+  }
 })(View);
