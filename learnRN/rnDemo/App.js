@@ -8,21 +8,27 @@
 
  // 用到react中的render方法
  import React, {Component} from 'react'
- import {Router, Scene} from 'react-native-router-flux'
+ import {Router, Scene, Lightbox} from 'react-native-router-flux'
 
   // 组件
-  import Startup from './components/Startup'
-  import List from './components/List'
+import Startup from './components/Startup'
+import List from './components/List'
+import AddModal from './components/AddModal'
 
  export default class App extends Component {
    render() {
      return (
       // 路由
       <Router>
-        <Scene key="root">
-          <Scene key="startup" component={Startup} hideNavBar={true} initial={true}></Scene>
-          <Scene key="list" component={List} hideNavBar={true}></Scene>
-        </Scene>
+        {/* 路由中必须是组件 */}
+        <Lightbox>
+            {/* 会将第一个子元素作为页面，其他为弹框 */}
+          <Scene key="root">
+            <Scene key="startup" component={Startup} hideNavBar={true}></Scene>
+            <Scene key="list" component={List} hideNavBar={true} initial={true}></Scene>
+          </Scene>
+          <Scene key="addModal" component={AddModal} hideNavBar={true}></Scene>
+        </Lightbox>
       </Router>
      )
    }

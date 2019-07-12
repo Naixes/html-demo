@@ -1,21 +1,50 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet, FlatList, Button} from 'react-native';
+import {View, Text, Image, StyleSheet, FlatList, Button, Alert, ScrollView} from 'react-native';
 import {calc} from '../util/index';
+import { Actions } from 'react-native-router-flux';
 
 export default class List extends Component{
   constructor(...args){
     super(...args);
 
     this.state={
-      accounts: [
-        {ID: 1, title: '通讯', amount: 100, income: 0},
-        {ID: 2, title: '购物', amount: 58, income: 0},
-        {ID: 3, title: '工资', amount: 8000, income: 1},
-      ]
+      accounts: []
     };
   }
 
-  fn(){
+  // 计算总收入支出
+  totalIncome() {
+    return this.state.accounts.filter(account => account.income).reduce((ini, cur) => ini + Number(cur.amount), 0).toFixed(2)
+  }
+  totalOutcome() {
+    return this.state.accounts.filter(account => !account.income).reduce((ini, cur) => ini + Number(cur.amount), 0).toFixed(2)
+  }
+
+  async getList() {
+    // 这里不应该用localhost，localhost是模拟器的本地服务
+    let res = await fetch('http://192.168.31.34:8080/list')
+    let data = await res.json()
+    this.setState({
+      accounts: data
+    })
+  }
+
+  // 引用类型时需要进行深度判断，这里简化了
+  shouldComponentUpdate(nextProps, nextState) {
+    return JSON.stringify(this.state.accounts) !== JSON.stringify(nextState.accounts)
+  }
+
+  // 会产生重复请求的问题，需要在shouldComponentUpdate中进行判断
+  async componentDidMount() {
+    await this.getList()
+  }
+
+  async componentDidUpdate() {
+    await this.getList()
+  }
+
+  showAddModal(){
+    Actions.push('addModal', {})
   }
 
   render(){
@@ -31,14 +60,14 @@ export default class List extends Component{
           </View>
           <View style={{flex: 2}}>
             <Text style={styles.smallTxt}>收入</Text>
-            <Text style={styles.bigTxt}>0.00</Text>
+            <Text style={styles.bigTxt}>{this.totalIncome()}</Text>
           </View>
           <View style={{flex: 2}}>
             <Text style={styles.smallTxt}>支出</Text>
-            <Text style={styles.bigTxt}>158.00</Text>
+            <Text style={styles.bigTxt}>{this.totalOutcome()}</Text>
           </View>
         </View>
-        <View>
+        <ScrollView>
           {/* 列表 */}
           <FlatList
             data={this.state.accounts}
@@ -53,9 +82,9 @@ export default class List extends Component{
               </View>
             )}
           />
-        </View>
+        </ScrollView>
         <View style={{position: 'absolute', bottom: 0, left: 0, width: '100%'}}>
-          <Button title="记账" color="#fada63" onPress={this.fn.bind(this)} />
+          <Button title="记账" color="#fada63" onPress={this.showAddModal.bind(this)} />
         </View>
       </View>
     );
