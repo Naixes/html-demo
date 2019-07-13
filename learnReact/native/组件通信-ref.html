@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="react.development.js" charset="utf-8"></script>
+    <script src="react-dom.development.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/babel">
+let root = document.getElementById("div")
+// 子组件向父组件传值，父组件可修改
+
+class Comp extends React.Component{
+    constructor(...args){
+        super(...args)
+        this.state = {
+        }
+    }
+    fn(){
+        this.refs['sub'].add(1);
+    }
+    render() {
+        return (
+            <div>
+                <input type="button" value="+1" onClick={this.fn.bind(this)} />
+                <Sub ref='sub'/>
+            </div>
+        )
+    }
+}
+
+class Sub extends React.Component{
+    constructor(...args){
+        super(...args)
+        this.state = {
+            a: 2
+        }
+    }
+    add(n){
+        this.setState({
+            a: this.state.a + n
+        })
+    }
+    render() {
+        return (
+            <div>
+                {this.state.a}
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+    <div className="box">
+        <div>
+            <Comp a={2}/>
+        </div>
+    </div>,
+    root
+)
+</script>
+</html>

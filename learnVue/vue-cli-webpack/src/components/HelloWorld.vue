@@ -7,6 +7,7 @@
     <VuexMapText :n=n></VuexMapText>
     <hr/>
     <router-link to='/animate/'>动画</router-link>
+    <router-link to='/lifecircle/'>生命周期</router-link>
   </div>
 </template>
 

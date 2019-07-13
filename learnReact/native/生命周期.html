@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="browser.js" charset="utf-8"></script>
+    <script src="react.development.js" charset="utf-8"></script>
+    <script src="react-dom.development.js" charset="utf-8"></script>
+</head>
+<body>
+    <div id="div"></div>
+</body>
+<script type="text/babel">
+let root = document.getElementById("div")
+// 子组件向父组件传值，父组件可修改
+
+class Comp extends React.Component{
+    constructor(...args){
+        console.log('constructor')
+        super(...args)
+        this.state = {
+            a: 0
+        }
+    }
+    add(n) {
+        this.setState({
+            a: this.state.a + n
+        })
+    }
+    // 创建阶段
+    componentWillMount() {
+        console.log('componentWillMount', this.state)
+    }
+    render() {
+        console.log('render')
+        return (
+            <div>
+                <input type="button" value="+1" onClick={this.add.bind(this, 1)} />
+                {this.state.a}
+                <Sub/>
+            </div>
+        )
+    }
+    // 一般在这里请求数据
+    componentDidMount() {
+        console.log('componentDidMount')
+    }
+    // 运行阶段
+    componetWillReceiveProps() {
+        console.log('componetWillReceiveProps')
+    }
+    shouldComponentUpdate() {
+        console.log('shouldComponentUpdate')
+        return true
+    }
+    componentWillUpdate() {
+        console.log('componentWillUpdate')
+    }
+    componentDidlUpdate() {
+        console.log('componentWillUpdate')
+    }
+    // 销毁阶段
+    componentWillUnmount() {
+        console.log('componentWillUnmount')
+    }
+}
+
+class Sub extends React.Component{
+    constructor(...args){
+        console.log('sub constructor')
+        super(...args)
+        this.state = {
+            a: 2
+        }
+    }
+    // 创建阶段
+    componentWillMount() {
+        console.log('sub componentWillMount')
+    }
+    render() {
+        console.log('sub render')
+        return (
+            <div>
+                {this.state.a}
+            </div>
+        )
+    }
+    componentDidMount() {
+        console.log('sub componentDidMount')
+    }
+    // 运行阶段
+    componetWillReceiveProps() {
+        console.log('sub componetWillReceiveProps')
+    }
+    shouldComponentUpdate() {
+        console.log('sub shouldComponentUpdate')
+        return true
+    }
+    componentWillUpdate() {
+        console.log('sub componentWillUpdate')
+    }
+    componentDidlUpdate() {
+        console.log('sub componentWillUpdate')
+    }
+    // 销毁阶段
+    componentWillUnmount() {
+        console.log('sub componentWillUnmount')
+    }
+}
+
+ReactDOM.render(
+    <div className="box">
+        <div>
+            root
+            <Comp/>
+        </div>
+    </div>,
+    root
+)
+</script>
+</html>
