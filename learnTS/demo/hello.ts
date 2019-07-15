@@ -19,7 +19,7 @@ interface Person {
 
 //  类型注解，参数类型及个数
  function greeter(person: Person) {
-	 return `hello ${person.firstName} ${person.lastName}`
+	 return `hello ${person.firstName}${person.lastName}`
  }
 
 //  let user: Person = {

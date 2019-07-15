@@ -12,7 +12,7 @@ var str = 'aaa';
 var list = [1, 2, 3, 4];
 // 数组泛型
 // let list: Array<number> = [1, 2, 3, 4]
-// 元祖：指定类型和数量
+// 元祖：指定类型和数量，越界赋值会报错（老版本3.1之前不会）
 var x = ['aaa', 1];
 // 枚举
 var Color;
@@ -51,4 +51,9 @@ function infiniteLoop() {
     while (true) {
     }
 }
-create(o, { prop: 0 });
+create({ prop: 0 });
+// 类型断言
+var some = 'string';
+// 强制转换
+// let strLength: number = (<string>some).length
+var strLength = some.length;

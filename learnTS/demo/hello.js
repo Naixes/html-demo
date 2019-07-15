@@ -9,7 +9,7 @@ var User = /** @class */ (function () {
 }());
 //  类型注解，参数类型及个数
 function greeter(person) {
-    return "hello " + person.firstName + " " + person.lastName;
+    return "hello " + person.firstName + person.lastName;
 }
 //  let user: Person = {
 // 	 firstName: 'S',

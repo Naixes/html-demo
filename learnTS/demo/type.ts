@@ -66,8 +66,9 @@ function infiniteLoop(): never {
 
 // object：非原始类型
 // declare function create(o: object | null): void
+// 规定数量和类型
 declare function create(o: {prop: number} | null): void
-create({prop: 0, num: 2})
+create({prop: 0})
 
 // 类型断言
 let some: any = 'string'
