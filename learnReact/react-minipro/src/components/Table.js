@@ -3,16 +3,19 @@ import {connect} from 'react-redux';
 
 class Table extends Component{
   constructor(...args){
-    super(...args);
+    super(...args)
+    this.state = {
+
+    }
   }
 
-  fnDel(ID){
+  delItem(ID){
     this.props.del_callback && this.props.del_callback(ID);
   }
 
-componentDidMount() {
+  componentDidMount() {
 
-}
+  }
 
   render(){
     return (
@@ -31,6 +34,11 @@ componentDidMount() {
               <td>{i.name}</td>
               <td>￥{i.price}</td>
               <td>{i.count}</td>
+              <td>
+                <a href="#" className="glyphicon glyphicon-trash" onClick={this.delItem.bind(this, i.ID)}>
+                  删除
+                </a>
+              </td>
             </tr>
             ))
           }

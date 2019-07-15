@@ -13,17 +13,15 @@ class View extends Component{
     }
   }
 
-  fn_del(ID){
+  cb_delItem(ID){
     let del_dialog=this.refs.del_dialog;
 
-    del_dialog.open(async index=>{
-      if(index==0){
-        let {error}=await data.get(`del/${ID}`);
-
-        del_dialog.close();
+    // index:按钮索引
+    del_dialog.show(async index=>{
+      // 是
+      if(index === 0){
+        await data.get(`del/${ID}`);
         this.props.delItem(ID);
-      }else{
-        del_dialog.close();
       }
     });
   }
@@ -35,7 +33,7 @@ class View extends Component{
           {title: '是'},
           {title: '否'}
         ]} ref="del_dialog" />
-        <Table del_callback={this.fn_del.bind(this)} />
+        <Table del_callback={this.cb_delItem.bind(this)} />
       </div>
     );
   }

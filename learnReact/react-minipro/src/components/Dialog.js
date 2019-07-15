@@ -13,40 +13,41 @@ class Dialog extends Component{
     this.callback=null;
   }
 
-  open(fn){
+  show(fn){
     this.callback=fn;
     this.setState({
       show: true
     });
   }
-  close(){
+  hide(){
     this.setState({
       show: false
     });
   }
 
-  fnClick(index){
+  btnClick(index){
     this.callback && this.callback(index);
-    this.close();
+    this.hide();
   }
 
   render(){
     return (
-      <div style={{display: 'none'}}>
+      <div style={{display: this.state.show ? 'block' : 'none'}}>
         <div className="my-dialog-shadow"></div>
         <div className="panel panel-default my-dialog">
           <div className="panel-heading">
             <div className="panel-title">
-              标题
+              {this.props.title}
             </div>
           </div>
           <div className="panel-body">
-            内容
+            {this.props.msg}
           </div>
           <div className="panel-footer">
             <div className="btn-group">
-              <button type="button" className="btn btn-default btn-sm">按钮1</button>
-              <button type="button" className="btn btn-default btn-sm">按钮2</button>
+              {this.props.buttons.map((btn, i) => (
+                <button key={i} type="button" className="btn btn-default btn-sm" onClick={this.btnClick.bind(this, i)}>{btn.title}</button>
+              ))}
             </div>
           </div>
         </div>

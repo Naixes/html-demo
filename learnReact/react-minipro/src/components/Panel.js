@@ -14,16 +14,14 @@ class Panel extends Component{
   }
 
   async addItem(){
-    let name=this.refs.name.value;
-    let price=this.refs.price.value;
-    let count=this.refs.count.value;
+    let name = this.refs.name.value;
+    let price = this.refs.price.value;
+    let count = this.refs.count.value;
 
-    let {data}=await Ajax.get(`add/${name}/${price}/${count}`);
-    console.log(this.props)
+    let {data} = await Ajax.get(`add/${name}/${price}/${count}`);
 
-    // this.props.history.push('/')
-
-    // this.props.addItem(data);
+    // 同步画面数据
+    this.props.addItem(data);
   }
 
   render(){
@@ -73,10 +71,10 @@ class Panel extends Component{
 export default connect(function (state, props){
   return state;
 }, {
-  // addItem(item){
-  //   return {
-  //     type: ADD_ITEM,
-  //     item
-  //   }
-  // }
+  addItem(item){
+    return {
+      type: ADD_ITEM,
+      item
+    }
+  }
 })(Panel);
