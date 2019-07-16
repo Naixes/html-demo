@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Panel.css';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Ajax from '../ajax';
 import {ADD_ITEM} from '../actions';
@@ -22,6 +22,10 @@ class Panel extends Component{
 
     // 同步画面数据
     this.props.addItem(data);
+
+    // 路由跳转
+    // console.log(this.props.history)
+    this.props.history.push('/')
   }
 
   render(){
@@ -77,4 +81,4 @@ export default connect(function (state, props){
       item
     }
   }
-})(Panel);
+})(withRouter(Panel));
