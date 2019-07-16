@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="ydc-release-form-text">
-            <textarea name="area2" style="width: 100%;">请输入内容</textarea>
+            <textarea name="area2" class="ydc-form-control" placeholder="请输入内容"></textarea>
         </div>
         <div class="ydc-form-city">
             <form action="">
@@ -62,14 +62,14 @@
                 <p>标题字数需在11字到30字之间。</p>
             </div>
             <div class="ydc-release-form-group-input clearfix">
-                <label class="ydc-form-group-label">标题</label>
+                <label class="aui-card-form-label">标题:</label>
                 <input style="width:89.999%" type="text" class="ydc-form-control" title="" placeholder="请输入标题，为了更好的展示效果，建议标题字数在30个汉字以内" onkeyUp="textLimitCheck(this, 30);">
                 <div class="ydc-form-group-jl">
                     <span id="messageCount1">0</span>/30
                 </div>
             </div>
             <div class="ydc-release-form-group-input ydc-release-form-group-ms clearfix">
-                <label class="ydc-form-group-label">描述</label>
+                <label class="aui-card-form-label">描述:</label>
                 <input style="width:89.999%" type="text" class="ydc-form-control" title="" placeholder="请输入描述，统一描述" onkeyUp="">
                 <div class="ydc-form-group-jl">
                     <span id="">0</span>/30
