@@ -1,5 +1,5 @@
 <template lang="html">
-  <form action="">
+  <form :action="SERVER+'api/login'" method="post" ref="form">
     <div class="ydc-body-login-box">
       <div class="ydc-user-img">
         <div class="ydc-user-img-img"><img src="../assets/images/icon/ph.png" alt=""></div>
@@ -29,11 +29,10 @@
       </div>
     </div>
     <div class="ydc-body-submit">
-      <a href="info.html">登录</a>
+      <a href="#" @click="login">登录</a>
     </div>
     <div class="ydc-login-box">
-
-      <a href="go-reg.html" target="_blank">立即注册</a>
+      <router-link :to="{name: 'reg'}">立即注册</router-link>
       <span>|</span>
       <a href="customer.html" target="_blank">常见问题</a>
 
@@ -42,7 +41,32 @@
 </template>
 
 <script>
+import {SERVER} from '../config'
 export default {
+  data() {
+    return {
+      SERVER
+    }
+  },
+  methods: {
+    async login() {
+      let form = this.$refs.form
+      let formData = new FormData(form)
+      let res = await fetch(form.action, {
+        method: form.method,
+        body: formData
+      })
+      let json = await res.json()
+
+      if(json.err) {
+        alert(json.msg)
+      }else {
+        alert('登陆成功')
+        localStorage.token = json.token
+        this.$router.push('/')
+      }
+    }
+  }
 }
 </script>
 

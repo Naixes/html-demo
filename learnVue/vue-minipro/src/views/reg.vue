@@ -106,21 +106,35 @@
                         </div>
                     </form>
 
-                    <form action="" v-if="cur_step==2">
+
+
+
+                    <form :action="SERVER+'api/reg'" method="post" v-if="cur_step==2" ref="from3">
+                        <!-- 账号类别 -->
+                        <input type="hidden" name="type" v-model="account_type" />
                         <div class="ydc-reg-form-class ydc-reg-form-reg">
                             <div class="ydc-reg-form-group clearfix">
                                 <label>帐号名称:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="loginEmail" name="username" class="ydc-form-control" autocomplete="off" placeholder="" style="width:200px;">
+                                    <input type="text" id="loginEmail" name="display_name" class="ydc-form-control" autocomplete="off" placeholder="" style="width:200px;">
                                     <div class="ydc-reg-form-text">
                                         <p>请输入2至14字的帐号名称</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="ydc-reg-form-group clearfix">
+                                <label>密码:</label>
+                                <div class="ydc-reg-form-input">
+                                    <input type="password" name="password" class="ydc-form-control" autocomplete="off" placeholder="" style="width:200px;">
+                                    <div class="ydc-reg-form-text">
+                                        <p>请输入2至14字的密码</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ydc-reg-form-group clearfix">
                                 <label>帐号简介:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="password" id="psd" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="psd" name="slogan" class="ydc-form-control" autocomplete="off" placeholder="">
                                     <div class="ydc-reg-form-text">
                                         <p>请输入2至14字的帐号简介</p>
                                     </div>
@@ -129,18 +143,18 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>帐号分类:</label>
                                 <div class="ydc-reg-form-input">
-                                    <select>
-                                        <option v-for="catalog in catalogs">{{catalog}}</option>
+                                    <select name="catalog">
+                                        <option v-for="catalog,index in catalogs" :value="index">{{catalog}}</option>
                                     </select>
-                                </div>
-                                <div class="ydc-reg-form-text">
-                                    <p>请输入2至14字的帐号名称</p>
+                                    <div class="ydc-reg-form-text" style="float: none">
+                                        <p>请选择账号分类</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="ydc-reg-form-group clearfix">
                                 <label>帐号图标:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="file" id="" name="username" class="" autocomplete="off" placeholder="">
+                                    <input type="file" id="" name="icon" class="" autocomplete="off" placeholder="">
                                     <div class="ydc-reg-form-text">
                                         <p>选取至少160*160尺寸的图片。请勿上传二维码或其他推广性质图片作为图标。</p>
                                     </div>
@@ -149,7 +163,7 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>帐号描述:</label>
                                 <div class="ydc-reg-form-input ydc-reg-form-input-width">
-                                    <textarea>请详细描述您的帐号，30至120字</textarea>
+                                    <textarea name="description">请详细描述您的帐号，30至120字</textarea>
                                     <div class="ydc-reg-form-text">
                                         <p>请输入2至14字的帐号名称</p>
                                     </div>
@@ -158,32 +172,22 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>已有内容渠道及链接:</label>
                                 <div class="ydc-reg-form-input ydc-reg-form-input-width">
-                                    <textarea>请详细描述您的帐号，30至120字</textarea>
+                                    <textarea name="other_channels">请详细描述您的帐号，30至120字</textarea>
                                     <div class="ydc-reg-form-text">
                                         <p>例如已发布文章的网站地址、博客地址、微信号等，方便我们作为审核参考。</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="ydc-reg-form-group clearfix">
-                                <label>已有内容渠道截图:</label>
-                                <div class="ydc-reg-form-input">
-                                    <input type="file" id="file" name="username" class="" autocomplete="off" placeholder="">
-                                    <div class="ydc-reg-form-text">
-                                        <p>截图中必须包含个人账号名或昵称等信息,支持.jpg.png格式，大小不超过5M。</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="ydc-reg-form-group clearfix">
                                 <label>姓名:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="user1" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user1" name="name" class="ydc-form-control" autocomplete="off" placeholder="">
                                 </div>
                             </div>
                             <div class="ydc-reg-form-group clearfix">
                                 <label>身份证号:</label>
                                 <div class="ydc-reg-form-input clearfix">
-                                    <input type="text" id="user2" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user2" name="identify_number" class="ydc-form-control" autocomplete="off" placeholder="">
                                     <div class="ydc-reg-form-text">
                                         <p>帐号信息填写需真实有效，如发现虚假以及非个人真实信息导致帐号收益无法提取，责任由帐号个人承担</p>
                                     </div>
@@ -196,10 +200,10 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>所在城市:</label>
                                 <div class="ydc-reg-form-input">
-                                    <select v-model="cur_pro">
+                                    <select v-model="cur_pro" name="province">
                                         <option v-for="pro in province" :value="pro.ID">{{pro.name}}</option>
                                     </select>
-                                    <select v-if="city" v-model="cur_city">
+                                    <select v-if="city" v-model="cur_city" name="city">
                                         <option v-for="c in city" :value="c.ID">{{c.name}}</option>
                                     </select>
                                 </div>
@@ -208,7 +212,7 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>联系手机:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="user4" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user4" name="" class="ydc-form-control" autocomplete="off" placeholder="">
                                     <div class="ydc-reg-form-text">
                                         <p>请输入手机号并验证</p>
                                     </div>
@@ -221,7 +225,7 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>邮箱:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="user5" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user5" name="email" class="ydc-form-control" autocomplete="off" placeholder="">
                                 </div>
                                 <div class="ydc-reg-form-text">
                                     <p>请使用自己日常使用邮箱便于接受相关信息</p>
@@ -230,7 +234,7 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>QQ/微信号:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="user6" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user6" name="qq_wx" class="ydc-form-control" autocomplete="off" placeholder="">
                                 </div>
                                 <div class="ydc-reg-form-text">
                                     <p>请输入常用QQ/微信号方便联系沟通</p>
@@ -239,7 +243,7 @@
                             <div class="ydc-reg-form-group clearfix">
                                 <label>推荐人:</label>
                                 <div class="ydc-reg-form-input">
-                                    <input type="text" id="user7" name="username" class="ydc-form-control" autocomplete="off" placeholder="">
+                                    <input type="text" id="user7" name="recommend_code" class="ydc-form-control" autocomplete="off" placeholder="">
                                 </div>
                                 <div class="ydc-reg-form-text">
                                     <p>选填，若有网易员工推荐您入驻，请填写相应推荐码。</p>
@@ -255,7 +259,7 @@
                         <div class="ydc-reg-form-group">
                             <div class="ydc-reg-form-button" style="margin-left:255px;">
                                 <a class="btn btn-border fl" href="#" @click="cur_step--">上一步</a>
-                                <a class="btn fl" href="#">提交申请</a>
+                                <a class="btn fl" href="#" @click="submit">提交申请</a>
                             </div>
                         </div>
                     </form>
@@ -297,6 +301,7 @@ export default {
     return {
       steps: ['登录邮箱账号', '选择帐号类别', '填写媒体信息'],
       cur_step: 0,
+    //   账号类别
       account_type: -1,
       types: [
         {icon: mt1, title: '媒体', desc: '适合报纸、杂志、电视台、网站等以内容生产为主，有国家新闻出版广电总局认可资质的媒体机构申请。'},
@@ -308,7 +313,8 @@ export default {
       province: [],
       city: null,
       cur_pro: 0,
-      cur_city: 1
+      cur_city: 1,
+      SERVER
     }
   },
   async created(){
@@ -340,6 +346,15 @@ export default {
     }
   },
   methods: {
+    async submit() {
+        let form = this.$refs['from3']
+        let formDate = new FormData(form)
+        let res = await fetch(form.action, {
+            method: form.method,
+            body: formDate
+        })
+        let json = await res.json()
+    },
     tostep3(){
       if(this.account_type==-1){
         alert('请选择账户类型');

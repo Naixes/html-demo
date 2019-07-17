@@ -2,6 +2,7 @@ const koa = require('koa')
 const Router = require('koa-router')
 const mysql = require('mysql')
 const co = require('co-mysql')
+const body = require('koa-better-body')
 
 let server = new koa()
 server.listen(8081)
@@ -18,6 +19,10 @@ server.use(async (ctx, next) => {
 
 // 路由
 let router = new Router()
+// 路由参数
+server.use(body({
+    uploadDir: 'upload'
+}))
 // 嵌套路由
 router.use('/api', require('./router/api'))
 
