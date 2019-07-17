@@ -31,6 +31,11 @@ export default {
   name: 'app',
   components: {
     Header, Menu, Footer
+  },
+  created() {
+    if(!localStorage.getItem('token')) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

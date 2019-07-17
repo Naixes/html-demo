@@ -62,7 +62,7 @@ export default {
         alert(json.msg)
       }else {
         alert('登陆成功')
-        localStorage.token = json.token
+        localStorage.setItem('token', json.token)
         this.$router.push('/')
       }
     }

@@ -24,7 +24,7 @@
                                 <i class="ydc-icon ydc-icon-mail fl"></i>
                                 <em>12</em>
                             </span>
-                            <a href="javascript:;">退出</a>
+                            <a href="#" @click="logout">退出</a>
                         </div>
                     </div>
                 </div>
@@ -36,6 +36,12 @@
 
 <script>
 export default {
+    methods: {
+        logout() {
+            localStorage.removeItem('token')
+            this.$router.push('/login')
+        }
+    }
 }
 </script>
 
