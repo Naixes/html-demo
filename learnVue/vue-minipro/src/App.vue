@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <Header/>
-    <section>
-      <div class="ydc-content-slide ydc-body">
-        <div class="ydc-flex">
-          <div class="ydc-column ydc-column-2">
-            <Menu/>
-          </div>
-          <div class="ydc-column ydc-column-8">
-            <router-view/>
+    <!-- 判断是否全屏页面 -->
+    <template v-if="['login', 'reg'].includes($route.name)">
+      <router-view/>
+    </template>
+    <template v-else>
+      <Header/>
+      <section>
+        <div class="ydc-content-slide ydc-body">
+          <div class="ydc-flex">
+            <div class="ydc-column ydc-column-2">
+              <Menu/>
+            </div>
+            <div class="ydc-column ydc-column-8">
+              <router-view/>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    <Footer/>
+      </section>
+      <Footer/>
+    </template>
   </div>
 </template>
 <script>
