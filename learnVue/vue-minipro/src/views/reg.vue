@@ -109,7 +109,7 @@
 
 
 
-                    <form :action="SERVER+'api/reg'" method="post" v-if="cur_step==2" ref="from3">
+                    <form :action="SERVER+'api/reg'" method="post" v-if="cur_step==2" ref="from3" enctype="multipart/form-data">
                         <!-- 账号类别 -->
                         <input type="hidden" name="type" v-model="account_type" />
                         <div class="ydc-reg-form-class ydc-reg-form-reg">
@@ -290,11 +290,14 @@
 </template>
 
 <script>
-import mt1 from '../assets/images/icon/mt1.png';
-import mt2 from '../assets/images/icon/mt2.png';
-import mt3 from '../assets/images/icon/mt3.png';
-import mt4 from '../assets/images/icon/mt4.png';
-import {SERVER} from '@/config';
+// 也可以在template中使用require引入
+import mt1 from '../assets/images/icon/mt1.png'
+import mt2 from '../assets/images/icon/mt2.png'
+import mt3 from '../assets/images/icon/mt3.png'
+import mt4 from '../assets/images/icon/mt4.png'
+import {SERVER} from '@/config'
+// 也可以添加到vue实例上
+import ajax from '../lib/ajax'
 
 export default {
   data(){
@@ -348,12 +351,9 @@ export default {
   methods: {
     async submit() {
         let form = this.$refs['from3']
-        let formDate = new FormData(form)
-        let res = await fetch(form.action, {
-            method: form.method,
-            body: formDate
-        })
-        let json = await res.json()
+        
+        // 注册
+        let json = await ajax(form)
     },
     tostep3(){
       if(this.account_type==-1){

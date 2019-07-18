@@ -42,6 +42,7 @@
 
 <script>
 import {SERVER} from '../config'
+import ajax from '../lib/ajax'
 export default {
   data() {
     return {
@@ -51,12 +52,8 @@ export default {
   methods: {
     async login() {
       let form = this.$refs.form
-      let formData = new FormData(form)
-      let res = await fetch(form.action, {
-        method: form.method,
-        body: formData
-      })
-      let json = await res.json()
+      // 登录
+      let json = await ajax(form)
 
       if(json.err) {
         alert(json.msg)
