@@ -8,12 +8,13 @@
     <hr/>
     <router-link to='/animate/'>动画</router-link>
     <router-link to='/lifecircle/'>生命周期</router-link>
+    <router-link to='/comps/'>组件通信</router-link>
   </div>
 </template>
 
 <script>
-import VuexText from '@/components/VuexTest'
-import VuexMapText from '@/components/VuexMapText'
+import VuexText from '@/pages/VuexTest'
+import VuexMapText from '@/pages/VuexMapText'
 import {mapGetters} from 'vuex'
 
 export default {

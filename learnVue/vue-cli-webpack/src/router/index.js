@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Animate from '@/components/Animate'
-import lifecircle from '@/components/lifecircle'
-import lifeComp from '@/components/lifeComp'
+import HelloWorld from '@/pages/HelloWorld'
+import Animate from '@/pages/Animate'
+import lifecircle from '@/pages/lifecircle'
+import lifeComp from '@/pages/lifeComp'
+
+import Comps from '@/pages/CompsCommunication'
 
 Vue.use(Router)
 
@@ -35,6 +37,11 @@ export default new Router({
           component: lifeComp
         }
       ]
+    },
+    {
+      path: '/comps',
+      name: 'Comps',
+      component: Comps
     }
   ]
 })
