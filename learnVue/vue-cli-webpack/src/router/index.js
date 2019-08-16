@@ -4,8 +4,8 @@ import HelloWorld from '@/pages/HelloWorld'
 import Animate from '@/pages/Animate'
 import lifecircle from '@/pages/lifecircle'
 import lifeComp from '@/pages/lifeComp'
-
 import Comps from '@/pages/CompsCommunication'
+import jsx from '@/pages/jsx'
 
 Vue.use(Router)
 
@@ -42,6 +42,11 @@ export default new Router({
       path: '/comps',
       name: 'Comps',
       component: Comps
+    },
+    {
+      path: '/jsx',
+      name: 'Jsx',
+      component: jsx
     }
   ]
 })

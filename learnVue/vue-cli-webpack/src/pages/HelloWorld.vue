@@ -6,9 +6,10 @@
     <hr/>
     <VuexMapText :n=n></VuexMapText>
     <hr/>
-    <router-link to='/animate/'>动画</router-link>
-    <router-link to='/lifecircle/'>生命周期</router-link>
-    <router-link to='/comps/'>组件通信</router-link>
+    <router-link to='/animate/'>动画 | </router-link>
+    <router-link to='/lifecircle/'>生命周期 | </router-link>
+    <router-link to='/comps/'>组件通信 | </router-link>
+    <router-link to='/jsx/'>jsx | </router-link>
   </div>
 </template>
 
