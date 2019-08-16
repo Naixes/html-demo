@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 
+// 跨域配置
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
@@ -13,11 +14,16 @@ app.use((req, res, next) => {
   }
   next();
 });
+
 app.use(bodyParser.json());
+
 const secret = 'zfjg';
+
 app.get('/test', (req, res) => {
   res.send({ test: 'test' });
 });
+
+// 登录
 app.post('/login', (req, res) => {
   const { username } = req.body;
   // 如果访问的是admin 种植cookie
@@ -25,6 +31,7 @@ app.post('/login', (req, res) => {
     res.json({
       code: 0,
       username: 'admin',
+      // 生成token
       token: jwt.sign({ username: 'admin' }, secret, {
         expiresIn: 20,
       }),
@@ -36,6 +43,8 @@ app.post('/login', (req, res) => {
     });
   }
 });
+
+// 验证登录
 app.get('/validate', (req, res) => {
   const token = req.headers.authorization;
   // 验证token的可靠性
