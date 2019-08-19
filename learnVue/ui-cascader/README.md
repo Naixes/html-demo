@@ -4,9 +4,13 @@
 
 对dom的一系列操作可以绑定为一个指令
 
+指令是方法有自己的生命周期：bind, inserted, update, componentUpdated, unbind
+
 校验是否点击了元素的外部
 
 指令的参数：el，bindings（绑定的内容，包括修饰符），vnode
+
+将事件处理函数保存到el方便解除绑定
 
 ## flex布局级联实现结构
 
