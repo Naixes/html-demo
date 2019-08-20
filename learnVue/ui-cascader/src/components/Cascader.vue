@@ -52,11 +52,17 @@ export default {
   methods: {
     // 当前选中的完整值
     change(val) {
+      // 更新value值
       this.$emit('input', val);
 
       // 获取当前选项并添加子元素
       const lastItem = val[val.length - 1];
       this.lazyload(lastItem.id, (children) => {
+      // 如果没有子元素，关闭下拉
+        if (!children || !children.length) {
+          this.hideOptions();
+          return;
+        }
         const cloneOptions = cloneDeep(this.options);
 
         // 用来做广度遍历
@@ -77,7 +83,6 @@ export default {
             break;
           }
         }
-        console.log('stack', stack);
         // 给当前选择项添加子元素
         if (current) {
           // 给value添加子元素
