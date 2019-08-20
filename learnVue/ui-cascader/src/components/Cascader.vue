@@ -1,86 +1,117 @@
 <template>
     <div class="cascader" v-click-outside="hideOptions">
-        <div class="select" @click="toggleOptions">
+        <div class="select" @click="toggleOptions" :title="result">
             {{result}}
         </div>
-        <div class="wrapper" v-if="fShowOptions">
-            <!-- <CascaderItem></CascaderItem> -->
-            <div class="cascader-left">
-                <ul>
-                    <li v-for="(option, index) in options" :key="index" @click="select(option)">{{option.value}}</li>
-                </ul>
-            </div>
-            <div class="cascader-right">
-                <ul>
-                    <li v-for="(option, index) in selectedOptions" :key="index" @click="select(option)">{{option.value}}</li>
-                </ul>
-            </div>
-        </div>
+        <CascaderItem v-if="fShowOptions" :options="options" :value="value" @change="change" :level="0"></CascaderItem>
     </div>
 </template>
 
 <script>
 // 指令：判断是否点击了dom元素以外的部分
-import {clickOutside} from '../directions/clickOutside'
+import cloneDeep from 'lodash/cloneDeep';
+import { clickOutside } from '../directions/clickOutside';
 
 export default {
-    components: {
-        CascaderItem: () => import('./CascaderItem')
+  components: {
+    CascaderItem: () => import('./CascaderItem'),
+  },
+  directives: {
+    clickOutside,
+  },
+  computed: {
+    // 当前选中的完整内容
+    result() {
+      const arr = [];
+      this.value.forEach((opt) => {
+        arr.push(opt.label);
+      });
+      return arr.join('/');
     },
-    directives: {
-        clickOutside
+  },
+  props: {
+    value: {
+      type: Array,
+      default: () => [],
     },
-    props: {
-        options: {
-            type: Array,
-            default: []
+    options: {
+      type: Array,
+      default: () => [],
+    },
+    lazyload: {
+      type: Function,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      // f开头表示flag
+      fShowOptions: false,
+      // 当前选中的选项
+      selectedOption: [],
+      //   level: 0,
+      childrenOptions: [],
+    };
+  },
+  methods: {
+    // 当前选中的完整值
+    change(val) {
+      this.$emit('input', val);
+
+      // 获取当前选项并添加子元素
+      const lastItem = val[val.length - 1];
+      this.lazyload(lastItem.id, (children) => {
+        const cloneOptions = cloneDeep(this.options);
+
+        // 用来做广度遍历
+        let stack = [...cloneOptions];
+        let current;
+        let index = 0;
+
+        // 广度遍历
+        // eslint-disable-next-line
+        while (current = stack[index++]) {
+          if (current.id !== lastItem.id) {
+            if (current.children) {
+              stack = stack.concat(current.children);
+            }
+          } else {
+            // 找到时退出
+            break;
+          }
         }
-    },
-    data() {
-        return {
-            // f开头表示flag
-            fShowOptions: false,
-            // 当前选中的完整内容
-            result: '',
-            selectedOptions: ''
+        // 给当前选择项添加子元素
+        if (current) {
+          current.children = children;
+
+          this.$emit('update:options', cloneOptions);
         }
+      });
     },
-    methods: {
-        select(opt) {
-            this.selectedOptions = opt.children
-        },
-        toggleOptions() {
-            this.fShowOptions = !this.fShowOptions
-        },
-        hideOptions() {
-            this.fShowOptions = false
-        }
-    }
-}
+    toggleOptions() {
+      this.fShowOptions = !this.fShowOptions;
+    },
+    hideOptions() {
+      this.fShowOptions = false;
+    },
+  },
+};
 </script>
 
 <style lang="stylus">
-ul 
+ul
     margin 0;
     padding 0;
     list-style none;
 li
     padding 4px 6px;
-.cascader 
+.cascader
     display inline-block;
-    .wrapper
-        display flex;
-        ul
-            border 1px solid #ccc;
-            margin-top -1px;
-        li
-            min-width 50px;
-            cursor pointer;
-            &:hover 
-                background-color #eee;
-        // li+li
-        //     border-top 1px solid #ccc;
-    .select 
+    .select
+        overflow hidden;
+        text-overflow ellipsis;
+        white-space nowrap;
+
         width 150px;
         height 30px;
         border 1px solid #aaa;
