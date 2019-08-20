@@ -37,10 +37,8 @@ export default {
   },
   computed: {
     childrenOptions() {
-      console.log('options', this.options);
       if (this.value[this.level] && this.value[this.level].id) {
         const o = this.options.find(option => option.id === this.value[this.level].id);
-        console.log('children', o.children);
         return o.children;
       }
       return [];

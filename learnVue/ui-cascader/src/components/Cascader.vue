@@ -47,10 +47,6 @@ export default {
     return {
       // f开头表示flag
       fShowOptions: false,
-      // 当前选中的选项
-      selectedOption: [],
-      //   level: 0,
-      childrenOptions: [],
     };
   },
   methods: {
@@ -73,6 +69,7 @@ export default {
         while (current = stack[index++]) {
           if (current.id !== lastItem.id) {
             if (current.children) {
+              // stack重新赋值
               stack = stack.concat(current.children);
             }
           } else {
@@ -80,10 +77,11 @@ export default {
             break;
           }
         }
+        console.log('stack', stack);
         // 给当前选择项添加子元素
         if (current) {
+          // 给value添加子元素
           current.children = children;
-
           this.$emit('update:options', cloneOptions);
         }
       });
