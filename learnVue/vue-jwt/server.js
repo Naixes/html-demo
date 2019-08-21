@@ -45,12 +45,12 @@ app.get('/roleAuth', (req, res) => {
         id: 5,
         auth: 'lottery',
       },
-      {
-        pid: 4,
-        name: '商品',
-        id: 6,
-        auth: 'product',
-      },
+      // {
+      //   pid: 4,
+      //   name: '商品',
+      //   id: 6,
+      //   auth: 'product',
+      // },
     ],
   });
 });

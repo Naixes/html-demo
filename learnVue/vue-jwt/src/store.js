@@ -50,6 +50,10 @@ export default new Vuex.Store({
     username: '',
     hasPermission: false,
     menuList: [],
+    btnPermission: {
+      add: false,
+      edit: true,
+    },
   },
   mutations: {
     setUsername(state, username) {
