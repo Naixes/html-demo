@@ -6,6 +6,34 @@ import Profile from './views/Profile.vue';
 
 Vue.use(Router);
 
+// 权限路由
+export const authRoutes = [
+  {
+    path: '/cart',
+    name: 'cart',
+    component: () => import('@/views/Cart'),
+    children: [
+      {
+        path: 'cart-list',
+        name: 'cart-list',
+        component: () => import('@/views/CartList'),
+        children: [
+          {
+            path: 'lottery',
+            name: 'lottery',
+            component: () => import('@/views/Lottery'),
+          },
+          {
+            path: 'product',
+            name: 'product',
+            component: () => import('@/views/Product'),
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
