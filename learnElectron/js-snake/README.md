@@ -54,6 +54,7 @@ npm config set electron_mirror https://npm.taobao.org/mirrors/electron/
     "mac": {
       "category": "your.app.category.type"
     }
+  }
 ```
 
 也可以直接打开一个网站，win.loadURL()
