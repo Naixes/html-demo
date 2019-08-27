@@ -1,3 +1,4 @@
+// router统一处理
 let router = {
 	// 'get': {
 	// 	'url': function() {},
