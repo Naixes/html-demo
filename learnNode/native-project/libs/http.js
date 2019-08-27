@@ -47,7 +47,7 @@ http.createServer((req, res) => {
 			})
 			form.on('close', () => {
 				// 路由
-				handle(req.methodm, pathname, query, post, files)
+				handle(req.method, pathname, query, post, files)
 			})
 		}
 	}else {
