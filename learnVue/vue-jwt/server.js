@@ -23,6 +23,38 @@ app.get('/test', (req, res) => {
   res.send({ test: 'test' });
 });
 
+// 权限校验
+app.get('/roleAuth', (req, res) => {
+  res.json({
+    menuList: [
+      {
+        pid: -1,
+        name: '购物车',
+        id: 1,
+        auth: 'cart',
+      },
+      {
+        pid: 1,
+        name: '购物车列表',
+        id: 4,
+        auth: 'cart-list',
+      },
+      {
+        pid: 4,
+        name: '彩票',
+        id: 5,
+        auth: 'lottery',
+      },
+      // {
+      //   pid: 4,
+      //   name: '商品',
+      //   id: 6,
+      //   auth: 'product',
+      // },
+    ],
+  });
+});
+
 // 登录
 app.post('/login', (req, res) => {
   const { username } = req.body;
@@ -33,7 +65,7 @@ app.post('/login', (req, res) => {
       username: 'admin',
       // 生成token
       token: jwt.sign({ username: 'admin' }, secret, {
-        expiresIn: 20,
+        expiresIn: 2000,
       }),
     });
   } else {
@@ -59,7 +91,7 @@ app.get('/validate', (req, res) => {
       username: decode.username,
       code: 0, // 延长tokne的过期时间
       token: jwt.sign({ username: 'admin' }, secret, {
-        expiresIn: 20,
+        expiresIn: 2000,
       }),
     });
   });

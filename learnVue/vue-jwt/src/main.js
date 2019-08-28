@@ -7,6 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(ElementUI);
 
+Vue.config.productionTip = false;
+
 // 校验登录
 router.beforeEach(async (to, from, next) => {
   const valid = await store.dispatch('checkLogin');
@@ -28,7 +30,21 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 
-Vue.config.productionTip = false;
+// 校验权限
+router.beforeEach(async (to, from, next) => {
+  console.log(to);
+  // 如果没有校验
+  if (!store.state.hasPermission) {
+    // 获取路由
+    const newRoutes = await store.dispatch('getNewRoutes');
+    // 动态添加路由
+    router.addRoutes(newRoutes);
+    // 有可能不会马上添加上，所以覆盖路由避免产生过多的历史记录
+    next({ ...to, replace: true });
+  } else {
+    next();
+  }
+});
 
 new Vue({
   router,

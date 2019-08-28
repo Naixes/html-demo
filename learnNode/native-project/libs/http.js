@@ -29,6 +29,7 @@ http.createServer((req, res) => {
 				handle(req.method, pathname, query, post, {})
 			})
 		}else {
+			// 包含文件上传的post
 			let form = new Form({
 				uploadDir: HTTP_UPLOAD
 			})
@@ -46,7 +47,7 @@ http.createServer((req, res) => {
 			})
 			form.on('close', () => {
 				// 路由
-				handle(req.methodm, pathname, query, post, files)
+				handle(req.method, pathname, query, post, files)
 			})
 		}
 	}else {

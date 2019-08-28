@@ -12,5 +12,10 @@ export const checkLogin = () => axios.request({
   url: '/validate',
 });
 
+// 权限校验
+export const getNewRoutes = () => axios.request({
+  url: '/roleAuth',
+});
+
 // 避免报错
 export default {};
