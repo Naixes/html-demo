@@ -41,8 +41,7 @@ module.exports = {
 			// { test: /\.css$/, use: ['style-loader', 'css-loader'] } //处理css文件的规则
 			// 对象形式：可以传多个参数
 			{
-				test: /\.css$/,
-				use: [{
+				test: /\.css$/, use: [{
 					loader: 'style-loader',
 					options: {
 						// 让样式字符串变成style标签输出到页面，header标签的顶部，不会覆盖index.html的自定义样式
@@ -50,15 +49,6 @@ module.exports = {
 						// insertAt: 'top'
 					}
 				}, 'css-loader']
-			},
-			{
-				test: /\.less$/,
-				use: [{
-					loader: 'style-loader',
-					options: {
-						insertAt: 'top'
-					}
-				}, 'css-loader', 'less-loader']
 			}
 		]
 	},
