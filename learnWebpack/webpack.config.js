@@ -5,9 +5,9 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 导出抽取css的插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// 压缩css，不起作用？？
+// 压缩css，生产环境下起作用
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
-// 压缩js，不起作用？？
+// 压缩js，生产环境下起作用
 const TerserJSPlugin = require('terser-webpack-plugin');
 module.exports = {
 	// 开发服务器配置，webpack-dev-server
@@ -21,7 +21,8 @@ module.exports = {
 		// compress: true
 	},
 	optimization: {
-	  minimizer: [new TerserJSPlugin({}), new OptimizeCss({})],
+		// 压缩css和js
+	  	minimizer: [new TerserJSPlugin({}), new OptimizeCss({})],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -64,7 +65,8 @@ module.exports = {
 		]
 	},
 	// production(默认) development
-	mode: 'development',
+	// production
+	mode: 'production',
 	// 入口：默认就是这个
 	entry: './src/index.js',
 	output: {
