@@ -1,0 +1,12 @@
+body {
+	background-color: #eee;
+}
+.box {
+	background-color: yellow;
+}
+.box {
+	height: 100px;
+	width: 100px;
+	/* background-color: red; */
+}
+
