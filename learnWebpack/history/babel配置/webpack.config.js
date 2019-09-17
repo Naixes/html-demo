@@ -5,6 +5,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 导出抽取css的插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 压缩css，生产环境下起作用
+const OptimizeCss = require('optimize-css-assets-webpack-plugin')
+// 压缩js，生产环境下起作用
+const TerserJSPlugin = require('terser-webpack-plugin');
 module.exports = {
 	// 开发服务器配置，webpack-dev-server
 	devServer: {
@@ -15,6 +19,10 @@ module.exports = {
 		contentBase: "./dist",
 		// 压缩
 		// compress: true
+	},
+	optimization: {
+		// 压缩css和js
+	  	minimizer: [new TerserJSPlugin({}), new OptimizeCss({})],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -39,41 +47,37 @@ module.exports = {
 	],
 	module: { // 用来配置第三方loader模块的
 		rules: [
-			// 文件的匹配规则，从右到左依次处理
-			// loader功能单一，可以叠加使用
-			// css-loader： 加载css文件，成为js的一部分（读取成字符串），可以解析@import这种语法，解析路径
-			// style-loader： 使css有作用，让样式字符串变成style标签输出到页面
-			// 一个loader写成字符串，顺序：从右向左，从下到上
-			// { test: /\.css$/, use: ['style-loader', 'css-loader'] } //处理css文件的规则
-			// 对象形式：可以传多个参数
 			{
 				test: /\.css$/,
-				use: [{
-					// 将style-loader改为MiniCssExtractPlugin.loader
-					// loader: 'style-loader',
-					loader: MiniCssExtractPlugin.loader,
-					options: {
-						// 让样式字符串变成style标签输出到页面，header标签的顶部，不会覆盖index.html的自定义样式
-						// 报错？？？
-						// insertAt: 'top'
-					}
-					// postcss-loader加载css-loader前面
-				}, 'css-loader', 'postcss-loader']
+				// 将style-loader改为MiniCssExtractPlugin.loader
+				use: [
+					MiniCssExtractPlugin.loader,   
+					'css-loader', 'postcss-loader'
+				]
 			},
 			{
 				test: /\.less$/,
-				use: [{
-					// loader: 'style-loader',
-					loader: MiniCssExtractPlugin.loader,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader', 'postcss-loader', 'less-loader'
+				]
+			},
+			// 配置babel，添加.babelrc配置文件，有不支持的语法时会报错提示，按照提示去babel官网寻找配置，比如装饰器@xxx
+			{
+				test: /\.js$/,
+				use: {
+					loader: 'babel-loader',
 					options: {
-						// 好像没有用
-						insertAt: 'top'
+						presets: ['@babel/preset-env']
 					}
-				}, 'css-loader', 'postcss-loader', 'less-loader']
+				},
+				exclude: /node_modules/
 			}
 		]
 	},
 	// production(默认) development
+	// production：测试压缩
+	// mode: 'production',
 	mode: 'development',
 	// 入口：默认就是这个
 	entry: './src/index.js',

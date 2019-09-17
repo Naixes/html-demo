@@ -51,7 +51,7 @@ module.exports = {
 				test: /\.css$/,
 				// 将style-loader改为MiniCssExtractPlugin.loader
 				use: [
-					MiniCssExtractPlugin.loader,   
+					MiniCssExtractPlugin.loader,
 					'css-loader', 'postcss-loader'
 				]
 			},
@@ -61,24 +61,12 @@ module.exports = {
 					MiniCssExtractPlugin.loader,
 					'css-loader', 'postcss-loader', 'less-loader'
 				]
-			},
-			// 配置babel，添加.babelrc配置文件，有不支持的语法时会报错提示，按照提示去babel官网寻找配置，比如装饰器@xxx
-			{
-				test: /\.js$/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['@babel/preset-env']
-					}
-				},
-				exclude: /node_modules/
 			}
 		]
 	},
 	// production(默认) development
 	// production：测试压缩
-	// mode: 'production',
-	mode: 'development',
+	mode: 'production',
 	// 入口：默认就是这个
 	entry: './src/index.js',
 	output: {
