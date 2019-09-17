@@ -5,10 +5,6 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 导出抽取css的插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// 压缩css，不起作用？？
-const OptimizeCss = require('optimize-css-assets-webpack-plugin')
-// 压缩js，不起作用？？
-const TerserJSPlugin = require('terser-webpack-plugin');
 module.exports = {
 	// 开发服务器配置，webpack-dev-server
 	devServer: {
@@ -19,9 +15,6 @@ module.exports = {
 		contentBase: "./dist",
 		// 压缩
 		// compress: true
-	},
-	optimization: {
-	  minimizer: [new TerserJSPlugin({}), new OptimizeCss({})],
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -44,13 +37,6 @@ module.exports = {
 			filename: 'main.css',
 		})
 	],
-	// optimization: {
-	// 	// 优化项
-	// 	minimizer: [
-	// 		// css压缩后js没压缩
-	// 		new OptimizeCss()
-	// 	]
-	// },
 	module: { // 用来配置第三方loader模块的
 		rules: [
 			// 文件的匹配规则，从右到左依次处理
@@ -62,35 +48,28 @@ module.exports = {
 			// 对象形式：可以传多个参数
 			{
 				test: /\.css$/,
-				// 将style-loader改为MiniCssExtractPlugin.loader
-				use: [
-					// {
-					// 	loader: 'style-loader',
-					// 	loader: MiniCssExtractPlugin.loader,
-					// 	options: {
-					// 		// 让样式字符串变成style标签输出到页面，header标签的顶部，不会覆盖index.html的自定义样式
-					// 		// 报错？？？
-					// 		// insertAt: 'top'
-					// 	}
-					// 	// postcss-loader加载css-loader前面
-					// },
-					MiniCssExtractPlugin.loader,
-					'css-loader', 'postcss-loader'
-				]
+				use: [{
+					// 将style-loader改为MiniCssExtractPlugin.loader
+					// loader: 'style-loader',
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+						// 让样式字符串变成style标签输出到页面，header标签的顶部，不会覆盖index.html的自定义样式
+						// 报错？？？
+						// insertAt: 'top'
+					}
+					// postcss-loader加载css-loader前面
+				}, 'css-loader', 'postcss-loader']
 			},
 			{
 				test: /\.less$/,
-				use: [
-					// {
-					// 	loader: 'style-loader',
-					// 	options: {
-					// 		// 好像没有用
-					// 		insertAt: 'top'
-					// 	}
-					// },
-					MiniCssExtractPlugin.loader,
-					'css-loader', 'postcss-loader', 'less-loader'
-				]
+				use: [{
+					// loader: 'style-loader',
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+						// 好像没有用
+						insertAt: 'top'
+					}
+				}, 'css-loader', 'postcss-loader', 'less-loader']
 			}
 		]
 	},
