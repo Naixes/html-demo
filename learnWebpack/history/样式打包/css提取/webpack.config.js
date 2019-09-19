@@ -39,7 +39,6 @@ module.exports = {
 	],
 	module: { // 用来配置第三方loader模块的
 		rules: [
-			// 文件的匹配规则，从右到左依次处理
 			// loader功能单一，可以叠加使用
 			// css-loader： 加载css文件，成为js的一部分（读取成字符串），可以解析@import这种语法，解析路径
 			// style-loader： 使css有作用，让样式字符串变成style标签输出到页面
