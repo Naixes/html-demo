@@ -68,9 +68,13 @@ module.exports = {
 						// 会在打包目录新建这个目录
 						outputPath: 'images/',
 						// 小于这个大小会进行base64编码直接写到css文件，否则使用file-loader产生真实文件
-						limit: 100*1024
+						limit: 0.1*1024,
+						// 指定打包文件名，也可以是一个函数根据环境返回不同的文件名：name(){return xxx}
+						name: '[hash:8]-[name].[ext]'
 					}
-				}
+				},
+				// 简写
+				// use: 'url-loader?limit=43960&[hash:8]-[name].[ext]'
 			},
 			{
 				test: /\.html$/,
