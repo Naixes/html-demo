@@ -68,9 +68,17 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						presets: ['@babel/preset-env']
+						presets: ['@babel/preset-env'],
+						plugins: [
+							// "loose": true：使用赋值表达式而不是Object.defineProperty。
+						   ['@babel/plugin-proposal-class-properties', { "loose": true }],
+						   ['@babel/plugin-transform-runtime']
+						]
 					}
 				},
+				// 包含
+				include: path.resolve(__dirname, 'src'),
+				// 排除
 				exclude: /node_modules/
 			}
 		]
