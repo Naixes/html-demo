@@ -1,0 +1,10 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env", 
+            // This option configures how @babel/preset-env handles polyfills.
+            // 还不知道有什么用
+            // {"useBuiltIns": "usage"}
+        ]
+    ]
+}
