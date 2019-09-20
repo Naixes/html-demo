@@ -1,11 +1,11 @@
 // 跨域问题
 // 3.1发送请求，配置代理
-let xhr = new XMLHttpRequest()
-xhr.open('GET', '/api/user', true)
-xhr.onload = function() {
-    console.log(xhr.response)
-}
-xhr.send()
+// let xhr = new XMLHttpRequest()
+// xhr.open('GET', '/api/user', true)
+// xhr.onload = function() {
+//     console.log(xhr.response)
+// }
+// xhr.send()
 // 3.2模拟数据
 // 3.3在服务器打开webpack，端口一致不存在跨域
 
