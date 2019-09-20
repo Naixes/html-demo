@@ -1,3 +1,6 @@
+// 环境变量
+console.log('DEV', DEV)
+
 // 跨域问题
 // 3.1发送请求，配置代理
 // let xhr = new XMLHttpRequest()

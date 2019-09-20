@@ -21,7 +21,7 @@ module.exports = {
 	// 解析配置
 	resolve: {
 		// 配置第三方包的查找路径，默认还会继续往上级查找
-		modules: path.resolve('node_modules'),
+		modules: [path.resolve('node_modules')],
 		// 配置别名
 		alias: {
 			// 方法1：默认引入样式文件

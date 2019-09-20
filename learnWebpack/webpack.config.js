@@ -21,7 +21,7 @@ module.exports = {
 	// 解析配置
 	resolve: {
 		// 配置第三方包的查找路径，默认还会继续往上级查找
-		modules: path.resolve('node_modules'),
+		modules: [path.resolve('node_modules')],
 		// 配置别名
 		alias: {
 			// 方法1：默认引入样式文件
@@ -29,10 +29,10 @@ module.exports = {
 		},
 		// 方法2：先找style，再找main，默认找main
 		mainFields: ['style', 'main'],
-		// 设置查找的入口文件的名字
-		mainFiles: [],
+		// 设置查找的入口文件的名字,默认是index.js
+		mainFiles: ['index.js'],
 		// 设置可以省略的后缀，从左往右的顺序
-		extensions: ['.js', '.vue', 'json']
+		extensions: ['.js', '.vue', '.json']
 	},
 	// 源码映射，不单独生成文件，忽略列，能定位到具体的vue文件
 	// 开发环境：'cheap-module-eval-source-map'
@@ -80,6 +80,11 @@ module.exports = {
 		jquery: '$'
 	},
 	plugins: [
+		// 定义环境变量，内置插件
+		new webpack.DefinePlugin({
+			// 在这里'dev'指的是变量需要转化成字符串
+			DEV: JSON.stringify('dev')
+		}),
 		new HtmlWebpackPlugin({
 			// 指定模板
 			template: './src/index.html',
