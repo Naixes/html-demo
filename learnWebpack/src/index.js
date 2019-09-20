@@ -36,7 +36,7 @@ document.body.appendChild(img)
 
 // js
 const fn = () => {
-    console.log('我是箭头函数')
+    console.lo('我是箭头函数')
 }
 
 fn()
