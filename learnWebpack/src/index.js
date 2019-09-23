@@ -1,3 +1,11 @@
+// 使用moment
+const moment = require('moment')
+// 配置忽略locale文件后会不起作用需要手动引入
+import  'moment/locale/zh-cn'
+moment.locale('zh-cn')
+let t = moment().startOf('hour').fromNow()
+console.log(t)
+
 // 环境变量
 console.log('DEV', DEV)
 
@@ -24,16 +32,15 @@ document.body.appendChild(img)
 
 // 全局变量引入
 // 1.直接引入jquery
-// import $ from 'jquery'
-// console.log($)
+import $ from 'jquery'
+console.log('jquery', $)
 // // undefined
 // console.log(window.$)
 
 // 2.引入jquery
-// 安装expose-loader
-// 将jquery注入到全局
-// 也可以在config中配置：见config
+// 安装expose-loader 将jquery注入到全局
 // import $ from 'expose-loader?$!jquery'
+// 也可以在config中配置：见config
 // import $ from 'jquery'
 // console.log($)
 // console.log(window.$)

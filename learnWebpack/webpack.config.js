@@ -77,9 +77,11 @@ module.exports = {
 	},
 	// 4.配置忽略引入的jquery
 	externals: {
-		jquery: '$'
+		// jquery: '$'
 	},
 	plugins: [
+		// 配置忽略第三方库中一些不需要的文件，减少打包体积
+		new webpack.IgnorePlugin(/\.\/locale/, /moment/),
 		// 定义环境变量，内置插件
 		new webpack.DefinePlugin({
 			// 在这里'dev'指的是变量需要转化成字符串
@@ -116,6 +118,8 @@ module.exports = {
 		new webpack.BannerPlugin('sin make in 2019')
 	],
 	module: { // 用来配置第三方loader模块的
+		// 配置不需要寻找依赖的第三方库提高打包速度，比如jquery
+		noParse: /jquery/,
 		rules: [
 
 			// 处理图片
