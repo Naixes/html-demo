@@ -19,9 +19,6 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 // 打包非代码的数据信息文件
 const copyWebpackPlugin = require('copy-webpack-plugin')
 
-// 多线程打包，小项目不需要
-const HappyPack = require('happypack')
-
 module.exports = {
 	// 解析配置
 	resolve: {
@@ -85,33 +82,13 @@ module.exports = {
 		// jquery: '$'
 	},
 	plugins: [
-		// 多线程打包
-		new HappyPack({
-			id: 'js',
-			use: {
-				loader: 'babel-loader',
-				options: {
-					presets: [
-						'@babel/preset-env',
-						'@babel/preset-react'
-					],
-					plugins: [
-						// "loose": true：使用赋值表达式而不是Object.defineProperty。
-					   [ '@babel/plugin-proposal-class-properties', { loose: true }],
-					   ['@babel/plugin-transform-runtime']
-					]
-				}
-			},
-			// 默认3
-			threads: 3
-		}),
 		// 动态链接库
-		// new webpack.DllReferencePlugin({
-		// 	// 需要先打包 webpack.config.react.js配置
-		// 	// manifest 就是 webpack.config.react.js 配置打包出来的 json 文件
-		// 	// 会先去查找清单如果没有才进行打包
-		// 	manifest: path.resolve(__dirname, 'dll' , 'react-manifest.json')
-		// }),
+		new webpack.DllReferencePlugin({
+			// 需要先打包 webpack.config.react.js配置
+			// manifest 就是 webpack.config.react.js 配置打包出来的 json 文件
+			// 会先去查找清单如果没有才进行打包
+			manifest: path.resolve(__dirname, 'dll' , 'react-manifest.json')
+		}),
 		// 配置忽略第三方库中一些不需要的文件，减少打包体积
 		new webpack.IgnorePlugin(/\.\/locale/, /moment/),
 		// 定义环境变量，内置插件
@@ -202,7 +179,18 @@ module.exports = {
 			{
 				test: /\.js$/,
 				use: {
-					loader: 'happypack/loader?id=js'
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							'@babel/preset-env',
+							'@babel/preset-react'
+						],
+						plugins: [
+							// "loose": true：使用赋值表达式而不是Object.defineProperty。
+						   [ '@babel/plugin-proposal-class-properties', { loose: true }],
+						   ['@babel/plugin-transform-runtime']
+						]
+					}
 				},
 				// 包含
 				include: path.resolve(__dirname, 'src'),
