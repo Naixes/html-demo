@@ -1,5 +1,11 @@
+// 抽离react
+import React from 'react'
+import {render} from 'react-dom'
+
+render(<h1>jsx</h1>, window.root)
+
 // 使用moment
-const moment = require('moment')
+import moment from 'moment'
 // 配置忽略locale文件后会不起作用需要手动引入
 import  'moment/locale/zh-cn'
 moment.locale('zh-cn')
