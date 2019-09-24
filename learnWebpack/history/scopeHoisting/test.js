@@ -1,0 +1,1 @@
+export const scopeHoisting = 1
