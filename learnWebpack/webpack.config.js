@@ -115,6 +115,9 @@ module.exports = {
 		// jquery: '$'
 	},
 	plugins: [
+		// 热更新
+		new webpack.NamedModulesPlugin(), // 打印更新的模块
+		new webpack.HotModuleReplacementPlugin(), // 热更新插件 
 		// 动态链接库
 		// new webpack.DllReferencePlugin({
 		// 	// 需要先打包 webpack.config.react.js配置
@@ -158,7 +161,7 @@ module.exports = {
 		new copyWebpackPlugin([{from: './docs', to: './'}]),
 		// 版权说明插件，webpack内置
 		// 打包后的文件最前面加上版权说明：'sin make in 2019'
-		new webpack.BannerPlugin('sin make in 2019')
+		// new webpack.BannerPlugin('sin make in 2019')
 	],
 	module: { // 用来配置第三方loader模块的
 		// 配置不需要寻找依赖的第三方库提高打包速度，比如jquery
