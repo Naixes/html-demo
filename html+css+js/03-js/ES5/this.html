@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>this</title>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+
+	// ---------------------------------------
+	// function sin() {
+	// 	console.log(1)
+	// }
+	// ; (function () {
+	// 	if (false) {
+	// 		function sin() {
+	// 			console.log(2)
+	// 		}
+	// 	}
+	// 	sin() // 报错，不同浏览器不一样
+	// })()
+
+	// 分析
+	function sin() {
+		console.log(1)
+	}
+	; (function () {
+		// 部分浏览器会提升
+		var sin
+		if (false) {
+			function sin() {
+				console.log(2)
+			}
+		}
+		console.log(sin) // undefined
+		// sin() // 报错
+	})()
+
+	// ---------------------------------------
+	// 函数的参数是按值传递的，两个m指向同一个地址
+	function test(m) {
+		// 重新赋值m
+		m = {
+			v: 1
+		}
+		// m.v = 1 // 1
+	}
+	let m = {
+		k: 2
+	}
+	test(m)
+	console.log(m.v) // undefined
+
+	// ---------------------------------------
+	function Fn(a) {
+		this.a = a
+	}
+	Fn.prototype.a = 'sin';
+	(new Fn().a) // undefind，实例上有a所以不会查找到原型，但是没有赋值
+
+	// ---------------------------------------
+	var obj = {
+		fna: function () {
+			console.log('a', this)
+		},
+		fnb: () => {
+			console.log('b', this)
+		},
+		// es6这种简写方式不支持new
+		fnc() {
+			console.log('c', this)
+		}
+	}
+	obj.fna() // obj
+	obj.fnb() // win
+	obj.fnc() // obj
+
+	// let newc = obj.fnc.bind(this)
+	// newc()
+	// new newc() // 报错
+
+
+	let newa = obj.fna.bind(this)
+	newc() // win
+	// new的方式会将this固化在实例上，不能改变，优先级最高
+	new newa() // obj
+	// ---------------------------------------
+	var name = 'window'
+
+	var person1 = {
+		name: 'person1',
+		show1: function () {
+			console.log(this.name)
+		},
+		show2: () => console.log(this.name),
+		show3: function () {
+			return function () {
+				console.log(this.name)
+			}
+		},
+		show4: function () {
+			return () => console.log(this.name)
+		}
+	}
+	var person2 = { name: 'person2' }
+
+	person1.show1() // p1
+	person1.show1.call(person2) // p2
+
+	person1.show2() // w 外层为w
+	person1.show2.call(person2) // w 不能被显示改变
+
+	person1.show3()() // w
+	person1.show3().call(person2) // p2
+	person1.show3.call(person2)() // w
+
+	person1.show4()() // p1 外层是p1
+	person1.show4().call(person2) // p1 不能被显示改变
+	person1.show4.call(person2)() // p2 改变了外层
+
+
+	// ---------------------------------------
+	var name = 'window'
+
+	function Person(name) {
+		this.name = name;
+		this.show1 = function () {
+			console.log(this.name)
+		}
+		this.show2 = () => console.log(this.name)
+		this.show3 = function () {
+			return function () {
+				console.log(this.name)
+			}
+		}
+		this.show4 = function () {
+			return () => console.log(this.name)
+		}
+	}
+
+	var personA = new Person('personA')
+	var personB = new Person('personB')
+
+	personA.show1() // p1
+	personA.show1.call(personB) //p2
+
+	personA.show2() // p1 外层为p1
+	personA.show2.call(personB) // p1 外层为p1
+
+	personA.show3()() // w
+	personA.show3().call(personB) // p2
+	personA.show3.call(personB)() // w
+
+	personA.show4()() // p1
+	personA.show4().call(personB) // p1
+	personA.show4.call(personB)() // p2
+
+	// ---------------------------------------
+	// 隐式绑定和显示绑定
+	var number = 5;
+	var obj = {
+		number: 3,
+		fn1: (function () {
+			var number;
+			this.number *= 2; // window.number = 10
+			number = number * 2;
+			console.log(number) // number = NaN
+			number = 3; // number = 3
+			return function () {
+				var num = this.number; // num = 10---num = 3
+				this.number *= 2; // window.number = 20---obj.number = 6
+				console.log(num); // num = 10---num = 3
+				number *= 3; // 闭包：number = 9---number = 27
+				console.log(number); // number = 9---number = 27
+			}
+		})() // 立即执行自执行函数只执行一次
+	}
+	var fn1 = obj.fn1;
+	fn1.call(null); // num = 10;闭包：number = 9
+	obj.fn1(); // num = 3;闭包：number = 27
+	console.log(window.number); // window.number = 20
+
+// ---------------------------------------
+</script>
+
+</html>
