@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	@keyframes ver {
+		0% {
+			/* transform: translateY(0) */
+			transform: matrix(1, 0, 0, 1, 0, 0)
+		}
+
+		100% {
+			/* transform: translateY(400px) */
+			transform: matrix(1, 0, 0, 1, 0, 400)
+		}
+	}
+
+	@keyframes hor {
+		0% {
+			/* transform: translateX(0) */
+			transform: matrix(1, 0, 0, 1, 0, 0)
+		}
+
+		100% {
+			/* transform: translateX(400px) */
+			transform: matrix(1, 0, 0, 1, 400, 0)
+		}
+	}
+
+	.wrapper {
+		padding: 10px;
+		animation: hor 2s cubic-bezier(.1, 1.29, .88, .27);
+	}
+
+	.item {
+		height: 20px;
+		width: 20px;
+		background-color: #ccc;
+		border-radius: 50%;
+		animation: ver 2s linear;
+	}
+</style>
+
+<body>
+	<div class="wrapper">
+		<div class="item"></div>
+	</div>
+</body>
+
+</html>
