@@ -1,31 +1,7 @@
-// 热更新
-// 会刷新页面
-import str from './testHot.js'
-console.log(str)
-// 不会刷新页面
-if(module.hot) {
-    module.hot.accept('./testHot.js', () => {
-        console.log('更新了')
-        let str = require('./testHot.js')
-        console.log(str)
-    })
-}
-
-// 懒加载
-let button = document.createElement('button')
-button.innerHTML = "懒加载"
-button.addEventListener('click', () => {
-    import('./testLazy.js').then(data => {
-        console.log('懒加载')
-        console.log(data)
-    })
-})
-document.body.appendChild(button)
-
 // 作用域提升
 // 开启之后webpack会将test注入到main中
-// import {scopeHoisting} from './test.js'
-// console.log(scopeHoisting)
+import {scopeHoisting} from './test.js'
+console.log(scopeHoisting)
 let b = 1
 let c = 2
 let d = b + c

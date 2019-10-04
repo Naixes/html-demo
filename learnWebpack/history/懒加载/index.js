@@ -1,21 +1,8 @@
-// 热更新
-// 会刷新页面
-import str from './testHot.js'
-console.log(str)
-// 不会刷新页面
-if(module.hot) {
-    module.hot.accept('./testHot.js', () => {
-        console.log('更新了')
-        let str = require('./testHot.js')
-        console.log(str)
-    })
-}
-
 // 懒加载
 let button = document.createElement('button')
 button.innerHTML = "懒加载"
 button.addEventListener('click', () => {
-    import('./testLazy.js').then(data => {
+    import('./test.js').then(data => {
         console.log('懒加载')
         console.log(data)
     })

@@ -1,35 +1,11 @@
-// 热更新
-// 会刷新页面
-import str from './testHot.js'
-console.log(str)
-// 不会刷新页面
-if(module.hot) {
-    module.hot.accept('./testHot.js', () => {
-        console.log('更新了')
-        let str = require('./testHot.js')
-        console.log(str)
-    })
-}
-
-// 懒加载
-let button = document.createElement('button')
-button.innerHTML = "懒加载"
-button.addEventListener('click', () => {
-    import('./testLazy.js').then(data => {
-        console.log('懒加载')
-        console.log(data)
-    })
-})
-document.body.appendChild(button)
-
 // 作用域提升
 // 开启之后webpack会将test注入到main中
-// import {scopeHoisting} from './test.js'
-// console.log(scopeHoisting)
+import {scopeHoisting} from './test.js'
+console.log(scopeHoisting)
 let b = 1
 let c = 2
 let d = b + c
-// 生产环境会自动计算
+// 不会自动计算？？？
 console.log(d, '----------')
 
 // 抽离react
@@ -39,12 +15,12 @@ console.log(d, '----------')
 // render(<h1>jsx</h1>, window.root)
 
 // 使用moment
-import moment from 'moment'
+// import moment from 'moment'
 // 配置忽略locale文件后会不起作用需要手动引入
-import  'moment/locale/zh-cn'
-moment.locale('zh-cn')
-let t = moment().startOf('hour').fromNow()
-console.log(t)
+// import  'moment/locale/zh-cn'
+// moment.locale('zh-cn')
+// let t = moment().startOf('hour').fromNow()
+// console.log(t)
 
 // 环境变量
 console.log('DEV', DEV)
@@ -62,18 +38,18 @@ console.log('DEV', DEV)
 
 // 图片处理：file-loader，url-loader，html-withimg-loader
 // 2.1.js引入图片
-import src from './icon_plus.png' // file-loader在内部生成一张新的图片（打包后的目录中）返回图片名字
-let img = new Image()
-img.src = src
-document.body.appendChild(img)
+// import src from './icon_plus.png' // file-loader在内部生成一张新的图片（打包后的目录中）返回图片名字
+// let img = new Image()
+// img.src = src
+// document.body.appendChild(img)
 // 2.2.css中的background：也是file-loader
 
 // 2.3.html中的图片：html-withimg-loader
 
 // 全局变量引入
 // 1.直接引入jquery
-import $ from 'jquery'
-console.log('jquery', $)
+// import $ from 'jquery'
+// console.log('jquery', $)
 // // undefined
 // console.log(window.$)
 

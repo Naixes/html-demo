@@ -64,9 +64,7 @@ module.exports = {
 			// 	target: 'http://localhost:8080',
 			// 	pathRewrite: {'api': ''}
 			// }
-		},
-		// 热更新
-		hot: true
+		}
 	},
 	// 实时打包
 	watch: true,
@@ -77,49 +75,15 @@ module.exports = {
 	},
 	optimization: {
 		// 压缩css和js
-		minimizer: [ 
-			new TerserJSPlugin({
-				// terserOptions: {
-				//   output: {
-				// 	// 去除注释
-				// 	comments: false,
-				//   },
-				// },
-			}),
-			new OptimizeCss({}) ],
+		minimizer: [ new TerserJSPlugin({}), new OptimizeCss({}) ],
 		// 开启scopeHoisting
-		// 开发环境起作用，生产环境默认会直接注入并进行简单优化计算
-		concatenateModules: true,
-		// 分离共同引入的代码
-		splitChunks: {
-			cacheGroups: {
-				// 对css也起作用
-				common: {
-					chunks: 'initial',
-					// 允许入口并行加载的最大请求数
-					maxInitialRequests: 3,
-					minSize: 0,
-					minChunks: 1
-				},
-				vendors: {
-					test: /node_modules/,
-					chunks: 'initial',
-					// 允许入口并行加载的最大请求数
-					maxInitialRequests: 2,
-					// 默认是-10
-					priority: 1
-				}
-			}
-		}
+		concatenateModules: true
 	},
 	// 4.配置忽略引入的jquery
 	externals: {
 		// jquery: '$'
 	},
 	plugins: [
-		// 热更新
-		new webpack.NamedModulesPlugin(), // 打印更新的模块
-		new webpack.HotModuleReplacementPlugin(), // 热更新插件 
 		// 动态链接库
 		// new webpack.DllReferencePlugin({
 		// 	// 需要先打包 webpack.config.react.js配置
@@ -163,7 +127,7 @@ module.exports = {
 		new copyWebpackPlugin([{from: './docs', to: './'}]),
 		// 版权说明插件，webpack内置
 		// 打包后的文件最前面加上版权说明：'sin make in 2019'
-		// new webpack.BannerPlugin('sin make in 2019')
+		new webpack.BannerPlugin('sin make in 2019')
 	],
 	module: { // 用来配置第三方loader模块的
 		// 配置不需要寻找依赖的第三方库提高打包速度，比如jquery
@@ -203,16 +167,16 @@ module.exports = {
 
 			// 一个loader写成字符串，处理顺序：从右向左，从下到上
 			// eslint
-			// {
-			// 	test: /\.js$/,
-			// 	use: {
-			// 		loader: 'eslint-loader',
-			// 		options: {
-			// 			// 强制在普通loader之前执行
-			// 			enforce: 'pre'
-			// 		}
-			// 	}
-			// },
+			{
+				test: /\.js$/,
+				use: {
+					loader: 'eslint-loader',
+					options: {
+						// 强制在普通loader之前执行
+						enforce: 'pre'
+					}
+				}
+			},
 			// 配置babel，添加.babelrc配置文件，有不支持的语法时会报错提示，按照提示去babel官网寻找配置，比如装饰器@xxx
 			{
 				test: /\.js$/,
@@ -225,10 +189,8 @@ module.exports = {
 						],
 						plugins: [
 							// "loose": true：使用赋值表达式而不是Object.defineProperty。
-							[ '@babel/plugin-proposal-class-properties', { loose: true }],
-							['@babel/plugin-transform-runtime'],
-							// 懒加载，不加也没报错？？？
-							// ['@babel/plugin-syntax-dynamic-import']
+						   [ '@babel/plugin-proposal-class-properties', { loose: true }],
+						   ['@babel/plugin-transform-runtime']
 						]
 					}
 				},
@@ -262,7 +224,7 @@ module.exports = {
 	},
 	// production(默认) development
 	// production：测试压缩
-	// production，development
+	// mode: 'production',
 	mode: 'development',
 	// 入口：默认就是这个
 	entry: './src/index.js',
