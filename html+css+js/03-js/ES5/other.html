@@ -15,11 +15,12 @@
 		// 10-(100/n)
 
 		// 遍历字符串
-		let atr = 'abc'
-		let a1 = Array.from(atr)
-		let a2 = [...atr]
-		let a3 = [...new Set(atr)]
-		console.log(a1, a2, a3)
+		let str = 'abc'
+		let a1 = Array.from(str)
+		let a2 = [...str]
+		let a3 = [...new Set(str)]
+		let a4 = Array.prototype.slice.call(str)
+		console.log(a1, a2, a3, a4)
 	</script>
 </body>
 

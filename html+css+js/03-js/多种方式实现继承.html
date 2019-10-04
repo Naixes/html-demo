@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>多种方式实现继承</title>
 </head>
+
 <body>
 
 </body>
@@ -35,7 +37,7 @@
 	// c2.eat()
 	// 缺点：构造函数执行了两次
 
-	// 寄生继承
+	// 寄生继承/混合继承
 	// function Cat(color, name) {
 	// 	Animal.call(this, color)
 	// 	this.name = name
@@ -52,7 +54,7 @@
 	// console.log(c3.color+'  '+c3.name)
 	// c3.eat()
 
-	// Class实现继承，c小写
+	// Class实现继承，语法糖本质还是函数，c小写
 	class Animal {
 		constructor(color) {
 			this.color = color
@@ -63,13 +65,16 @@
 	}
 	class Cat extends Animal {
 		constructor(color, name) {
-			// super 在构造函数中
+			// super 在构造函数中，放在最开始
 			super(color)
+			// super不作为构造函数时，指向 this 而不是父类
+			super.test = 1
 			this.name = name
 		}
 	}
 	const c4 = new Cat('white', 'c4')
-	console.log(c4.color+'  '+c4.name)
+	console.log(c4.color + '  ' + c4.name)
 	c4.eat()
 </script>
+
 </html>

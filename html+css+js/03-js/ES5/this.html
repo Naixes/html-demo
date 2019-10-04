@@ -11,6 +11,25 @@
 <script type="text/javascript">
 
 	// ---------------------------------------
+	function sin() { }
+	sin.prototype.a = 2
+	console.log(sin.a) // undefined，new的时候才会去查找原型链
+
+	// ---------------------------------------
+	function fn() {
+		console.log(this.length)
+	}
+	var sin = {
+		length: 5,
+		methods: function (fn) {
+			// fn() // 0：window.length是页面上iframe的个数 
+			arguments[0]() // 2，this指arguments
+			// console.log(arguments)
+		}
+	}
+	sin.methods(fn, 1)
+
+	// ---------------------------------------
 	// function sin() {
 	// 	console.log(1)
 	// }
