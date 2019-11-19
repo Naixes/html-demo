@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+
+<body>
+	<input type="button" value="点击" id="test">
+</body>
+<!-- 模拟多线程 -->
+<script src="./Concurrent.Thread.js"></script>
+<script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.js"></script>
+<!-- 模拟多线程 -->
+<!-- <script type="text/x-script.multithreaded-js">
+	$('#test').click(function () {
+			alert(1);
+	});
+	while (true) {
+			console.log(Math.random());
+	}
+</script> -->
+<!-- js多线程 -->
+<script>
+	const worker = new Worker('task.js')
+	worker.onmessage = function (event) {
+		console.log(event.data);
+	}
+</script>
+
+</html>
