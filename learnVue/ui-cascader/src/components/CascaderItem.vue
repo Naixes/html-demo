@@ -53,8 +53,11 @@ export default {
       this.$emit('change', item);
     },
     select(opt) {
+      console.log(opt);
       const cloneValue = cloneDeep(this.value);
+      console.log(cloneValue);
       cloneValue[this.level] = opt;
+      console.log(cloneValue);
       cloneValue.splice(this.level + 1);
 
       // 将处理好的value传给父级
