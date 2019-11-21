@@ -3,7 +3,7 @@ function Sin(name) {
 	this.name = name
 }
 
-// 在M 
+// 在Memory中使用快照，过滤sin查看引用情况
 
 // 闭包
 let SinFactory = function (name) {
@@ -18,7 +18,6 @@ s3()
 // 闭包是存在堆区的
 s3 = null
 
-// ==========================================================
 
 function test() {
 	var a = "yideng";
