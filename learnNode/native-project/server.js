@@ -1,6 +1,8 @@
 const db = require('./libs/database')
-const http = require('./libs/http')
-const routers = require('./routers')
+// 开启服务，处理请求
+require('./libs/http')
+// 添加路由
+require('./routers')
 
 // 测试
 // ;(async () => {
