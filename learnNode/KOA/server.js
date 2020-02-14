@@ -28,6 +28,7 @@ userRouter.use('/comp', comp.routes())
 
 let newsRouter = new Router()
 
+// 注册路由
 router.use('/user', userRouter.routes())
 router.use('/news', newsRouter.routes())
 

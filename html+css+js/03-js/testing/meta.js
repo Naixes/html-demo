@@ -31,11 +31,13 @@ if (yideng == 1 && yideng == 2 && yideng == 3) {
 // 2 tco
 
 //TCO 直接支持浏览器的TCO
-function test(i) {
-	return test(i--, i)
-	TCO_ENABLED = true;
+function factorial(n, total = 1) { 
+ if (n === 1) return total;
+ return factorial(n - 1, n * total);
+ TCO_ENABLED = true;
 }
-test(5);
+
+factorial(3)
 
 // 3 proxy
 let laoyuan = {
@@ -48,8 +50,8 @@ const validator = {
 		}
 	}
 }
-const proxy = new Proxy(laoyuan, validator);
-proxy.age = "京程一灯";
+const proxy = new Proxy(laoyuan,validator);
+proxy.age = "sin";
 
 // 4 反射
 require("reflect-metadata")

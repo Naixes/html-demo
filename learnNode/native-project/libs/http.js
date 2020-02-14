@@ -3,26 +3,32 @@ const url = require('url')
 const querystring = require('querystring')
 const zlib = require('zlib')
 const fs = require('fs')
+// 处理文件上传
 const { Form } = require('multiparty')
 const router = require('./router')
 const {HTTP_PORT, HTTP_ROOT, HTTP_UPLOAD} = require('../config')
 
 http.createServer((req, res) => {
+	// pathname：？前面的部分，query：？后面的部分
 	let {pathname, query} = url.parse(req.url, true)
 
+	// 在res上注入方法：给所有的返回添加content-type，并且将json转换为string
 	res.writeJson = function (json) {
 		res.setHeader('content-type', 'application/json')
 		res.write(JSON.stringify(json))
 	}
 
+	// 处理post
 	if(req.method == 'POST') {
+		// 普通的post
 		if(req.headers['content-type'].startsWith('application/x-www-form-urlencoded')) {
 			let arr = []
-			// 普通的post
 			req.on('data', buffer => {
 				arr.push(buffer)
 			})
 			req.on('end', () => {
+				// querystring.parse()将query字符串解析为json
+				// Buffer.concat()返回一个合并了 list 中所有 Buffer 实例的新 Buffer
 				let post = querystring.parse(Buffer.concat(arr).toString())
 
 				// 路由
@@ -56,12 +62,14 @@ http.createServer((req, res) => {
 	}
 
 	async function handle(method, url, get, post, files){
+		// 查询路由处理函数
 		let fn = router.findRouter(method, url)
 		console.log(method, url)
 
 		if(!fn) {
-			// 文件
+			// 未找到处理函数：获取文件
 			let filepath = HTTP_ROOT + pathname
+			// fs.stat()获取文件信息，返回stats对象
 			fs.stat(filepath, (err, stat) => {
 				if(err) {
 					res.writeHeader(404)
@@ -80,7 +88,7 @@ http.createServer((req, res) => {
 				}
 			})
 		}else {
-			// 接口
+			// 接口：执行处理函数
 			try {
 				await fn(res, get, post, files)
 			} catch (error) {

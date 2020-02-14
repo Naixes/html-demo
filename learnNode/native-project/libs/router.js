@@ -1,4 +1,4 @@
-// router统一处理
+// router统一处理：返回处理函数
 let router = {
 	// 'get': {
 	// 	'url': function() {},
@@ -6,6 +6,7 @@ let router = {
 	// }
 }
 
+// 添加路由
 function addRouter(method, url, fn) {
 	method = method.toLowerCase()
 	url = url.toLowerCase()
@@ -13,6 +14,7 @@ function addRouter(method, url, fn) {
 	router[method][url] = fn
 }
 
+// 查询路由
 function findRouter(method, url) {
 	method = method.toLowerCase()
 	url = url.toLowerCase()
