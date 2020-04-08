@@ -18,6 +18,8 @@
 </template>
 
 <script>
+// 提示
+import SNotice from './components/notice/SNotice.vue';
 // 表单组件
 import SForm from './components/form/SForm.vue';
 import SFormItem from './components/form/SFormItem.vue';
@@ -37,6 +39,8 @@ const fetchData = pid => new Promise((res, rej) => {
 export default {
   name: 'app',
   components: {
+    // 提示
+    SNotice,
     // 表单
     SForm,
     SFormItem,
@@ -115,14 +119,14 @@ export default {
     this.options = await fetchData(0);
   },
   methods: {
-    // 表单
+    // 表单/提示
     submitForm() {
       this.$refs.loginForm.validate((valid) => {
-        if (valid) {
-          alert('校验通过');
-        } else {
-          alert('校验失败');
-        }
+        this.$create(SNotice, {
+          title: '提示',
+          message: valid ? '校验通过' : '校验失败',
+          duration: 1000,
+        });
       });
     },
     // 级联

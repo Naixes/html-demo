@@ -31,6 +31,8 @@ lodash/cloneDeep cloneDeep()
 
 # form表单
 
+## input
+
 结构
 
 ```vue
@@ -47,7 +49,7 @@ lodash/cloneDeep cloneDeep()
 </s-form>
 ```
 
-## 数据绑定
+### 数据绑定
 
 自定义组件的事件绑定必须绑定value和input事件
 
@@ -110,7 +112,7 @@ export default {
 
 ```
 
-## 属性继承
+### 属性继承
 
 ```vue
 <template>
@@ -132,7 +134,7 @@ export default {
 
 ```
 
-## 实现校验
+### 实现校验
 
 input的父组件实现，input时触发
 
