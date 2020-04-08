@@ -1,27 +1,58 @@
 <template>
   <div id="app">
-    <Cascader :options.sync="options" v-model="value" :lazyload="lazyload"></Cascader>
+    <!-- 级联 -->
+    <cascader :options.sync="options" v-model="value" :lazyload="lazyload"></cascader>
+    <!-- 表单 -->
+    <s-form :rules="rules" :model="model" ref="loginForm">
+      <s-form-item label="用户名" prop="username">
+        <s-input autocomplete="off" placeholder="输入用户名" v-model="model.username"></s-input>
+      </s-form-item>
+      <s-form-item label="密码" prop="password">
+        <s-input autocomplete="off" placeholder="输入密码" type="password" v-model="model.password"></s-input>
+      </s-form-item>
+      <s-form-item>
+        <button @click="submitForm">提交</button>
+      </s-form-item>
+    </s-form>
   </div>
 </template>
 
 <script>
-import Cascader from './components/Cascader.vue';
+// 表单组件
+import SForm from './components/form/SForm.vue';
+import SFormItem from './components/form/SFormItem.vue';
+import SInput from './components/form/SInput.vue';
+// 级联组件
+import Cascader from './components/cascader/Cascader.vue';
 import cityList from './data.json';
 
+// 级联
 // 获取数据
 const fetchData = pid => new Promise((res, rej) => {
   setTimeout(() => {
-    res(cityList.filter(item => item.pid == pid));
+    res(cityList.filter(item => item.pid === pid));
   }, 200);
 });
 
 export default {
   name: 'app',
   components: {
+    // 表单
+    SForm,
+    SFormItem,
+    SInput,
+    // 级联
     Cascader,
   },
   data() {
     return {
+      // 表单
+      model: { username: '', password: '' },
+      rules: {
+        username: [{ required: true, message: '请输入用户名' }],
+        password: [{ required: true, message: '请输入密码' }],
+      },
+      // 级联
       value: [],
       options: [
         {
@@ -84,6 +115,17 @@ export default {
     this.options = await fetchData(0);
   },
   methods: {
+    // 表单
+    submitForm() {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          alert('校验通过');
+        } else {
+          alert('校验失败');
+        }
+      });
+    },
+    // 级联
     async lazyload(id, cb) {
       const children = await fetchData(id);
       cb(children);

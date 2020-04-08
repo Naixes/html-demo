@@ -10,7 +10,7 @@
 <script>
 // 指令：判断是否点击了dom元素以外的部分
 import cloneDeep from 'lodash/cloneDeep';
-import { clickOutside } from '../directions/clickOutside';
+import { clickOutside } from '../../directions/clickOutside';
 
 export default {
   components: {
