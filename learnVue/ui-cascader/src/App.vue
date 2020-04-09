@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <!-- 树 -->
+    <s-tree :model="treeOpt"></s-tree>
     <!-- 级联 -->
     <cascader :options.sync="options" v-model="value" :lazyload="lazyload"></cascader>
     <!-- 表单 -->
@@ -18,6 +20,8 @@
 </template>
 
 <script>
+// 树
+import STree from './components/tree/Tree.vue';
 // 提示
 import SNotice from './components/notice/Notice.vue';
 // 表单组件
@@ -40,6 +44,8 @@ const fetchData = pid => new Promise((res, rej) => {
 export default {
   name: 'app',
   components: {
+    // 树
+    STree,
     // 提示
     SNotice,
     // 表单
@@ -51,6 +57,32 @@ export default {
   },
   data() {
     return {
+      // 树
+      treeOpt: {
+        value: '1',
+        children: [
+          {
+            value: '1-1',
+            children: [
+              {
+                value: '1-1-1',
+              },
+              {
+                value: '1-1-2',
+              },
+              {
+                value: '1-1-3',
+              },
+            ],
+          },
+          {
+            value: '1-2',
+          },
+          {
+            value: '1-3',
+          },
+        ],
+      },
       // 表单
       model: { username: '', password: '' },
       rules: {
