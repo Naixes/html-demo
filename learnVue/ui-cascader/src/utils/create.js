@@ -17,6 +17,8 @@ export default function (component, props) {
 
   // 从vm.$children中拿出comp
   const comp = vm.$children[0];
+
+  // 销毁
   comp.remove = function remove() {
     document.body.removeChild(vm.$el);
     vm.$destroy();

@@ -19,11 +19,11 @@
 
 <script>
 // 提示
-import SNotice from './components/notice/SNotice.vue';
+import SNotice from './components/notice/Notice.vue';
 // 表单组件
-import SForm from './components/form/SForm.vue';
-import SFormItem from './components/form/SFormItem.vue';
-import SInput from './components/form/SInput.vue';
+import SForm from './components/form/Form.vue';
+import SFormItem from './components/form/FormItem.vue';
+import SInput from './components/form/Input.vue';
 // 级联组件
 import Cascader from './components/cascader/Cascader.vue';
 import cityList from './data.json';
@@ -32,7 +32,8 @@ import cityList from './data.json';
 // 获取数据
 const fetchData = pid => new Promise((res, rej) => {
   setTimeout(() => {
-    res(cityList.filter(item => item.pid === pid));
+    // ==是因为两边类型不统一
+    res(cityList.filter(item => item.pid == pid));
   }, 200);
 });
 
