@@ -1,7 +1,7 @@
 <template>
-    <div v-if="vasible">
+    <div class="box" v-if="vasible">
         <h3>{{title}}</h3>
-        <p>{{message}}</p>
+        <p class="box-content">{{message}}</p>
     </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
       default: 1000,
     },
   },
-  components: {
+  created() {
+    this.show();
   },
   data() {
     return {
@@ -40,3 +41,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.box {
+  position: fixed;
+  width: 100%;
+  top: 16px;
+  left: 0;
+  text-align: center;
+  pointer-events: none;
+}
+.box-content {
+  width: 200px;
+  margin: 10px auto;
+  font-size: 14px;
+  border: blue 3px solid;
+  padding: 8px 16px;
+  background: #fff;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+</style>
