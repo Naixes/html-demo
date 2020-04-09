@@ -27,7 +27,7 @@ export default {
     };
   },
   mounted() {
-    this.$on('validate', this.validate);
+    this.$on('validate', () => { this.validate(); });
   },
   methods: {
     validate() {
