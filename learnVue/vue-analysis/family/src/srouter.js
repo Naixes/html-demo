@@ -30,7 +30,6 @@ class VueRouter {
     }
     onHashChange() {
         this.app.current = window.location.hash.slice(1) || '/'
-        console.log(this.app.current)
     }
     createRouteMap(options) {
         options.routes.forEach(opt => {
@@ -42,7 +41,6 @@ class VueRouter {
         Vue.component("router-link", {
             props: {to: String},
             render(h) {
-                console.log(this)
                 // h(tag, data, children)
                 return h("a", { attrs: {href: "#" + this.to} }, [ this.$slots.default ])
             }
@@ -51,8 +49,6 @@ class VueRouter {
         Vue.component("router-view", {
             // 注意这里要使用箭头函数否则会绑定到router-view组件，找不到app和routeMap
             render: (h) => {
-                console.log(this.app)
-                console.log(this.routeMap)
                 return h(this.routeMap[this.app.current])
             }
         })
@@ -65,7 +61,7 @@ VueRouter.install = function() {
     Vue.mixin({
         beforeCreate() {
             // this是Vue实例，$options是配置项
-            // 仅在根组件执行一次
+            // 保证仅在根组件执行一次
             if(this.$options.router) {
                 Vue.prototype.$router = this.$options.router
                 this.$options.router.init()
