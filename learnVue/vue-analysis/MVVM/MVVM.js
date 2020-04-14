@@ -15,7 +15,6 @@ class Vue {
         let computed = options.computed
         if(this.$el) {
             // 数据劫持：将所有的数据转化为Object.defineProperty()
-            // Object.defineProperty()
             new Observer(this.$data)
             // 实现computed
             for(let key in computed) {
@@ -49,7 +48,7 @@ class Vue {
     }
 }
 
-// 观察者(包含发布订阅模式)
+// 订阅者(包含发布订阅模式)
 // 实现发布订阅
 class Dep {
     constructor() {
@@ -58,7 +57,7 @@ class Dep {
     }
     // 订阅
     addSub(watcher) {
-        this,subs.push(watcher)
+        this.subs.push(watcher)
     }
     // 发布
     notify() {
@@ -79,7 +78,6 @@ class Watcher {
     get() {
         // 记录下当前的watcher
         Dep.target = this
-        // 保存旧值
         // 这里会调用数据的get方法，会将当前的watcher加入到subs当中
         const value = CompileUtil.getVal(this.vm, this.expr)
         // 要将当前target清空，否则在其他地方获取数据时也会重复加入当前的观察者
@@ -214,7 +212,7 @@ class Observer {
         Object.defineProperty(data, key, {
             get() {
                 // 获取属性值时判断是否有新的观察者并将它添加到subs中
-                Dep.target && dep.subs.push(Dep.target)
+                Dep.target && dep.addSub(Dep.target)
                 return value
             },
             set:(newVal) => {
