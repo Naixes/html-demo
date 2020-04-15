@@ -93,6 +93,41 @@ class Watcher {
     }
 }
 
+// 数据劫持
+class Observer {
+    constructor(data) {
+        // 对data的数据进行劫持
+        this.observer(data)
+    }
+    observer(data) {
+        // 校验传入的参数
+        if(data && typeof data === "object") {
+            for(const key in data) {
+                this.defineReactive(data, key, data[key])
+            }
+        }
+    }
+    defineReactive(data, key, value) {
+        // 如果该值也是一个对象，对这个对象也进行劫持
+        this.observer(data[key])
+        // 给每一个属性增加发布订阅的功能，Dep和key一对一对应
+        let dep = new Dep()
+        Object.defineProperty(data, key, {
+            get() {
+                // 获取属性值时判断是否有新的观察者并将它添加到subs中
+                Dep.target && dep.addSub(Dep.target)
+                return value
+            },
+            set:(newVal) => {
+                // 如果新值也是一个对象，对这个对象也进行劫持
+                this.observer(newVal)
+                value = newVal
+                dep.notify()
+            }
+        })
+    }
+}
+
 // 模板编译
 class Compiler {
     constructor(el, vm) {
@@ -187,41 +222,6 @@ class Compiler {
             fragment.appendChild(firstChild)
         }
         return fragment
-    }
-}
-
-// 数据劫持
-class Observer {
-    constructor(data) {
-        // 对data的数据进行劫持
-        this.observer(data)
-    }
-    observer(data) {
-        // 校验传入的参数
-        if(data && typeof data === "object") {
-            for(const key in data) {
-                this.defineReactive(data, key, data[key])
-            }
-        }
-    }
-    defineReactive(data, key, value) {
-        // 如果该值也是一个对象，对这个对象也进行劫持
-        this.observer(data[key])
-        // 给每一个属性增加发布订阅的功能
-        let dep = new Dep()
-        Object.defineProperty(data, key, {
-            get() {
-                // 获取属性值时判断是否有新的观察者并将它添加到subs中
-                Dep.target && dep.addSub(Dep.target)
-                return value
-            },
-            set:(newVal) => {
-                // 如果新值也是一个对象，对这个对象也进行劫持
-                this.observer(newVal)
-                value = newVal
-                dep.notify()
-            }
-        })
     }
 }
 
