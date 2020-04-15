@@ -34,6 +34,7 @@ class Vue {
             // 将$data取值操作都代理到实例上
             this.proxyVm(this.$data)
             // 根据数据编译模板
+            // ！！注意：实际上vue不是在这里进行dom操作，而是得到一个render函数，视图更新是patch阶段的工作
             new Compiler(this.$el, this)
         }
     }
