@@ -7,6 +7,9 @@
     </svg>
     <!-- 使用svg组件 -->
     <svg-icon name="close"/>
+    <!-- 权限按钮 -->
+    <button v-permission="['admin', 'editor']">editor button</button>
+    <button v-permission="['admin']">admin button</button>
   </div>
 </template>
 

@@ -81,7 +81,9 @@ chainWebpack(config) {
 ```js
 // 图标自动导入
 // icons/index.js
-// 参数：上下文，无嵌套文件，加载规则，返回是一个函数
+// 获取加载函数
+// 参数：上下文，是否检索子目录，加载规则，返回是一个函数
+// 有id属性，keys，resolve等方法
 const req = require.context('./svg', false, /\.svg$/)
 req.keys().map(req);
 // main.js
@@ -144,6 +146,10 @@ Vue.component('svg-icon', SvgIcon)
 #### 权限控制
 
 依赖element ui，js-cookie
+
+`vue add element`安装完注意配置.babelrc或手动引入样式文件
+
+`npm i js-cookie -S`
 
 ##### 动态路由
 
