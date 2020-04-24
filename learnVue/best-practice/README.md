@@ -315,7 +315,7 @@ const permission = {
     // 指令已经添加到元素上，el-指令相关dom元素；binding-对象
     // binding: {name:'if', expression:'foo==1', value: true}
     // v-permission="['admin','editor']"
-  inserted(el, binding) {
+    inserted(el, binding) {
     // 获取指令的值：按钮要求的角色数组
     // 结构value并取别名pRoles
     const { value:pRoles } = binding;
@@ -342,6 +342,22 @@ export default permission;
 ```
 
 也有必须使用v-if的场景
+
+##### 总结
+
+流程：
+
+输入网址----全局守卫（判断cookie无token非白名单重定向到登录）----全局守卫（判断无token，白名单继续）----登录----action Login（登录，获取token并保存，获取用户信息等）----重定向首页----全局守卫（有token，判断无roles，设置roles和路由，重定向至本页）----全局守卫（有token，有roles继续访问）----首页
+
+流程主要由全局守卫控制，vuex，cookie提供数据存储
+
+可优化成：
+
+输入网址----全局守卫（判断cookie无token非白名单重定向到登录）----全局守卫（判断无token，白名单继续）----登录----action Login（登录，获取token并保存，获取用户信息，设置roles和路由等）----重定向首页----全局守卫（有token，有roles继续访问）----首页
+
+其他方案（hccpb）：
+
+输入网址----created（判断cookie非白名单重定向至登录）-----created（判断cookie白名单重定向至登录注册全局守卫）----登录----获取用户信息设置cookie----action Login（保存用户信息和权限信息至vuex）----全局守卫（有token，有roles继续访问）----首页
 
 #### 面包屑
 

@@ -17,12 +17,15 @@ export default {
         }
     },
     actions: {
+        // 登录，保存用户信息
         login({commit}, userInfo) {
             const {username} = userInfo
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if(username === 'admin' || username === 'editor') {
+                        // 存储token到state
                         commit("SET_TOKEN", username)
+                        // 同步cookie的token
                         setToken(username);
                         resolve()
                     }else {
@@ -31,6 +34,7 @@ export default {
                 }, 1000)
             })
         },
+        // 获取保存用户角色
         getInfo({commit, state}) {
             return new Promise(resolve=> {
                 setTimeout(() => {
@@ -40,6 +44,7 @@ export default {
                 }, 1000)
             })
         },
+        // 重置token
         resetToken({commit}) {
             return new Promise(resolve => {
                 commit("SET_TOKEN", "")
