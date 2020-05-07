@@ -8,8 +8,8 @@ export default {
       default: ''
     }
   },
-  render (h) {
-    return this.renderList(h, this.item)
+  render () {
+    return this.renderList(this.item)
     // return <h1>{this.item}</h1>
   }
 }
