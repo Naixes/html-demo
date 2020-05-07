@@ -5,7 +5,7 @@ import Animate from '@/pages/Animate'
 import lifecircle from '@/pages/lifecircle'
 import lifeComp from '@/pages/lifeComp'
 import Comps from '@/pages/CompsCommunication'
-import jsx from '@/pages/jsx'
+import jsxScopSlot from '@/pages/jsxScopSlot'
 
 Vue.use(Router)
 
@@ -44,9 +44,9 @@ export default new Router({
       component: Comps
     },
     {
-      path: '/jsx',
-      name: 'Jsx',
-      component: jsx
+      path: '/jsxScopSlot',
+      name: 'jsxScopSlot',
+      component: jsxScopSlot
     }
   ]
 })
