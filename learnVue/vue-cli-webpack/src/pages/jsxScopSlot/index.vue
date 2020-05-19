@@ -31,7 +31,7 @@ export default {
     ListSlot: () => import('./components/ListSlot')
   },
   methods: {
-    renderList (h, data) {
+    renderList (data) {
       return <h5>{data}</h5>
     }
   }

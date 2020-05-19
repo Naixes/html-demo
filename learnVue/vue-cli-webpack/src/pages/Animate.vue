@@ -94,7 +94,7 @@ export default {
 /* 定义进入和离开时候的过渡状态 */
 .fade-enter-active,
 .fade-leave-active {
-    transition: all .5s;
+    transition: all 3s;
 }
 
 /* 定义进入过渡的开始状态 和 离开过渡的结束状态 */

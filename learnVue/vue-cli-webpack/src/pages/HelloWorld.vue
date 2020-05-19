@@ -9,7 +9,7 @@
     <router-link to='/animate/'>动画 | </router-link>
     <router-link to='/lifecircle/'>生命周期 | </router-link>
     <router-link to='/comps/'>组件通信 | </router-link>
-    <router-link to='/jsx/'>jsx | </router-link>
+    <router-link to='/jsxScopSlot/'>jsx&scopSlot | </router-link>
   </div>
 </template>
 
