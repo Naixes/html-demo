@@ -8,6 +8,7 @@ use app\models\BookSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BookController implements the CRUD actions for Book model.
@@ -36,12 +37,17 @@ class BookController extends Controller
     public function actionIndex()
     {
         $searchModel = new BookSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+				$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+				// 返回数据
+        YII::$app->response->format = Response::FORMAT_JSON;
+        return  $dataProvider->getModels();
+
+				// 返回页面
+        // return $this->render('index', [
+        //     'searchModel' => $searchModel,
+        //     'dataProvider' => $dataProvider,
+        // ]);
     }
 
     /**
@@ -64,15 +70,25 @@ class BookController extends Controller
      */
     public function actionCreate()
     {
+				// 返回数据
+				$result = array("code"=>0, "message"=>"err");
+        YII::$app->response->format = Response::FORMAT_JSON;
+				
         $model = new Book();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+						// return $this->redirect(['view', 'id' => $model->id]);
+						$result["message"] = "ok";
+				}else {
+					// 添加失败
+					$result["code"] = 1;
+				}
+				return $result;
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+				// 返回页面
+        // return $this->render('create', [
+        //     'model' => $model,
+        // ]);
     }
 
     /**
