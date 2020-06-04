@@ -15,6 +15,10 @@ use yii\web\Response;
  */
 class BookController extends Controller
 {
+
+		// csrf间接提交的数据
+		public $enableCsrfValidation = false
+		
     /**
      * {@inheritdoc}
      */
