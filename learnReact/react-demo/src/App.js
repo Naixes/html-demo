@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
 import Comp from './Comp'
 
+import JsxTest from "./components/JsxTest";
+import StateMgt from "./components/StateMgt";
+import EventHandle from "./components/EventHandle";
+import ContextTest from "./components/ContextTest";
+import HocTest from "./components/HocTest.js";
+import Composition from "./components/Composition";
+import HooksTest from "./components/HooksTest";
+
 // 状态映射，合并冲突
 import {connect} from 'react-redux'
 // 独立的actions，当actions没找到时会报错，好维护
@@ -24,23 +32,37 @@ class App extends Component {
   render() {
     return (
       <Router>
-        {/* redux */}
-        <div className="App">
+        <h3>JsxTest</h3>
+        {/* <JsxTest /> */}
+        <h3>状态管理</h3>
+        {/* <StateMgt /> */}
+        <h3>事件处理</h3>
+        {/* <EventHandle /> */}
+        <h3>上下文</h3>
+        {/* <ContextTest /> */}
+        <h3>Hoc</h3>
+        {/* <HocTest /> */}
+        <h3>组件复合</h3>
+        {/* <Composition /> */}
+        <h3>Hooks</h3>
+        <HooksTest />
+        <h3>redux</h3>
+        {/* <div className="App">
           name：{this.state.name}<br/>
           desc: {this.props.desc}<br/>
           age: {this.props.age}
-          {/* 注意绑定this */}
           <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
           <Comp/>
-        </div>
+        </div> */}
         {/* 路由 */}
-        <div className="nav-bar">
+        <h3>路由</h3>
+        {/* <div className="nav-bar">
           <Link to="/">首页</Link>
           <Link to="/news">新闻</Link>
         </div>
 
         <Route path="/" exact component= {Home}></Route>
-        <Route path="/news" exact component= {News}></Route>
+        <Route path="/news" exact component= {News}></Route> */}
       </Router>
     )
   }

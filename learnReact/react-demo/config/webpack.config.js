@@ -1,4 +1,6 @@
-'use strict';
+
+
+// webpack.config.js 是webpack配置文件，开头的常量声明可以看出cra能够支持ts、sass及css模块化
 
 const fs = require('fs');
 const isWsl = require('is-wsl');
@@ -139,9 +141,11 @@ module.exports = function(webpackEnv) {
       // the line below with these two lines if you prefer the stock client:
       // require.resolve('webpack-dev-server/client') + '?/',
       // require.resolve('webpack/hot/dev-server'),
+      // WebpackDevServer客户端，它实现开发时热更新功能
       isEnvDevelopment &&
         require.resolve('react-dev-utils/webpackHotDevClient'),
       // Finally, this is your app's code:
+      // 应用程序入口：src/index
       paths.appIndexJs,
       // We include the app code last so that if there is a runtime error during
       // initialization, it doesn't blow up the WebpackDevServer client, and

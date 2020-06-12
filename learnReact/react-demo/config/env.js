@@ -1,4 +1,6 @@
-'use strict';
+
+
+// env.js用来处理.env文件中配置的环境变量
 
 const fs = require('fs');
 const path = require('path');
@@ -7,6 +9,7 @@ const paths = require('./paths');
 // Make sure that including paths.js after env.js will read .env variables.
 delete require.cache[require.resolve('./paths')];
 
+// node运行环境：development、production、test等
 const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
@@ -15,6 +18,7 @@ if (!NODE_ENV) {
 }
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
+// 要扫描的文件名数组
 var dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
@@ -30,6 +34,8 @@ var dotenvFiles = [
 // that have already been set.  Variable expansion is supported in .env files.
 // https://github.com/motdotla/dotenv
 // https://github.com/motdotla/dotenv-expand
+// 从.env*文件加载环境变量
+// 实践一下，创建.env文件，修改一下默认端口号
 dotenvFiles.forEach(dotenvFile => {
   if (fs.existsSync(dotenvFile)) {
     require('dotenv-expand')(
