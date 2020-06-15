@@ -80,7 +80,7 @@ export default function HooksTest() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("msg");
+      console.log("useEffect msg");
     }, 1000);
 
     return function() {
