@@ -357,6 +357,13 @@ module.exports = function(webpackEnv) {
                       },
                     },
                   ],
+                  // 配置按需加载
+                  [
+                    require.resolve('babel-plugin-import'), 
+                    { libraryName: 'antd', style: 'css' },
+                  ],
+                  // 配置装饰器
+                  ["@babel/plugin-proposal-decorators", { "legacy": true }],
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
@@ -380,7 +387,7 @@ module.exports = function(webpackEnv) {
                   [
                     require.resolve('babel-preset-react-app/dependencies'),
                     { helpers: true },
-                  ],
+                  ]
                 ],
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Comp from './Comp'
 
+// 组件使用
 import JsxTest from "./components/JsxTest";
 import StateMgt from "./components/StateMgt";
 import EventHandle from "./components/EventHandle";
@@ -8,6 +9,29 @@ import ContextTest from "./components/ContextTest";
 import HocTest from "./components/HocTest.js";
 import Composition from "./components/Composition";
 import HooksTest from "./components/HooksTest";
+
+// 使用第三方组件
+import AntdForm from "./components/AntdForm"
+
+// 使用自定义组件
+import MyForm from "./components/MyForm"
+
+// 组件库
+// 按需引入
+// import { Button } from 'antd';
+// import "antd/dist/antd.css"
+// 配置按需导入：
+// 方案一
+// 安装react-app-rewired取代react-scripts，可以扩展webpack的配置
+// npm install react-app-rewired customize-cra babel-plugin-import -D
+// 编写配置文件config-overrides.js，参考同名文件
+// 修改scripts
+// 方案二（本项目使用）
+// npm run eject 
+// 修改配置文件
+import { Button } from 'antd';
+// 配置装饰器也有类似的两种方案
+// eject需要修改package.json和配置文件
 
 // 状态映射，合并冲突
 import {connect} from 'react-redux'
@@ -32,37 +56,44 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <h3>JsxTest</h3>
-        {/* <JsxTest /> */}
-        <h3>状态管理</h3>
-        {/* <StateMgt /> */}
-        <h3>事件处理</h3>
-        {/* <EventHandle /> */}
-        <h3>上下文</h3>
-        {/* <ContextTest /> */}
-        <h3>Hoc</h3>
-        {/* <HocTest /> */}
-        <h3>组件复合</h3>
-        {/* <Composition /> */}
-        <h3>Hooks</h3>
-        <HooksTest />
-        <h3>redux</h3>
-        {/* <div className="App">
-          name：{this.state.name}<br/>
-          desc: {this.props.desc}<br/>
-          age: {this.props.age}
-          <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
-          <Comp/>
-        </div> */}
-        {/* 路由 */}
-        <h3>路由</h3>
-        {/* <div className="nav-bar">
-          <Link to="/">首页</Link>
-          <Link to="/news">新闻</Link>
-        </div>
+        <div style={{margin: '40px'}}>
+          <h3>第三方模块</h3>
+          <Button>mua~</Button>
+          <AntdForm></AntdForm>
+          <h3>自定义模块</h3>
+          <MyForm></MyForm>
+          <h3>JsxTest</h3>
+          {/* <JsxTest /> */}
+          <h3>状态管理</h3>
+          {/* <StateMgt /> */}
+          <h3>事件处理</h3>
+          {/* <EventHandle /> */}
+          <h3>上下文</h3>
+          {/* <ContextTest /> */}
+          <h3>Hoc</h3>
+          {/* <HocTest /> */}
+          <h3>组件复合</h3>
+          {/* <Composition /> */}
+          <h3>Hooks</h3>
+          <HooksTest />
+          <h3>redux</h3>
+          {/* <div className="App">
+            name：{this.state.name}<br/>
+            desc: {this.props.desc}<br/>
+            age: {this.props.age}
+            <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
+            <Comp/>
+          </div> */}
+          {/* 路由 */}
+          <h3>路由</h3>
+          {/* <div className="nav-bar">
+            <Link to="/">首页</Link>
+            <Link to="/news">新闻</Link>
+          </div>
 
-        <Route path="/" exact component= {Home}></Route>
-        <Route path="/news" exact component= {News}></Route> */}
+          <Route path="/" exact component= {Home}></Route>
+          <Route path="/news" exact component= {News}></Route> */}
+        </div>
       </Router>
     )
   }
