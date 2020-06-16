@@ -17,6 +17,7 @@ import AntdForm from "./components/AntdForm"
 import MyForm from "./components/MyForm"
 import Dialog from "./components/Dialog"
 import {Dialog2} from "./components/Dialog"
+import Tree from "./components/Tree"
 
 // 组件库
 // 按需引入
@@ -63,9 +64,11 @@ class App extends Component {
           <Button>mua~</Button>
           <AntdForm></AntdForm>
           <h3>自定义组件</h3>
-          <h3>表单组件</h3>
+          <h4>树组件</h4>
+          <Tree></Tree>
+          <h4>表单组件</h4>
           <MyForm></MyForm>
-          <h3>弹框组件</h3>
+          <h4>弹框组件</h4>
           <Dialog>我是弹框组件,但是我不在声明的位置,嘻嘻~~~~</Dialog>
           <Dialog2>我是弹框组件2,但是我不在声明的位置,嘻嘻~~~~</Dialog2>
           <h3>JsxTest</h3>
