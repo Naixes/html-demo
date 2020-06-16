@@ -23,7 +23,7 @@ import thunk from 'redux-thunk'
 // }
 // export const counter = createStore(counterReducer)
 
-// 将多个reducer合并
+// 模块化:将多个reducer合并
 let arr = combineReducers({
     counterReducer,
     user,

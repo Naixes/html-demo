@@ -9,7 +9,9 @@ import ContextTest from "./components/ContextTest";
 import HocTest from "./components/HocTest.js";
 import Composition from "./components/Composition";
 import HooksTest from "./components/HooksTest";
+
 import ReduxTest from "./components/ReduxTest";
+import RouterText from "./components/RouterText"
 
 // 使用第三方组件
 import AntdForm from "./components/AntdForm"
@@ -61,15 +63,26 @@ class App extends Component {
     return (
       <Router>
         <div style={{margin: '40px'}}>
+          {/* 路由 */}
+          <h3>路由</h3>
+          <h4>路由1</h4>
+          <div className="nav-bar">
+            <Link to="/">首页</Link>
+            <Link to="/news">新闻</Link>
+          </div>
+          <Route path="/" exact component= {Home}></Route>
+          <Route path="/news" exact component= {News}></Route>
+          <h4>路由2</h4>
+          <RouterText></RouterText>
           <h3>Redux</h3>
-          <ReduxTest></ReduxTest>
+          {/* <ReduxTest></ReduxTest>
           <div className="App">
             name：{this.state.name}<br/>
             desc: {this.props.desc}<br/>
             age: {this.props.age}
             <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
             <Comp/>
-          </div>
+          </div> */}
           <h3>第三方组件</h3>
           <Button>mua~</Button>
           <AntdForm></AntdForm>
@@ -95,15 +108,6 @@ class App extends Component {
           {/* <Composition /> */}
           <h3>Hooks</h3>
           <HooksTest />
-          {/* 路由 */}
-          <h3>路由</h3>
-          {/* <div className="nav-bar">
-            <Link to="/">首页</Link>
-            <Link to="/news">新闻</Link>
-          </div>
-
-          <Route path="/" exact component= {Home}></Route>
-          <Route path="/news" exact component= {News}></Route> */}
         </div>
       </Router>
     )
@@ -115,7 +119,7 @@ class App extends Component {
 // fn1：解决冲突，state：reducer中的state，props组件接收的的参数
 // {}：action
 export default connect(function (state, props) {
-  console.log(state, props)
+  console.log('state',state, 'props', props)
   // 结果冲突，混合state和props
   return state.user
 }, {
