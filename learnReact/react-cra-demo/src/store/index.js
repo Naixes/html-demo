@@ -1,9 +1,13 @@
 
 // redux
-import {createStore, combineReducers} from 'redux'
+import {createStore, combineReducers, applyMiddleware} from 'redux'
 import user from './user'
 import company from './company'
 import {counterReducer} from './counterReducer'
+
+// redux不支持异步操作,需要中间件支持
+import logger from 'redux-logger'
+import thunk from 'redux-thunk'
 
 // 初始化状态,指定状态变化规则
 // reducer:函数,返回新的状态值,不能直接改变
@@ -27,4 +31,4 @@ let arr = combineReducers({
 })
 
 // 创建存储对象
-export default createStore(arr)
+export default createStore(arr, applyMiddleware(logger, thunk))

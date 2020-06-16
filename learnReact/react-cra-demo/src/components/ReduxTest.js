@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux'
 // import {counter} from '../store/index'
-import {add, minus} from '../store/counterReducer'
+import {add, minus, asyncAdd} from '../store/counterReducer'
 
 // 结合react-redux
+// 需要先在index.js全局引入store
 // 参数1：mapStateToProps = (state) => {return {num: state}}
 // 参数2：mapDispatchToProps = dispatch => {return {add:()=>dispatch({type:'add'})}}
 // connect的两个作用:
@@ -18,7 +19,7 @@ import {add, minus} from '../store/counterReducer'
     //     minus: () => ({type: 'minus'})
     // }
     // 将action creator封装进文件
-    { add, minus }
+    { add, minus, asyncAdd }
 )
 class ReduxTest extends React.Component {
   constructor() {
@@ -46,7 +47,8 @@ class ReduxTest extends React.Component {
             {/* 结合react-redux */}
             <p>{this.props.num}</p>
             {/* 参数传入action */}
-            <button onClick={this.props.add}>+</button>
+            <button onClick={() => this.props.add(2)}>+</button>
+            <button onClick={this.props.asyncAdd}>async +</button>
             <button onClick={this.props.minus}>-</button>
         </div>
     )
