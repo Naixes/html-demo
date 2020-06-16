@@ -9,6 +9,7 @@ import ContextTest from "./components/ContextTest";
 import HocTest from "./components/HocTest.js";
 import Composition from "./components/Composition";
 import HooksTest from "./components/HooksTest";
+import ReduxTest from "./components/ReduxTest";
 
 // 使用第三方组件
 import AntdForm from "./components/AntdForm"
@@ -60,6 +61,15 @@ class App extends Component {
     return (
       <Router>
         <div style={{margin: '40px'}}>
+          <h3>Redux</h3>
+          <ReduxTest></ReduxTest>
+          <div className="App">
+            name：{this.state.name}<br/>
+            desc: {this.props.desc}<br/>
+            age: {this.props.age}
+            <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
+            <Comp/>
+          </div>
           <h3>第三方组件</h3>
           <Button>mua~</Button>
           <AntdForm></AntdForm>
@@ -69,8 +79,8 @@ class App extends Component {
           <h4>表单组件</h4>
           <MyForm></MyForm>
           <h4>弹框组件</h4>
-          <Dialog>我是弹框组件,但是我不在声明的位置,嘻嘻~~~~</Dialog>
-          <Dialog2>我是弹框组件2,但是我不在声明的位置,嘻嘻~~~~</Dialog2>
+          <Dialog>我是弹框组件,我不在声明的位置,嘻嘻~~~~</Dialog>
+          <Dialog2>我是弹框组件2,我不在声明的位置,嘻嘻~~~~</Dialog2>
           <h3>JsxTest</h3>
           {/* <JsxTest /> */}
           <h3>状态管理</h3>
@@ -85,14 +95,6 @@ class App extends Component {
           {/* <Composition /> */}
           <h3>Hooks</h3>
           <HooksTest />
-          <h3>redux</h3>
-          {/* <div className="App">
-            name：{this.state.name}<br/>
-            desc: {this.props.desc}<br/>
-            age: {this.props.age}
-            <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
-            <Comp/>
-          </div> */}
           {/* 路由 */}
           <h3>路由</h3>
           {/* <div className="nav-bar">
