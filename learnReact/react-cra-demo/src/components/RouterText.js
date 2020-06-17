@@ -40,6 +40,7 @@ const ProductManage = () => {
 }
 
 // 路由守卫:利用render属性,增加逻辑扩展用户检查功能
+// render和component有竞争关系，component优先于render
 const PrivateRoute = ({component: Component, isLogin, ...rest}) => {
     return (
         <Route 

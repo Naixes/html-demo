@@ -12,6 +12,7 @@ import HooksTest from "./components/HooksTest";
 
 import ReduxTest from "./components/ReduxTest";
 import RouterText from "./components/RouterText"
+import MyReduxTest from "./components/MyReduxTest"
 
 // 使用第三方组件
 import AntdForm from "./components/AntdForm"
@@ -75,8 +76,11 @@ class App extends Component {
           <h4>路由2</h4>
           <RouterText></RouterText>
           <h3>Redux</h3>
-          {/* <ReduxTest></ReduxTest>
-          <div className="App">
+          <h4>自己实现的Redux和Redux中间件测试</h4>
+          <MyReduxTest></MyReduxTest>
+          {/* <h4>Redux和react-redux测试</h4> */}
+          {/* <ReduxTest></ReduxTest> */}
+          {/* <div className="App">
             name：{this.state.name}<br/>
             desc: {this.props.desc}<br/>
             age: {this.props.age}
