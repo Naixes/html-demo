@@ -12,7 +12,9 @@ import HooksTest from "./components/HooksTest";
 
 import ReduxTest from "./components/ReduxTest";
 import RouterText from "./components/RouterText"
+
 import MyReduxTest from "./components/MyReduxTest"
+import MyRouterTest from './components/MyRouterTest';
 
 // 使用第三方组件
 import AntdForm from "./components/AntdForm"
@@ -66,6 +68,8 @@ class App extends Component {
         <div style={{margin: '40px'}}>
           {/* 路由 */}
           <h3>路由</h3>
+          <h4>自己实现的路由测试</h4>
+          <MyRouterTest></MyRouterTest>
           <h4>路由1</h4>
           <div className="nav-bar">
             <Link to="/">首页</Link>
