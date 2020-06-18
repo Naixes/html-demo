@@ -1,68 +1,237 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 组件化
 
-## Available Scripts
+### antd
 
-In the project directory, you can run:
+#### 按需加载
 
-### `npm start`
+```js
+// 按需引入
+import { Button } from 'antd';
+import "antd/dist/antd.css"
+// 配置按需导入：
+// 方案一
+// 安装react-app-rewired取代react-scripts，可以扩展webpack的配置
+// npm install react-app-rewired customize-cra babel-plugin-import -D
+// 编写配置文件config-overrides.js，参考同名文件
+// 用来参考的，本项目已eject，未使用
+const { override, fixBabelImports, addDecoratorsLegacy } = require("customize-cra");
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+// override生成webpack配置对象
+module.exports = override(
+  fixBabelImports("import", { // antd按需加载
+    libraryName: "antd",
+    libraryDirectory: "es",
+    style: "css"
+  }),
+  addDecoratorsLegacy() // 配置装饰器
+);
+// 修改scripts，使用react-app-rewired取代react-scripts
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+// 方案二（本项目使用）
+// npm run eject 
+// 修改配置文件
+```
 
-### `npm test`
+#### 配置装饰器
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Form
 
-### `npm run build`
+getFieldDecorator：装饰器工厂，得到一个装饰器，设置校验规则，监听事件
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 组件设计
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+#### 表单组件
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##### 设计思路
 
-### `npm run eject`
+通过高阶组件实现数据收集，校验，提交等特性
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+传递包装好书接管输入事件，统一管理表单数据
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+传递一个校验函数
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+##### 实现
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+克隆
 
-## Learn More
+#### 弹窗组件
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+##### portal
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+16.0 传送门
 
-### Code Splitting
+##### unstable_renderSubtreeIntoContainer
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+16.0之前
 
-### Analyzing the Bundle Size
+#### 树形组件
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+#### 组件优化
 
-### Making a Progressive Web App
+##### shouldComponentUpdate
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+判断是否变化
 
-### Advanced Configuration
+##### PureComponet
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+纯展示型组件可以使用，浅对比。使用时注意对象（可以直接展开而不使用对象赋值，否则对比不起作用）
 
-### Deployment
+##### React.memo
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+16.6之后，让函数式组件也拥有Pure Component的功能，是一个高阶组件
 
-### `npm run build` fails to minify
+##### Immutable.js
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+不可变
+
+## 全家桶
+
+### Redux
+
+js应用的状态容器，保证程序的行为一致性且易于测试
+
+**安装**
+
+对比vuex没有action，Reducer相当于mutation
+
+#### reducer
+
+一个函数，初始化state，定义state修改规则
+
+通过dispatch一个action提交数据修改
+
+强制更新：`this.forcrUpdate()`
+
+**原生**
+
+createStore 创建
+
+reducer 初始化，修改状态
+
+getState 获取状态
+
+dispatch 提交变更
+
+subscribe 订阅变更
+
+#### react-redux
+
+Provider
+
+为后代组件提供store
+
+connect
+
+装饰器工厂函数，为组件提供数据和变更方法
+
+参数1:mapStateToProps方法
+
+参数2:mapDispatchToProps方法，可以简化为一个对象
+
+#### 异步
+
+redux只支持同步，异步任务需要中间件，比如redux-thunk和redux-logger
+
+安装
+
+applyMiddleware
+
+#### 优化
+
+store模块
+
+#### reducer原理实现
+
+store
+
+中间件
+
+异步
+
+#### react-redux原理实现
+
+### Router4
+
+ react-router-dom
+
+一切皆组件
+
+#### 匹配
+
+#### 传参
+
+####  嵌套
+
+#### 404
+
+#### 路由守卫
+
+#### 原理实现
+
+### 最佳实践
+
+#### 异步方案redux-saga
+
+管理副作用
+
+**使用**
+
+创建清单
+
+创建中间件
+
+运行saga监听
+
+#### 数据流方案dva
+
+基于redux和redux-saga
+
+类似vuex
+
+#### 应用框架umi
+
+基于dva
+
+结构
+
+`umi g page index //生成首页，路由`
+
+`umi g page user/'$id' // 动态路由`
+
+`umi g layout ./users // 生成布局`
+
+umi/router提供路由器
+
+##### 404页面
+
+`umi g page 404`
+
+##### 布局页
+
+创建layouts/index
+
+##### 扩展路由
+
+使用文件中第一个块注释，要符合yaml语法
+
+实现路由守卫
+
+##### 引入dva
+
+安装umi-plugin-react
+
+创建配置文件.umirc.js，配置插件，也可以添加自定义路由
+
+创建models
+
+使用connect映射
+
+mock
+
+loading
+
+#### 项目
+
+重定向注释
+
+安装ant-design-pro
