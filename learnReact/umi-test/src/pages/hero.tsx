@@ -25,7 +25,7 @@ interface PageProps extends ConnectProps {
 const Hero: FC<PageProps> = (props) => {
   // props.命名空间
   console.log(props.hero);
-  const { hero, dispatch } = props
+  const { hero, dispatch, history } = props
   const { heros = [], filterKey=0, freeheros = [], itemHover = 0 } = hero;
 
   const onChange = e => {
@@ -44,6 +44,10 @@ const Hero: FC<PageProps> = (props) => {
       },
     });
   }
+  
+  const onItemClick = (index: number) => {
+    history.push(`/herodetail/${index}`)
+  }
 
   return (
     <div className={styles.normal}>
@@ -58,6 +62,7 @@ const Hero: FC<PageProps> = (props) => {
                     data={data}
                     itemHover={itemHover}
                     onItemHover={onItemHover}
+                    onItemClick={onItemClick}
                     thisIndex={index}
                     key={index}
                   />

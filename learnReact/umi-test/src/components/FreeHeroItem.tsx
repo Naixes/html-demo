@@ -5,16 +5,20 @@ interface FreeHeroItemProps {
   data: HeroProps;
   thisIndex: number;
   onItemHover: (thisIndex: number) => void;
+  onItemClick: (thisIndex: number) => void;
   itemHover: number;
 }
 
-const FreeHeroItem: FC<FreeHeroItemProps> = ({ data, thisIndex, onItemHover, itemHover }) => {
+const FreeHeroItem: FC<FreeHeroItemProps> = ({ data, thisIndex, onItemHover, itemHover, onItemClick }) => {
   if (!data || !data.ename) return null;
 
   return (
     <img
       onMouseEnter={() => {
         itemHover !== thisIndex && onItemHover(thisIndex);
+      }}
+      onClick={() => {
+        onItemClick(thisIndex)
       }}
       style={{
         borderRadius: '5px',
