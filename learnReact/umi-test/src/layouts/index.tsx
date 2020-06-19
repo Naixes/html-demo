@@ -13,7 +13,7 @@ function BasicLayout(props) {
   return (
     <Layout>
       <Header>
-        <div className={styles.logo}>王者荣耀资料库 </div>
+        <div className={styles.logo}>王者荣耀资料库</div>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -21,7 +21,7 @@ function BasicLayout(props) {
           style={{ lineHeight: '64px' }}
         >
           <Menu.Item key="/hero">
-            <Link to="hero">{pathname}英雄</Link>
+            <Link to="hero">英雄</Link>
           </Menu.Item>
           <Menu.Item key="/item">
             <Link to="item">局内道具</Link>

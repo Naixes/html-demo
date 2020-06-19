@@ -1,3 +1,139 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Dva
+
+### Model
+
+在 umi 项目中，你可以使用 dva 来处理数据流，以响应一些复杂的交互操作。这些处理数据流的文件统一放在 models 文件夹下，每一个文件默认导出一个对象，里面包含数据和处理数据的方法，通常我们称之为 model 。一个 model 文件的结构一般是这样的：
+
+```
+export default {
+  namespace: 'example', // 这个 model 的名字，必须全局唯一
+  state: {
+    count: 0,
+  }, // 初始数据
+  reducers: {
+    save() { ... },
+  }, // 用于修改数据
+  effects: {
+    *getData() { ... },
+  }, // 用于获取数据
+  subscriptions: {
+    setup() { ... },
+  }, // 用于订阅数据
+}
+```
+
+### Reducer
+
+每一个 [reducer](https://dvajs.com/guide/concepts.html#reducer) 都是一个普通函数，接受 state 和 action 作为参数，即：`(state, action) => state` ，你可以在函数中更改旧的 state，返回新的 state 。
+
+```
+reducers: {
+  save(state, { payload }) {
+    return ({ ...state, ...payload });
+  },
+},
+```
+
+### Effect
+
+每一个 [effect](https://dvajs.com/guide/concepts.html#effect) 都是一个 [生成器函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*) ，你可以在这里获取你需要的数据，例如向服务器发起一个请求、或是获取其他 model 里的 state 。为了明确分工，你无法在 effect 中直接修改 state ，但你可以通过 [put 方法](https://www.yuque.com/hele/react/nwb3ff#put) 调用 reducer 来修改 state 。
+
+```
+state:{
+  assets:{},
+},
+*changeAssets({ payload }, { call, put, select }) {
+  const user = yield select(states => states.user);
+  const assets = yield call(fetchData, user);
+  yield put({ type: 'save', payload: { assets } });
+},
+```
+
+#### select
+
+此方法用于获取当前或其他 model 的 state 。
+
+```
+const data = yield select(states => states[namespace]);
+```
+
+#### call
+
+此方法用于执行一个异步函数，可以理解为等待这个函数执行结束。项目中常用于发送 http 请求，等待服务端响应数据。
+
+```
+const data = yield call(doSomethingFunc, parameter);
+```
+
+#### put
+
+此方法用于触发一个 action，这个 action 既可以是一个 reducer 也可以是一个 effect 。
+
+```
+yield put({ type: 'reducerName', payload: { page } });
+```
+
+### Subscription
+
+[subscription](https://dvajs.com/guide/concepts.html#subscription) 用于订阅一个数据源，根据需要使用 dispatch 触发相应的 action。数据源可以是当前的时间、服务器的 websocket 连接、keyboard 输入、geolocation 变化、history 路由变化等等。 项目中常用于页面初始化数据的自动请求，如：
+
+```
+subscriptions: {
+  setup({ dispatch, history }) {
+    return history.listen(({ pathname, query }) => {
+      // 进入 '/home' 路由，发起一个名叫 'query' 的 effect
+      if (pathname === '/home') {
+        dispatch({ type: 'query' });
+      }
+    });
+  },
+},
+```
+
+(model,page和其他)
+
+### dispatch
+
+类似 effect 中的 [put 方法](https://www.yuque.com/hele/react/nwb3ff#put)，你可以在 subscription 的参数、或是一个已经 connect 过的组件的 `props` 中拿到。
+
+### connect
+
+通过此方法在你的组件中获取到指定 model 的 state 数据。
+
+**示例**：
+
+```
+import { connect } from 'dva';
+function App({ user, dispatch }) {
+  const handleClick = () => {
+    dispatch({ type: 'user/fetchUser' });
+  };
+  return (
+    <div>
+      <h2>Hello, {user}</h2>
+      <button onClick={handleClick}>Click me</button>
+    </div>
+  );
+}
+export default connect(({ user }) => ({ user }))(App);
+```
+
+以上内容，做了一些简化描述。 相关概念，参阅[官方文档](http://www.umijs.org/)。
+
 ## 初始化项目
 
 ### 第一步 使用 yarn 初始化项目
@@ -66,3 +202,29 @@ export default {
 
 ## 使用 dva
 
+在 umi@3 中要使用 dva 的功能很简单，只要使用安装 `@umijs/plugin-dva` 并在 配置文件中开启 `dva` 配置。
+
+```
+yarn add @umijs/plugin-dva
+```
+
+> 如果提示 dva 不是约定的配置，说明你没有装 @umijs/plugin-dva ，如果你 dva 没有生效，可能是你配置没开启
+
+教程在前面[使用 create-umi-app 初始化项目](https://www.yuque.com/umijs/umi/createumi#15de1c17)时，依赖了 `@umijs/preset-react` ，这是一个插件集，你无需再而外安装 plugin-dva ，只需要再配置中开启即可。打开 umi 的配置文件：
+
+### ./umirc.js
+
+```
+import { defineConfig } from 'umi';
+
+export default defineConfig({
+  dva: {},
+  antd: {}
+});
+```
+
+### 新增 model 文件
+
+umi 中启用 dva 时，约定 `./src/models/` 目录下的  model 文件将被视为 model 模块 ，可以在页面中使用。
+
+> 这里的 model 模块不仅仅是指 dva model 还有可能是 useModel 的模块。umi会自己判断，这里我们先新建dva的模块就好。
