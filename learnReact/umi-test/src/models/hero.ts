@@ -11,7 +11,10 @@ export interface HeroProps {
 
 export interface HeroModelState {
   name: string;
-  heros: HeroProps[],
+  heros: HeroProps[];
+  freeheros: HeroProps[];
+  filterKey: number;
+  itemHover: number;
 }
 
 export interface HeroModelType {
@@ -33,6 +36,9 @@ const HeroModel: HeroModelType = {
     state: {
         name: 'hero',
         heros: [],
+        freeheros: [],
+        filterKey: 0,
+        itemHover: 0
     },
 
     effects: {
@@ -41,17 +47,27 @@ const HeroModel: HeroModelType = {
         },
         // 这里的 put 方法和 dispatch 方法可以理解为同一个方法，只是在不同的地方，用不同的方法名表示而已。这里我们写了一个静态数据，然后又发起了 save 的事件。
         *fetch({ type, payload }, { put, call, select }) {
-            // const data = yield request('/herolist.json');
-            // 传参
-            const data = yield request('/herodetails.json', {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json; charset=utf-8',
-                },
-                body: JSON.stringify({
-                  ename: 110,
-                }),
+            const data = yield request('/web201605/js/herolist.json');
+            // 传参获取单条数据
+            // const data = yield request('/herodetails.json', {
+            //     method: 'POST',
+            //     headers: {
+            //       Accept: 'application/json',
+            //       'Content-Type': 'application/json; charset=utf-8',
+            //     },
+            //     body: JSON.stringify({
+            //       ename: 110,
+            //     }),
+            // });
+            const freeheros = yield request('mock/freeheros.json', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
+              },
+              body: JSON.stringify({
+                number: 10,
+              }),
             });
             const localData = [
                 {
@@ -75,6 +91,7 @@ const HeroModel: HeroModelType = {
                 type: 'save',
                 payload: {
                     heros: data||localData,
+                    freeheros
                 },
             });
         },

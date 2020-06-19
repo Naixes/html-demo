@@ -266,3 +266,13 @@ export default {
 
 - changeOrigin 设置是否跨域请求资源
 - pathRewrite 表示是否重写请求地址，比如这里的配置，就是把 `/api` 替换成空字符
+
+## umi 中使用 mock
+
+在 umi 中使用 mock 还是蛮简单的，任何配置都不需要，只要在 `./mock/` 文件夹下，新建 js 文件，然后按照规范编写文档，就可以使用 mock 功能了。
+
+> 在page下，定义_mock.js也可以使用mock功能。如./src/pages/index/_mock.js
+
+## 在 umi 中使用 less
+
+要在 umi 中使用 less 不需要任何配置，直接使用就可以了。
