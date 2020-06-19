@@ -41,7 +41,18 @@ const HeroModel: HeroModelType = {
         },
         // 这里的 put 方法和 dispatch 方法可以理解为同一个方法，只是在不同的地方，用不同的方法名表示而已。这里我们写了一个静态数据，然后又发起了 save 的事件。
         *fetch({ type, payload }, { put, call, select }) {
-            const data = yield request('/web201605/js/herolist.json');
+            // const data = yield request('/herolist.json');
+            // 传参
+            const data = yield request('/herodetails.json', {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                  ename: 110,
+                }),
+            });
             const localData = [
                 {
                     ename: 105,
