@@ -138,8 +138,6 @@ export default connect(({ user }) => ({ user }))(App);
 
 ### 第一步 使用 yarn 初始化项目
 
-
-
 ```
 $ yarn global add @umijs/create-umi-app
 ```
@@ -228,3 +226,43 @@ export default defineConfig({
 umi 中启用 dva 时，约定 `./src/models/` 目录下的  model 文件将被视为 model 模块 ，可以在页面中使用。
 
 > 这里的 model 模块不仅仅是指 dva model 还有可能是 useModel 的模块。umi会自己判断，这里我们先新建dva的模块就好。
+
+## 监听路由事件
+
+一个很常见的需求，我们需要在进入页面的时候，发起请求页面初始化数据。这里我们通过 dva model 的 subscriptions 实现。
+
+## http 请求 umi-request
+
+在 umi 项目中并没有规定一定要使用某种 http 请求方式，我们可以根据实际项目，选择自己最熟悉和服务端交互最优的 http 请求方式，一般项目中我们比较常用的就是 fetch 和 axios ，这两者的优缺点比较，可以查阅其他资料，但是无论你选择哪一种，在你需要更换成另一种时，只需要修改几行代码，因为它们在使用上，只有一点点参数结构的差异。
+
+> preset-react 中内置了 plugin-request 插件，这里我们直接使用。
+
+## 配置 proxy
+
+要在 umi 中使用 proxy 非常简单，只要在配置文件中配置就可以了。
+
+./.umirc.js
+
+```
+export default {
+  plugins: [
+    ...
+  ],
+  "proxy": {
+    "/api": {                                       ---step1
+      "target": "https://pvp.qq.com", ---step2
+      "changeOrigin": true,                         ---step3
+      "pathRewrite": { "^/api" : "" }               ---step4
+    }
+  }
+}
+```
+
+> 注意层级，proxy在最外层，不要写到插件plugins里面
+
+- step1 设置了需要代理的请求头，比如这里定义了 `/api` ，当你访问如 `/api/abc` 这样子的请求，就会触发代理
+
+- step2 设置代理的目标，即真实的服务器地址
+
+- changeOrigin 设置是否跨域请求资源
+- pathRewrite 表示是否重写请求地址，比如这里的配置，就是把 `/api` 替换成空字符
