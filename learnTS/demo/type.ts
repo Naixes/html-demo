@@ -4,9 +4,9 @@ let isDone: boolean = false
 
 // 数值
 let decLiteral: number = 20
-let hexLiteral: number = 0x14
-let binaryLiteral: number = 0b10100
-let octalLiteral: number = 0o24
+let hexLiteral: number = 0x14 // 16进制
+let binaryLiteral: number = 0b10100 // 2进制
+let octalLiteral: number = 0o24 // 8进制
 
 // 字符串
 let str: string = 'aaa'
@@ -64,6 +64,10 @@ function infiniteLoop(): never {
 	}
 }
 
+// 联合类型
+let numberOrString: string | number;
+numberOrString = 2;
+
 // object：非原始类型
 // declare function create(o: object | null): void
 // 规定数量和类型
@@ -76,4 +80,28 @@ let some: any = 'string'
 // let strLength: number = (<string>some).length
 let strLength: number = (some as string).length
 
+// 用接口表示‘数组’
+interface NumberArray {
+    [index: number]: number;
+}
+let fibonacci: NumberArray = [1, 1, 2, 3, 5];
+// 报错
+// console.log(fibonacci.length);
+
+// 泛型接口
+// 用接口定义函数的形状
+interface CreateArrayFunc {
+    <T>(length: number, value: T): Array<T>;
+}
+
+let createArray: CreateArrayFunc;
+createArray = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = [];
+    for (let i = 0; i < length; i++) {
+        result[i] = value;
+    }
+    return result;
+}
+
+createArray(3, 'x'); // ['x', 'x', 'x']
 

@@ -3,9 +3,9 @@
 var isDone = false;
 // 数值
 var decLiteral = 20;
-var hexLiteral = 0x14;
-var binaryLiteral = 20;
-var octalLiteral = 20;
+var hexLiteral = 0x14; // 16进制
+var binaryLiteral = 20; // 2进制
+var octalLiteral = 20; // 8进制
 // 字符串
 var str = 'aaa';
 // 数组
@@ -51,9 +51,18 @@ function infiniteLoop() {
     while (true) {
     }
 }
-create({ prop: 0 });
+// 联合类型
+var numberOrString;
+numberOrString = 2;
+// object：非原始类型
+// declare function create(o: object | null): void
+// 规定数量和类型
+// declare function create(o: {prop: number} | null): void
+// create({prop: 0})
 // 类型断言
 var some = 'string';
 // 强制转换
 // let strLength: number = (<string>some).length
 var strLength = some.length;
+var fibonacci = [1, 1, 2, 3, 5];
+console.log(fibonacci.length);
