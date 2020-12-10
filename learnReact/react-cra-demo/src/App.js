@@ -67,54 +67,54 @@ class App extends Component {
       <Router>
         <div style={{margin: '40px'}}>
           {/* 路由 */}
-          <h3>路由</h3>
-          <h4>自己实现的路由测试</h4>
+          <h2>======路由======</h2>
+          <h3>---自己实现的路由测试---</h3>
           <MyRouterTest></MyRouterTest>
-          <h4>路由1</h4>
+          <h3>---路由1---</h3>
           <div className="nav-bar">
             <Link to="/">首页</Link>
             <Link to="/news">新闻</Link>
           </div>
           <Route path="/" exact component= {Home}></Route>
           <Route path="/news" exact component= {News}></Route>
-          <h4>路由2</h4>
+          <h3>---路由2---</h3>
           <RouterText></RouterText>
-          <h3>Redux</h3>
-          <h4>自己实现的Redux和Redux中间件测试</h4>
+          <h2>======Redux======</h2>
+          <h3>---自己实现的Redux和Redux中间件测试---</h3>
           <MyReduxTest></MyReduxTest>
-          {/* <h4>Redux和react-redux测试</h4> */}
-          {/* <ReduxTest></ReduxTest> */}
-          {/* <div className="App">
+          <h3>---Redux和react-redux测试---</h3>
+          <ReduxTest></ReduxTest>
+          <div className="App">
             name：{this.state.name}<br/>
             desc: {this.props.desc}<br/>
             age: {this.props.age}
             <input type="button" value="改变age" onClick={this.changeAge.bind(this)}></input>
             <Comp/>
-          </div> */}
-          <h3>第三方组件</h3>
+          </div>
+          <h2>======第三方组件======</h2>
           <Button>mua~</Button>
           <AntdForm></AntdForm>
-          <h3>自定义组件</h3>
-          <h4>树组件</h4>
+          <h2>======自定义组件======</h2>
+          <h3>---树组件---</h3>
           <Tree></Tree>
-          <h4>表单组件</h4>
+          <h3>---表单组件---</h3>
           <MyForm></MyForm>
-          <h4>弹框组件</h4>
+          <h3>---弹框组件---</h3>
           <Dialog>我是弹框组件,我不在声明的位置,嘻嘻~~~~</Dialog>
           <Dialog2>我是弹框组件2,我不在声明的位置,嘻嘻~~~~</Dialog2>
-          <h3>JsxTest</h3>
+          <h2>======JsxTest======</h2>
           {/* <JsxTest /> */}
-          <h3>状态管理</h3>
+          <h2>======状态管理======</h2>
           {/* <StateMgt /> */}
-          <h3>事件处理</h3>
+          <h2>======事件处理======</h2>
           {/* <EventHandle /> */}
-          <h3>上下文</h3>
+          <h2>======上下文======</h2>
           {/* <ContextTest /> */}
-          <h3>Hoc</h3>
+          <h2>======Hoc======</h2>
           {/* <HocTest /> */}
-          <h3>组件复合</h3>
+          <h2>======组件复合======</h2>
           {/* <Composition /> */}
-          <h3>Hooks</h3>
+          <h2>======Hooks======</h2>
           <HooksTest />
         </div>
       </Router>

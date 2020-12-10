@@ -51,12 +51,12 @@ class ReduxTest extends React.Component {
         <div>
             <p>{counter.getState()}</p>
             <button onClick={() => {counter.dispatch({type: 'add'})}}>+</button>
-            <button onClick={() => {counter.dispatch({type: 'add'})}}>+</button>
             <button onClick={() => {counter.dispatch(function(){
                 setTimeout(() => {
                   counter.dispatch({ type: "add" })
                 }, 1000);
-            })}}>-</button>
+            })}}>async +</button>
+            <button onClick={() => {counter.dispatch({type: 'minus'})}}>-</button>
         </div>
     )
   }

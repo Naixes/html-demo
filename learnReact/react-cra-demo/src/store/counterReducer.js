@@ -2,6 +2,9 @@ export const add = (num) => ({ type: 'add', payload: num })
 
 export const minus = () => ({type: 'minus'})
 
+// saga异步
+export const sagaAdd = () => ({type: 'sagaAdd'})
+
 // 异步增加
 export const asyncAdd = (dispatch, getState) => dispatch => {
     setTimeout(() => {
