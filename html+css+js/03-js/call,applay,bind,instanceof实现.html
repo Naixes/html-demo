@@ -20,7 +20,7 @@
 		const result = content.fn(...args)
 		// 删除方法
 		delete content.fn
-		result result
+		return result
 	}
 
 	Function.prototype.myApply = function (content) {

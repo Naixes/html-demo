@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>多种方式实现继承</title>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+	function Animal(color) {
+		this.color = color
+	}
+	Animal.prototype = {
+        constructor: Animal,
+        eat: () => {
+            console.log('eating');
+        }
+    }
+
+	// 寄生继承/混合继承
+	function Cat(color, name) {
+		Animal.call(this, color)
+		this.name = name
+	}
+	Cat.prototype = Object.create(Animal.prototype, {
+		constructor: {
+			value: Cat,
+			enumerable: false,
+			writable: true,
+			configurable: true
+		}
+	})
+
+	function TYCat(color, name) {
+		Animal.call(this, color)
+		this.name = name
+	}
+	TYCat.prototype = Object.create(Cat.prototype, {
+		constructor: {
+			value: TYCat,
+			enumerable: false,
+			writable: true,
+			configurable: true
+		}
+	})
+
+	const c3 = new Cat('black', 'c3')
+	const c4 = new Cat('black', 'c4')
+    const tyc = new TYCat('white', 'tyc')
+	console.log(c3.color+'  '+c3.name)
+	c3.eat()
+    // 重写eat
+    c3.eat = () => {
+        console.log('c3 eat');
+    }
+	c3.eat()
+    c3.son = new Cat('orange', 'c31')
+    // 重写原型链上的eat
+    c3.son.constructor.prototype.eat = () => {
+        console.log('c31 eat');
+    }
+    c3.son.eat()
+	c4.eat()
+    tyc.eat()
+    console.log(c3);
+    console.log(tyc);
+</script>
+
+</html>
