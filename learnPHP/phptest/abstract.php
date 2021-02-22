@@ -29,7 +29,9 @@
 		public function study() {
 			echo "study";
 		}
-		public function getPI() {
+		// 静态方法
+		public static function getPI() {
+			// self指向当前类
 			echo self::PI;
 		}
 	}
@@ -38,8 +40,8 @@
 	$stu1->eat();
 	$stu1->run();
 	$stu1->study();
-	// 获取常量
-	$stu1->getPI();
+	// 获取常量，执行静态方法
+	Student::getPI();
 	echo Action::NAME;
 	echo Person::PI;
 	echo Student::PI;

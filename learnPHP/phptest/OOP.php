@@ -4,12 +4,13 @@
 		public function __construct($age) {
 			$this->age = $age;
 		}
-		// 对象毁时执行
+		// 析造函数：对象毁时执行
 		public function __destruct() {
 			// 可以进行资源的释放，数据库关闭，读取文件关闭
-			echo "bye" . $this->ag
-		// 析造函数：对象销e;
-			echo "bye {$this->age}";
+      		// 对象被销毁时执行，即没有代码要执行时
+			echo "bye" . $this->ag;
+			// 另一种连接字符串的方式
+			// echo "bye {$this->age}";
 		}
 		public function getAge() {
 			return $this->age;

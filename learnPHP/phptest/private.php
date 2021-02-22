@@ -12,7 +12,6 @@
 		}
 
 		// 魔术方法：只适用于私有或保护
-		
 		public function __get($key) {
 			// if($key === 'age') {
 			// 	return $this->age;
@@ -27,7 +26,7 @@
 			}
 		}
 
-		// 判断时触发
+		// 判断isset时触发
 		public function __isset($key) {
 			if($key === 'money') {
 				return true;
@@ -49,7 +48,7 @@
 	echo $p1->money;
 	// 显示关于一个或多个表达式的结构信息，包括表达式的类型与值。数组将递归展开值，通过缩进显示其结构。
 	var_dump(isset($p1->money));
-	// isset：私有会返回false
+	// isset：判断是否可以访问，私有会返回false
 	var_dump(isset($p1->age));
 	unset($p1->money);
 	echo $p1->money;

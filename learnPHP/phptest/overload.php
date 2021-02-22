@@ -11,7 +11,7 @@
 			$this->money = $money;
 		}
 
-		public function getSex() {
+		public function getSex($name) {
 			echo "unknow";
 		}
 	}
@@ -24,11 +24,14 @@
 			$this->sex = "man";
 		}
 
-		// php重写，5.4以后需要与父类参数个数一致否则会报警告
+		// php重如果写同样的名称就是重写和参数无关，5.4以后需要与父类参数个数一致否则会报警告
 		public function getSex($name) {
 			// php实现重载
-			parent::getSex();
+			parent::getSex($name);
 			echo "{$name} is {$this->sex}";
+		}
+		public function getMoney() {
+			echo "{$this->name} has {$this->money}";
 		}
 	}
 
@@ -36,4 +39,5 @@
 	// 参数不对会报错
 	// $man1->getSex();
 	$man1->getSex('jack');
+	$man1->getMoney();
 ?>
