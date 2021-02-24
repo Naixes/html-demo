@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+const obj = {
+    name: 'naixes',
+    age: 18,
+    [Symbol.asyncIterator]() {
+        const me = this
+        const keys = Object.keys(this)
+        const len = keys.length
+        let pointer = 0
+        
+        return {
+            next() {
+            const done = pointer >= len
+            const value = !done ? me[keys[pointer++]] : undefined
+            return new Promise(resolve =>{
+                setTimeout(() => {
+                resolve({done,value})
+                }, 1000)
+            })
+            }
+        }
+    }
+}
+async function fn() {
+    for await(const val of obj) {
+        console.log(val)
+    }
+}
+fn()
+
+// 异步生成器
+async function* asyncGenerator() {
+    yield await Promise.resolve(1)
+    yield await Promise.resolve(2)
+    yield await Promise.resolve(3)
+}
+const asyncIterator = asyncGenerator()
+asyncIterator.next().then(res => console.log('res', res))
+async function fn1() {
+    for await(const val of asyncIterator) {
+        console.log('val', val)
+    }
+}
+fn1()
+</script>
+</html>
