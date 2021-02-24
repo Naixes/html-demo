@@ -23,7 +23,15 @@
 7. 实现一个支持空的then的Promise（支持透传）
 <!-- 以下步骤较复杂，完成上面的步骤算是一个简单的Promise实现了 -->
 8. 实现一个支持then传递thenable对象的Promise（给then中注入resolve和reject使其操作与Promise保持一致）
+9. 实现一个支持then传递Promise的Promise
+10. 实现一个支持resolve传递Promise的Promise
+11. 实现一个可以处理then中循环Promise的Promise（处理循环引用，抛出循环引用错误）
+12. 实现一个支持静态方法Promise.all的Promise
+13. 实现一个支持reject和catch的Promise
+14. 实现一个支持处理完成态和失败态的Promise
 
+> 规范参考：
+>
 > ...
 > then 方法必须返回一个 promise 对象 注3
 > promise2 = promise1.then(onFulfilled, onRejected);   
@@ -39,9 +47,19 @@
 >
 > 运行 `[[Resolve]](promise, x)` 需遵循以下步骤：
 >
-> ...
+> **`x` 与 `promise` 相等**
 >
-> `x` 为对象或函数
+> 如果 `promise` 和 `x` 指向同一对象，以 `TypeError` 为据因拒绝执行 `promise`
+>
+> **`x` 为 Promise**
+>
+> 如果 `x` 为 Promise ，则使 `promise` 接受 `x` 的状态 注4：
+>
+> - 如果 `x` 处于等待态， `promise` 需保持为等待态直至 `x` 被执行或拒绝
+> - 如果 `x` 处于执行态，用相同的值执行 `promise`
+> - 如果 `x` 处于拒绝态，用相同的据因拒绝 `promise`
+>
+> **`x` 为对象或函数**
 >
 > 如果 `x` 为对象或者函数：
 >
