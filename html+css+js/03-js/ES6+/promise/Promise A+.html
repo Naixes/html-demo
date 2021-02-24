@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+    const PENDING = "Pending"
+    const FULFILLED = "Fulfilled"
+    const REJECTED = "Rejected"
+
+    class MyPromise {
+        constructor(fn) {
+            // 自身的状态：
+            this.state = PENDING // 存放当前的状态：pending，fulfilled，rejected
+            this.value = undefined
+
+            // 缓存所有的then方法
+            this.resolvedCallbacks = []
+
+            const resolve = (val) => {
+                // 需要将以下操作异步化否则如果同步执行resolve时执行到这里then方法还没有执行，队列中没有可以执行的回调
+                setTimeout(() => {
+                    // 判断当前状态，防止resolve多次
+                    if(this.state === PENDING) {
+                        this.state = FULFILLED
+                        this.value = val
+                        // 触发resolve时会执行then方法，可能会有多个then方法
+                        // this.resolvedCallbacks.map(fn => fn(val))
+                        // 实现链式调用后这里的val也可以不传了
+                        this.resolvedCallbacks.map(fn => fn())
+                    }
+                })
+            }
+            const reject = (val) => {
+                this.state = REJECTED
+                this.value = val
+            }
+            // 执行fn并注入resolve和reject
+            fn(resolve, reject)
+        }
+        then(onFulfilled){
+            if(this.state === PENDING){
+                // this.resolvedCallbacks.push(onFulfilled)
+                // 返回Promise，支持链式调用
+                return new MyPromise((resolve, reject) => {
+                    this.resolvedCallbacks.push(() => {
+                        const res = onFulfilled(this.value)
+                        resolve(res)
+                    })
+                })
+            }
+        }
+    }
+</script>
+<script>
+    // 步骤一
+    // new MyPromise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('step 1')
+    //     }, 1000)
+    // }).then(res => {
+    //     console.log('res', res)
+    // })
+
+    // 步骤四
+    // new MyPromise((resolve, reject) => {
+    //     resolve('step 4')
+    // }).then(res => {
+    //     console.log('res', res)
+    // })
+
+    // 步骤五
+    // new MyPromise((resolve, reject) => {
+    //     resolve('step 5')
+    //     resolve('step 5.1')
+    // }).then(res => {
+    //     console.log('res', res)
+    // })
+
+    // 步骤六
+    new MyPromise((resolve, reject) => {
+        resolve('step 6')
+    }).then(res => {
+        console.log('res', res)
+        return 'step 6.2'
+    }).then(res => {
+        console.log('res', res)
+    })
+</script>
+</html>
