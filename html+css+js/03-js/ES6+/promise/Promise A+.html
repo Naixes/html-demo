@@ -13,6 +13,28 @@
     const FULFILLED = "Fulfilled"
     const REJECTED = "Rejected"
 
+    // 解决过程
+    function promiseResolutionProcedure(promise2, x, resolve, reject) {
+        // 判断x的值
+        // x是对象或者函数
+        if((typeof x === 'object' || typeof x === 'function') && typeof x !== null) {
+            // x是thenable对象
+            if(typeof x.then === 'function') {
+                // 执行then并注入执行resolve的方法
+                x.then(y => {
+                    // console.log('y', y);
+                    // 这里也要对y进行同样的判断和操作，即规范中的解决过程promiseResolutionProcedure
+                    // resolve(y)
+                    promiseResolutionProcedure(promise2, y, resolve, reject)
+                }, reject)
+            }else {
+                resolve(x)
+            }
+        }else {
+            resolve(x)
+        }
+    }
+
     class MyPromise {
         constructor(fn) {
             // 自身的状态：
@@ -43,16 +65,37 @@
             // 执行fn并注入resolve和reject
             fn(resolve, reject)
         }
-        then(onFulfilled){
+        // 设置默认函数，实现透传，即传什么返回什么
+        then(onFulfilled=val=>val){
             if(this.state === PENDING){
                 // this.resolvedCallbacks.push(onFulfilled)
-                // 返回Promise，支持链式调用
-                return new MyPromise((resolve, reject) => {
+                // 返回新的Promise，支持链式调用
+                const promise2 = new MyPromise((resolve, reject) => {
                     this.resolvedCallbacks.push(() => {
-                        const res = onFulfilled(this.value)
-                        resolve(res)
+                        const x = onFulfilled(this.value)
+                        // // 判断x的值
+
+                        // // x是对象或者函数
+                        // if((typeof x === 'object' || typeof x === 'function') && typeof x !== null) {
+                        //     // x是thenable对象
+                        //     if(typeof x.then === 'function') {
+                        //         // 执行then并注入执行resolve的方法
+                        //         x.then(y => {
+                        //             // console.log('y', y);
+                        //             // 这里也要对y进行同样的判断和操作，即规范中的解决过程promiseResolutionProcedure
+                        //             resolve(y)
+                        //         })
+                        //     }else {
+                        //         resolve(x)
+                        //     }
+                        // }else {
+                        //     resolve(x)
+                        // }
+                        promiseResolutionProcedure(promise2, x, resolve, reject)
                     })
                 })
+
+                return promise2
             }
         }
     }
@@ -83,12 +126,39 @@
     // })
 
     // 步骤六
+    // new MyPromise((resolve, reject) => {
+    //     resolve('step 6')
+    // }).then(res => {
+    //     console.log('res', res)
+    //     return 'step 6.1'
+    // }).then(res => {
+    //     console.log('res', res)
+    // })
+
+    // 步骤七
+    // new MyPromise((resolve, reject) => {
+    //     resolve('step 7')
+    // }).then(res => {
+    //     console.log('res', res)
+    //     return 'step 7.1'
+    // })
+    // .then()
+    // .then(res => {
+    //     console.log('res', res)
+    // })
+
+    // 步骤八
     new MyPromise((resolve, reject) => {
-        resolve('step 6')
+        resolve('step 8')
     }).then(res => {
         console.log('res', res)
-        return 'step 6.2'
-    }).then(res => {
+        return {
+            then(r) {
+                r("step 8.1")
+            }
+        }
+    })
+    .then(res => {
         console.log('res', res)
     })
 </script>
