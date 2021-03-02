@@ -14,11 +14,11 @@
 	</style>
 </head>
 <body>
-	<h3>定位实现三栏布局：脱离了文档流，可能对其他元素有影响</h3>
+	<h3>定位实现三栏布局：脱离了文档流，可能对其他元素有影响，需要考虑等高</h3>
 	<style type="text/css">
 		section.position>div {
 			position: absolute;
-			height: 300px;
+			/* height: 300px; */
 		}
 		.left.position {
 			width: 100px;
@@ -37,14 +37,14 @@
 		}
 	</style>
 	<section class="position">
-		<div class="position left"></div>
-		<div class="position main"></div>
-		<div class="position right"></div>
+		<div class="position left">===left===等高测试===</div>
+		<div class="position main">main</div>
+		<div class="position right">right</div>
 	</section>
-	<h3>浮动实现三栏布局：有时需要清除浮动，宽度太窄时会掉下去；兼容性好</h3>
+	<h3>浮动实现三栏布局：有时需要清除浮动，宽度太窄时会掉下去，需要考虑等高；兼容性好</h3>
 	<style type="text/css">
 		section.float>div {
-			height: 300px;
+			/* height: 300px; */
 		}
 		.left.float {
 			width: 100px;
@@ -63,13 +63,58 @@
 			float: right;
 		}
 	</style>
+	<!-- 中间部分必须放到最后：但是html从上向下渲染，中间部分一般十分重要这样的写法会导致延后 -->
 	<section class="float">
-		<div class="left float"></div>
-		<div class="right float"></div>
-		<!-- 中间部分必须放到最后 -->
-		<div class="main float"></div>
+		<div class="left float">===left===等高测试===</div>
+		<div class="right float">right</div>
+		<div class="main float">main</div>
 	</section>
-	<h3>flex实现三栏布局：兼容性不好；不收高度影响</h3>
+	<h3>负边距+浮动实现三栏布局，中间部分最先渲染（双飞翼布局），居中不好布局</h3>
+	<style type="text/css">
+		section.mar_float>div {
+			/* height: 300px; */
+		}
+		/* 实现假的等高 */
+		.mar_float {
+			overflow: hidden;
+		}
+		.left.mar_float,.right.mar_float,.main.mar_float {
+			/* 撑开 */
+			padding-bottom: 9999px;
+			margin-bottom: -9999px;
+		}
+		/* ========================= */
+		.main.mar_float {
+			background-color: green;
+			float: left;
+			width: 100%;
+		}
+		.main_inner.mar_float{
+			background-color: red;
+			margin-left: 100px;
+		}
+		.left.mar_float {
+			width: 100px;
+			background-color: yellow;
+			float:left;
+			margin-left: -100%;
+		}
+		.right.mar_float {
+			width: 200px;
+			background-color: blue;
+			float: left;
+			margin-left: -200px;
+		}
+	</style>
+	<section class="mar_float">
+		<!-- 中间部分放到最前面 -->
+		<div class="main mar_float">
+			<div class="main_inner mar_float">inner</div>
+		</div>
+		<div class="left mar_float">===left===等高测试===</div>
+		<div class="right mar_float">right</div>
+	</section>
+	<h3>flex实现三栏布局：兼容性不好；不受高度影响</h3>
 	<style type="text/css">
 		section.flex {
 			display: flex;
@@ -101,7 +146,7 @@
 	<style type="text/css">
 		section.grid {
 			display: grid;
-			grid-template-rows: 300px;
+			grid-template-rows: 30px;
 			grid-template-columns: 100px auto 200px;
 		}
 		section.grid>div {
@@ -117,9 +162,9 @@
 		}
 	</style>
 	<section class="grid">
-		<div class="left grid"></div>
-		<div class="main grid"></div>
-		<div class="right grid"></div>
+		<div class="left grid">===left===等高测试===</div>
+		<div class="main grid">main</div>
+		<div class="right grid">right</div>
 	</section>
 	<h3>table网格实现三栏布局：兼容性好</h3>
 	<style type="text/css">
@@ -144,9 +189,9 @@
 		}
 	</style>
 	<section class="table">
-		<div class="left table"></div>
-		<div class="main table"></div>
-		<div class="right table"></div>
+		<div class="left table">===left===等高测试===</div>
+		<div class="main table">main</div>
+		<div class="right table">right</div>
 	</section>
 	<h3>flex网格实现不居中三栏布局：兼容性好</h3>
 	<style type="text/css">
