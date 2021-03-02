@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 150px;
+        }
+        /* .test {
+            width: 500px;
+            height: 500px;
+            background: orange;
+            transform: rotate(45deg);
+            overflow: hidden;
+        }
+        .img { */
+            /* 1.42为计算所得 */
+            /* transform: rotate(-45deg)scale(1.42);
+        } */
+        /* ===================================== */
+        .img {
+            /* 裁切路径 */
+            /* 多边形(x y,x y) */
+            clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%);
+            transition: 1s clip-path;
+        }
+        .img:hover {
+            clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="test">
+        <img src="./cat.jpg" alt="">
+    </div> -->
+    <!-- css3优化 -->
+    <img class="img" src="./cat.jpg" alt="">
+</body>
+</html>
