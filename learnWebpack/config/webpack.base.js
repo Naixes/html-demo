@@ -7,10 +7,6 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 导出抽取css的插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// 压缩css，生产环境下起作用
-const OptimizeCss = require('optimize-css-assets-webpack-plugin')
-// 压缩js，生产环境下起作用
-const TerserJSPlugin = require('terser-webpack-plugin')
 // 清除插件：改成cleanWebpackPlugin的小写c会报错？？？
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
@@ -34,57 +30,11 @@ module.exports = {
 		// 设置可以省略的后缀，从左往右的顺序
 		extensions: ['.js', '.vue', '.json']
 	},
-	// 源码映射，不单独生成文件，忽略列，能定位到具体的vue文件
-	// 开发环境：'cheap-module-eval-source-map'
-	// 生产环境：'cheap-module-source-map'
-	devtool: 'cheap-module-eval-source-map',
-	// 开发服务器配置，webpack-dev-server
-	devServer: {
-		port: 3000,
-		// 显示进度条
-		progress: true,
-		// 从dist目录开始执行
-		contentBase: './dist',
-		// 压缩
-		// compress: true,
-		// 3.2模拟数据
-		// before(app) {
-		// 	app.get('/api/user', (req, res) => {
-		// 		console.log('before')
-		// 		res.json({name: 'sin-before'})
-		// 	})
-		// },
-		// 3.1配置跨域代理
-		proxy: {
-			// '/api': 'http://localhost:8080'
-			// 改变路径，后端接口没有api
-			// '/api': {
-			// 	target: 'http://localhost:8080',
-			// 	pathRewrite: {'api': ''}
-			// }
-		}
-	},
-	// 实时打包
-	watch: true,
-	watchOptions: {
-		poll: 1000, // 每秒询问1000次
-		aggregateTimeout: 500, // 防抖 500毫秒
-		ignored: /node_modules/
-	},
-	optimization: {
-		// 压缩css和js
-	  	minimizer: [ new TerserJSPlugin({}), new OptimizeCss({}) ]
-	},
 	// 4.配置忽略引入的jquery
 	externals: {
 		jquery: '$'
 	},
 	plugins: [
-		// 定义环境变量，内置插件
-		new webpack.DefinePlugin({
-			// 在这里'dev'指的是变量需要转化成字符串
-			DEV: JSON.stringify('dev')
-		}),
 		new HtmlWebpackPlugin({
 			// 指定模板
 			template: './src/index.html',
@@ -198,17 +148,11 @@ module.exports = {
 			}
 		]
 	},
-	// production(默认) development
-	// production：测试压缩
-	// mode: 'production',
-	mode: 'development',
-	// 入口：默认就是这个
-	entry: './src/index.js',
 	output: {
 		// 默认是main.js，hash：每次修改都产生新的文件
 		filename: 'bundle.[hash:8].js',
 		// 必须是一个绝对路径
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, '../dist'),
 		// 公共路径：会在每个html引用的资源前添加，资源不在本地时使用
 		// 如果不是所有的都需要可以单独配置
 		// publicPath: 'http://www.sinnote.cn'
