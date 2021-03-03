@@ -1,10 +1,25 @@
 {
     "presets": [
         [
-            "@babel/preset-env", 
+            "@babel/preset-env",
+            // 注意：以全局变量的方式注入，污染全局变量，推荐使用@babel/plugin-transform-runtime，以闭包方式注入
             // This option configures how @babel/preset-env handles polyfills.
-            // 还不知道有什么用
-            // {"useBuiltIns": "usage"}
+            // 可以按需自动引入用到的polyfills
+          	// 必须同时设置corejs:3 默认使用corejs:2
+            // {"useBuiltIns": "usage", "corejs":3}
         ]
+    ],
+    "plugins": [
+        // "loose": true：使用赋值表达式而不是Object.defineProperty。
+        ["@babel/plugin-proposal-class-properties", { "loose": true }],
+        // @babel/plugin-transform-runtime需要配合@babel/runtime-corejs3
+        [
+            "@babel/plugin-transform-runtime", 
+            {
+                "corejs": 3
+            }
+        ],
+        // 懒加载，不加也没报错？？？
+        // ['@babel/plugin-syntax-dynamic-import']
     ]
 }

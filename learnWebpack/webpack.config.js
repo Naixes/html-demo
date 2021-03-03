@@ -11,7 +11,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 // 压缩js，生产环境下起作用
 const TerserJSPlugin = require('terser-webpack-plugin')
-// 清除插件：改成cleanWebpackPlugin的小写c会报错？？？
+// 清除插件
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 // todo：可以引入外部打包生成的name.dll.js资源，安装报错
 // const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
@@ -221,12 +221,24 @@ module.exports = {
 					options: {
 						presets: [
 							'@babel/preset-env',
+							// 注意：以全局变量的方式注入，污染全局变量，推荐使用@babel/plugin-transform-runtime，以闭包方式注入
+							// 可以按需自动引入用到的polyfills
+							// 必须同时设置corejs:3 默认使用corejs:2
+							// 需安装core-js@3
+							// {"useBuiltIns": "usage", corejs: 3},
 							'@babel/preset-react'
 						],
+						// 也可以在.babelrc中配置
 						plugins: [
 							// "loose": true：使用赋值表达式而不是Object.defineProperty。
-							[ '@babel/plugin-proposal-class-properties', { loose: true }],
-							['@babel/plugin-transform-runtime'],
+							['@babel/plugin-proposal-class-properties', { loose: true }],
+							// @babel/plugin-transform-runtime需要配合@babel/runtime-corejs3
+							[
+								'@babel/plugin-transform-runtime', 
+								{
+									corejs: 3
+								}
+							],
 							// 懒加载，不加也没报错？？？
 							// ['@babel/plugin-syntax-dynamic-import']
 						]
