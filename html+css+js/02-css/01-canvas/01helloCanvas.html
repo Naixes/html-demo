@@ -3,28 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .box {
+            border: 1px solid #ccc;
+        }
+        img {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <canvas id='demo' width='600' height='600'>
+    <canvas class="box" id='line' width='600' height='600'>
         你的浏览器不支持canvas，请升级
     </canvas>
+    <canvas class="box" id='circle' width='600' height='600'>
+        你的浏览器不支持canvas，请升级
+    </canvas>
+    <canvas class="box" id='gradient' width='600' height='600'>
+        你的浏览器不支持canvas，请升级
+    </canvas>
+    <canvas class="box" id='font' width='600' height='600'>
+        你的浏览器不支持canvas，请升级
+    </canvas>
+    <canvas class="box" id='image' width='600' height='600'>
+        你的浏览器不支持canvas，请升级
+    </canvas>
+    <img id="img" src="./imgs/sherlock.jpg" alt="">
 
     <script>
-        var canvas = document.getElementById('demo');
-        var ctx = canvas.getContext('2d'); //3d是：webgl
+        // 绘制区域
+        var canvasLine = document.getElementById('line');
+        var ctxLine = canvasLine.getContext('2d'); //3d是：webgl
 
-        canvas.style.border = "1px solid #ccc";
+        ctxLine.moveTo(100,100);
+        ctxLine.lineTo(200,200);
+        ctxLine.lineTo(300,400);
+        ctxLine.closePath();
 
-        ctx.moveTo(100,100);
-        ctx.lineTo(200,200);
-        ctx.lineTo(300,400);
-        ctx.closePath();
+        ctxLine.strokeStyle = 'rgba(233,233,2,.8)'
+        ctxLine.lineWidth  = 4;
+        ctxLine.fillStyle = 'red';
+        // 绘制线
+        ctxLine.stroke();
+        // 填充
+        ctxLine.fill();
 
-        ctx.strokeStyle = 'rgba(233,233,2,.8)'
-        ctx.lineWidth  = 4;
-        ctx.fillStyle = 'red';
-        ctx.stroke();
-        ctx.fill();
+        // 圆
+        var canvasCircle = document.getElementById('circle');
+        var ctxCircle = canvasCircle.getContext('2d');
+
+        ctxCircle.beginPath()
+        // 圆心x 圆心y 半径 起始角 结束角 true（逆时针）
+        ctxCircle.arc(200, 200, 100, 0*Math.PI, 2*Math.PI, false)
+        ctxCircle.closePath()
+
+        ctxCircle.fillStyle = 'red';
+
+        ctxCircle.stroke();
+        ctxCircle.fill();
+
+        // 渐变
+        var canvasGradient = document.getElementById('gradient');
+        var ctxGradient = canvasGradient.getContext('2d');
+
+        // 创建线性渐变（用在画布内容上）开始x 开始y 结束x 结束y
+        var gra = ctxGradient.createLinearGradient(0,0,600,600)
+        gra.addColorStop(0,'red')
+        gra.addColorStop(.5,'yellow')
+        gra.addColorStop(1,'green')
+
+        ctxGradient.fillStyle = gra;
+        ctxGradient.fillRect(0,0,600,600)
+
+        // 空心字
+        var canvasFont = document.getElementById('font');
+        var ctxFont = canvasFont.getContext('2d');
+
+        ctxFont.font="30px Arial"
+
+        ctxFont.fillText("Naixes", 10, 50)
+        ctxFont.strokeText("Sin", 200, 500)
+
+        // 图片
+        var canvasImage = document.getElementById('image');
+        var ctxImage = canvasImage.getContext('2d');
+
+        var img = document.getElementById('img')
+        img.onload = function() {
+            ctxImage.drawImage(img, 10, 10)
+        }
     </script>
 </body>
 </html>
