@@ -9,6 +9,8 @@ const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 // 导出抽取css的插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// 包分析工具
+const WebpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = smart(base, {
     mode: 'production',
@@ -50,6 +52,8 @@ module.exports = smart(base, {
 			// 在这里'prod'指的是变量需要转化成字符串
 			DEV: JSON.stringify('prod')
 		}),
+		// 包分析工具
+		new WebpackBundleAnalyzer()
 	],
     // 其他配置：优化项
     // 执行：npm run build -- --config ./config/webpack.prod.js

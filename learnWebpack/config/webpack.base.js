@@ -7,9 +7,12 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // 清除插件：改成cleanWebpackPlugin的小写c会报错？？？
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-
 // 打包非代码的数据信息文件
 const copyWebpackPlugin = require('copy-webpack-plugin')
+// 获取环境变量
+const argv = require('yargs').argv
+// 可以用于判断
+console.log(argv.env);
 
 module.exports = {
 	// 解析配置
