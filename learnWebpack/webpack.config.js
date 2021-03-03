@@ -76,7 +76,7 @@ module.exports = {
 		ignored: /node_modules/
 	},
 	optimization: {
-		// 压缩css和js
+		// 压缩css和js，默认js会进行压缩，但是由于覆盖了默认的配置所以也要指定js压缩
 		minimizer: [ 
 			new TerserJSPlugin({
 				// terserOptions: {

@@ -5,8 +5,6 @@ const webpack = require('webpack')
 
 // 导入自动生成HTMl文件并引入的插件
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// 导出抽取css的插件
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // 清除插件：改成cleanWebpackPlugin的小写c会报错？？？
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
@@ -49,10 +47,6 @@ module.exports = {
 			},
 			// 增加hash戳
 			hash: true
-		}),
-		new MiniCssExtractPlugin({
-			// 打包后的名字
-			filename: 'css/main.css'
 		}),
 		// 3.给每个模块注入$
 		// new webpack.ProvidePlugin({
@@ -133,16 +127,15 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				// 将style-loader改为MiniCssExtractPlugin.loader
 				use: [
-					MiniCssExtractPlugin.loader,
+					'style-loader',
 					'css-loader', 'postcss-loader'
 				]
 			},
 			{
 				test: /\.less$/,
 				use: [
-					MiniCssExtractPlugin.loader,
+					'style-loader',
 					'css-loader', 'postcss-loader', 'less-loader'
 				]
 			}

@@ -7,6 +7,8 @@ const base = require('./webpack.base')
 const OptimizeCss = require('optimize-css-assets-webpack-plugin')
 // 压缩js，生产环境下起作用
 const TerserJSPlugin = require('terser-webpack-plugin')
+// 导出抽取css的插件
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = smart(base, {
     mode: 'production',
@@ -15,10 +17,34 @@ module.exports = smart(base, {
 	// 生产环境：'cheap-module-source-map'
 	devtool: 'cheap-module-eval-source-map',
 	optimization: {
-		// 压缩css和js
+		// 压缩css和js，默认js会进行压缩，但是由于覆盖了默认的配置所以也要指定js压缩
 	  	minimizer: [ new TerserJSPlugin({}), new OptimizeCss({}) ]
 	},
+	module: { // 用来配置第三方loader模块的
+		rules: [
+			{
+				test: /\.css$/,
+				// 将style-loader改为MiniCssExtractPlugin.loader
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader', 'postcss-loader'
+				]
+			},
+			{
+				test: /\.less$/,
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader', 'postcss-loader', 'less-loader'
+				]
+			}
+		]
+	},
 	plugins: [
+		// css抽取
+		new MiniCssExtractPlugin({
+			// 打包后的名字
+			filename: 'css/main.css'
+		}),
 		// 定义环境变量，内置插件
 		new webpack.DefinePlugin({
 			// 在这里'prod'指的是变量需要转化成字符串
