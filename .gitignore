@@ -15,3 +15,6 @@ yarn-error.log*
 
 # parcel打包后生成的缓存文件
 .cache
+
+# 测试reports
+reports/

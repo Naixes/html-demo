@@ -1,0 +1,17 @@
+{
+  "name": "karmaTest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "jest:test": "jest",
+    "jest:UI": "majestic"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "majestic": "^1.8.0"
+  }
+}
