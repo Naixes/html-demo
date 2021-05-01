@@ -10,4 +10,14 @@ $(function () {
 		console.log('test', msg)
 	})
 	socket.on('system', function () { })
+
+	// 简单聊天室：点击发送input中的消息
+	$('#btn').on('click', () => {
+		const value = $('#msg').val()
+		socket.emit('chatEvent', value)
+		$('#msg').val('')
+	})
+	socket.on('ServerMsg', function (msg) {
+		console.log('msg', msg);
+	})
 })

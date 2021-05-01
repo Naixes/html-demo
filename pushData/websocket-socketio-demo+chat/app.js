@@ -1,6 +1,4 @@
 var path = require('path')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
 var logger = require('morgan')
 var express = require('express')
 
@@ -11,14 +9,10 @@ var io = require('socket.io').listen(server)
 app.set('port', process.env.PORT || 3000)
 
 app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')))
 
 // websocket连接监听
 io.on("connection", function (socket) {
-	// 
 	socket.emit('open')
 	console.log(socket.handshake)
 	// 接收客户端的消息
@@ -30,10 +24,17 @@ io.on("connection", function (socket) {
 		socket.broadcast.emit('test', 'server ready')
 	})
 	socket.on('disconnect', function () { })
+
+	// 简单聊天室
+	socket.on('chatEvent', (msg) => {
+		console.log('app', msg);
+		// 广播：自己不会收到
+		socket.broadcast.emit('ServerMsg', msg)
+	})
 })
 
 app.get('/', function (req, res) {
-	res.sendfile('views/index.html')
+	res.sendFile(path.resolve(__dirname, './views/index.html'))
 })
 
 server.listen(app.get('port'), function () {

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <template v-if="!isEnter">
+            <div class="ctrl">
+                <input v-model="name" type="text">
+                <button type="button" @click="enter">进入聊天室</button>
+            </div>
+        </template>
+        <template v-else>
+            <ul>
+                <li v-for="(v, index) in list" :key="index">{{v}}</li>
+            </ul>
+            <div class="ctrl">
+                <input v-model="msg" type="text">
+                <button type="button" @click="send">发送</button>
+            </div>
+        </template>
+    </div>
+</body>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            ws: null,
+            msg: '',
+            list: [],
+            isEnter: false,
+            name: ''
+        },
+        mounted() {
+            this.ws = new WebSocket('ws://192.168.0.100:3000')
+            this.ws.onopen = this.open
+            this.ws.onmessage = this.message
+            // 客户端主动断开连接：结束程序/ws.close()
+            this.ws.onclose = this.close
+            // 连接失败，比如服务器断开，先触发error再触发close
+            this.ws.onerror = this.error
+        },
+        methods: {
+            enter() {
+                if(this.name.trim() === '') {
+                    alert('请输入昵称')
+                    return 
+                }
+                this.isEnter = true
+                this.ws.send(JSON.stringify({
+                    type: 'enter',
+                    name: this.name
+                }))
+                this.list.push(`欢迎${this.name}进入聊天室`)
+                this.name = ''
+            },
+            send() {
+                this.ws.send(JSON.stringify({
+                    type: 'message',
+                    message: this.msg
+                }))
+                this.list.push(this.msg)
+                this.msg = ''
+            },
+            open() {
+                console.log('onopen', this.ws.readyState); // 1
+            },
+            message(e) {
+                console.log('e', e);
+                data = JSON.parse(e.data)
+                console.log('data', data);
+                if(data.type === 'enter') {
+                    this.list.push(`欢迎${data.name}进入聊天室`)
+                }else if(data.type === 'message') {
+                    this.list.push(data.message)
+                }
+                console.log('onmessage', this.ws.readyState); // 1
+            },
+            close() {
+                console.log('onclose', this.ws.readyState); // 3
+            },
+            error() {
+                console.log('onerror', this.ws.readyState); // 3
+            }
+        },
+    })
+</script>
+</html>
