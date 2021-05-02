@@ -11,7 +11,8 @@
     <div id="app">
         <template v-if="!isEnter">
             <div class="ctrl">
-                <input v-model="name" type="text">
+                <p>昵称：<input v-model="name" type="text"></p>
+                <p>房间号：<input v-model="roomid" type="text"></p>
                 <button type="button" @click="enter">进入聊天室</button>
             </div>
         </template>
@@ -36,7 +37,8 @@
             list: [],
             isEnter: false,
             name: '',
-            num: 0
+            num: 0,
+            roomid: ''
         },
         mounted() {
             this.ws = new WebSocket('ws://192.168.0.100:3000')
@@ -48,6 +50,7 @@
             this.ws.onerror = this.error
         },
         methods: {
+            // 进入聊天室
             enter() {
                 if(this.name.trim() === '') {
                     alert('请输入昵称')
@@ -56,7 +59,8 @@
                 this.isEnter = true
                 this.ws.send(JSON.stringify({
                     type: 'enter',
-                    name: this.name
+                    name: this.name,
+                    roomid: this.roomid
                 }))
                 this.list.push(`欢迎${this.name}进入聊天室`)
             },
@@ -64,7 +68,8 @@
                 this.ws.send(JSON.stringify({
                     type: 'message',
                     message: this.msg,
-                    name: this.name
+                    name: this.name,
+                    roomid: this.roomid
                 }))
                 this.list.push(`${this.name}：${this.msg}`)
                 this.msg = ''
