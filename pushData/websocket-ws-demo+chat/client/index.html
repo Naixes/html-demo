@@ -18,6 +18,7 @@
         <template v-else>
             <ul>
                 <li v-for="(v, index) in list" :key="index">{{v}}</li>
+                <li>在线人数{{num}}</li>
             </ul>
             <div class="ctrl">
                 <input v-model="msg" type="text">
@@ -34,7 +35,8 @@
             msg: '',
             list: [],
             isEnter: false,
-            name: ''
+            name: '',
+            num: 0
         },
         mounted() {
             this.ws = new WebSocket('ws://192.168.0.100:3000')
@@ -57,28 +59,36 @@
                     name: this.name
                 }))
                 this.list.push(`欢迎${this.name}进入聊天室`)
-                this.name = ''
             },
             send() {
                 this.ws.send(JSON.stringify({
                     type: 'message',
-                    message: this.msg
+                    message: this.msg,
+                    name: this.name
                 }))
-                this.list.push(this.msg)
+                this.list.push(`${this.name}：${this.msg}`)
                 this.msg = ''
             },
             open() {
                 console.log('onopen', this.ws.readyState); // 1
             },
             message(e) {
-                console.log('e', e);
+                // 进入之前不接收消息
+                if(!this.isEnter) {
+                    return
+                }
                 data = JSON.parse(e.data)
                 console.log('data', data);
-                if(data.type === 'enter') {
-                    this.list.push(`欢迎${data.name}进入聊天室`)
-                }else if(data.type === 'message') {
-                    this.list.push(data.message)
+                if(data.name !== this.name) {
+                    if(data.type === 'enter') {
+                        this.list.push(`欢迎${data.name}进入聊天室`)
+                    }else if(data.type === 'out') {
+                        this.list.push(`${data.name}：退出聊天室`)
+                    }else if(data.type === 'message') {
+                        this.list.push(`${data.name}：${data.message}`)
+                    }
                 }
+                this.num = data.num
                 console.log('onmessage', this.ws.readyState); // 1
             },
             close() {
