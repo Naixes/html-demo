@@ -38,11 +38,24 @@
             isEnter: false,
             name: '',
             num: 0,
-            roomid: ''
+            roomid: '',
+            handler: {}
         },
         mounted() {
         },
         methods: {
+            // 超时重连
+            checkServer() {
+                const _this = this
+                // 如果没到时间收到了第二次请求就会清空上次定时器
+                clearTimeout(this.handler)
+                this.handler = setTimeout(() => {
+                    _this.onclose()
+                    setTimeout(() => {
+                        _this.init()
+                    }, 1000)
+                }, 2000 + 500)
+            },
             init() {
                 // 建立连接
                 this.ws = new WebSocket('ws://192.168.0.101:3000')
@@ -95,6 +108,7 @@
 
                 switch (data.type) {
                     case 'heartbeat':
+                        this.checkServer()
                         this.ws.send(JSON.stringify({
                             type: 'heartbeat',
                             message: 'pong'
@@ -134,9 +148,14 @@
                 console.log('onmessage', this.ws.readyState); // 1
             },
             close() {
+                this.ws.close()
                 console.log('onclose', this.ws.readyState); // 3
             },
             error() {
+                const _this = this
+                this.handler = setTimeout(() => {
+                    _this.init()
+                }, 1000)
                 console.log('onerror', this.ws.readyState); // 3
             }
         },

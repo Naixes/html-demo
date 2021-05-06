@@ -100,8 +100,9 @@ server.listen(3000);
 // 心跳检测
 setInterval(() => {
     wss.clients.forEach(ws => {
-        if(!ws.isAlive) {
+        if(!ws.isAlive && ws.roomid) {
             group[ws.roomid]--
+            delete group['roomid']
             return ws.terminate()
         }
         ws.isAlive = false
