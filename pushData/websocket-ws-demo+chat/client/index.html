@@ -41,28 +41,27 @@
             roomid: ''
         },
         mounted() {
-            this.ws = new WebSocket('ws://192.168.0.100:3000')
-            this.ws.onopen = this.open
-            this.ws.onmessage = this.message
-            // 客户端主动断开连接：结束程序/ws.close()
-            this.ws.onclose = this.close
-            // 连接失败，比如服务器断开，先触发error再触发close
-            this.ws.onerror = this.error
         },
         methods: {
+            init() {
+                // 建立连接
+                this.ws = new WebSocket('ws://192.168.0.101:3000')
+                this.ws.onopen = this.open
+                this.ws.onmessage = this.message
+                // 客户端主动断开连接：结束程序/ws.close()
+                this.ws.onclose = this.close
+                // 连接失败，比如服务器断开，先触发error再触发close
+                this.ws.onerror = this.error
+            },
             // 进入聊天室
             enter() {
                 if(this.name.trim() === '') {
                     alert('请输入昵称')
                     return 
                 }
+                // 建立连接
+                this.init()
                 this.isEnter = true
-                this.ws.send(JSON.stringify({
-                    type: 'enter',
-                    name: this.name,
-                    roomid: this.roomid
-                }))
-                this.list.push(`欢迎${this.name}进入聊天室`)
             },
             send() {
                 this.ws.send(JSON.stringify({
@@ -76,6 +75,16 @@
             },
             open() {
                 console.log('onopen', this.ws.readyState); // 1
+                // 发起鉴权请求
+                this.ws.send(JSON.stringify({
+                    type: 'auth',
+                    message: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Im5haXhlcyIsImlhdCI6MTUxNjIzOTAyMn0.KK0yPOJtJN1AdNAPD0WvsRgcIGlJaLZfjP4DGcJhk_k'
+                }))
+                this.ws.send(JSON.stringify({
+                    type: 'enter',
+                    name: this.name,
+                    roomid: this.roomid
+                }))
             },
             message(e) {
                 // 进入之前不接收消息
@@ -83,16 +92,44 @@
                     return
                 }
                 data = JSON.parse(e.data)
-                console.log('data', data);
-                if(data.name !== this.name) {
-                    if(data.type === 'enter') {
+
+                switch (data.type) {
+                    case 'heartbeat':
+                        this.ws.send(JSON.stringify({
+                            type: 'heartbeat',
+                            message: 'pong'
+                        }))
+                        break;
+                    case 'noauth':
+                        // 鉴权失败，路由跳转，重新鉴权
+                        break;
+                    case 'enter':
                         this.list.push(`欢迎${data.name}进入聊天室`)
-                    }else if(data.type === 'out') {
+                        break;
+                    case 'out':
                         this.list.push(`${data.name}：退出聊天室`)
-                    }else if(data.type === 'message') {
-                        this.list.push(`${data.name}：${data.message}`)
-                    }
+                        break;
+                    case 'message':
+                        if(data.name !== this.name) {
+                            this.list.push(`${data.name}：${data.message}`)
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
+                // if(data.type === 'noauth') {
+                //     // 鉴权失败，路由跳转，重新鉴权
+                // }
+                // if(data.type === 'enter') {
+                //     this.list.push(`欢迎${data.name}进入聊天室`)
+                // }else if(data.type === 'out') {
+                //     this.list.push(`${data.name}：退出聊天室`)
+                // }else if(data.type === 'message') {
+                //     if(data.name !== this.name) {
+                //         this.list.push(`${data.name}：${data.message}`)
+                //     }
+                // }
                 this.num = data.num
                 console.log('onmessage', this.ws.readyState); // 1
             },
