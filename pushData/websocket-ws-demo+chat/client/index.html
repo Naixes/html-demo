@@ -12,6 +12,7 @@
         <template v-if="!isEnter">
             <div class="ctrl">
                 <p>昵称：<input v-model="name" type="text"></p>
+                <p>uid：<input v-model="uid" type="text"></p>
                 <p>房间号：<input v-model="roomid" type="text"></p>
                 <button type="button" @click="enter">进入聊天室</button>
             </div>
@@ -39,6 +40,7 @@
             name: '',
             num: 0,
             roomid: '',
+            uid: '',
             handler: {}
         },
         mounted() {
@@ -81,6 +83,7 @@
                     type: 'message',
                     message: this.msg,
                     name: this.name,
+                    uid: this.uid,
                     roomid: this.roomid
                 }))
                 this.list.push(`${this.name}：${this.msg}`)
