@@ -18,3 +18,5 @@ yarn-error.log*
 
 # 测试reports
 reports/
+
+.nuxt/
