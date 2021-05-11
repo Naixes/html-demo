@@ -10,7 +10,6 @@ const hotMiddleware = require('webpack-hot-middleware')
 const path = require('path')
 const memoryfs = require('memory-fs')
 const fs = require('fs')
-
 const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
 
@@ -28,6 +27,7 @@ const setupServer = (app, templatePath, cb) => {
     let template
     let ready
 
+    // promise是为了通知server进行render
     const readyPromise = new Promise(r => ready = r)
     template = fs.readFileSync(templatePath, 'utf8')
 
@@ -45,6 +45,7 @@ const setupServer = (app, templatePath, cb) => {
     
     // webpack -> entry-server -> bundle
     // memory-fs 将文件放在内存中
+    // 服务端：监听入口文件的变化
     const mfs = new memoryfs()
     const serverCompiler = webpack(serverConfig)
     serverCompiler.outputFileSystem = mfs
@@ -62,6 +63,7 @@ const setupServer = (app, templatePath, cb) => {
 
     // webpack -> entry-client -> clientManifest
     // 参考hot-middleware文档
+    // 浏览器端：监听代码的热更新，热更替
     clientConfig.plugins.push(new webpack.HotModuleReplacementPlugin)
     clientConfig.entry.app = [
         'webpack-hot-middleware/client',
@@ -92,7 +94,7 @@ const setupServer = (app, templatePath, cb) => {
         update()
     })
 
-    // 监控文件
+    // 监控template文件
     chokidar.watch(templatePath).on('change', () => {
         template = fs.readFileSync(templatePath, 'utf8')
         update()
