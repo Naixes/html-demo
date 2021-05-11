@@ -9,6 +9,7 @@ const devMiddleware = require('webpack-dev-middleware')
 const hotMiddleware = require('webpack-hot-middleware')
 const path = require('path')
 const memoryfs = require('memory-fs')
+const fs = require('fs')
 
 const clientConfig = require('./webpack.client.config')
 const serverConfig = require('./webpack.server.config')
@@ -21,17 +22,17 @@ const readFile = (fs, file) => {
     }
 }
 
-const setupServer = (templatePath, cb) => {
+const setupServer = (app, templatePath, cb) => {
     let serverBundle
     let clientManifest
     let template
     let ready
 
+    const readyPromise = new Promise(r => ready = r)
     template = fs.readFileSync(templatePath, 'utf8')
 
-    const readyPromise = new Promise(r => ready = r)
     const update = () => {
-        if(servrBundle && clientManifest) {
+        if(serverBundle && clientManifest) {
             // 通知 server 进行渲染
             ready()
             // 执行创建实例
@@ -47,7 +48,10 @@ const setupServer = (templatePath, cb) => {
     const mfs = new memoryfs()
     const serverCompiler = webpack(serverConfig)
     serverCompiler.outputFileSystem = mfs
+
     serverCompiler.watch({}, (err, stats) => {
+        if (err) throw err
+
         stats = stats.toJson()
         stats.errors.forEach(err => console.error(err))
         stats.warnings.forEach(err => console.warn(err))
@@ -63,11 +67,18 @@ const setupServer = (templatePath, cb) => {
         'webpack-hot-middleware/client',
         clientConfig.entry.app
     ]
+    clientConfig.output.filename = '[name].js'
     const clientCompiler = webpack(clientConfig)
-    app.use(devMiddleware(clientCompiler, {
+
+    const _devMiddleware = devMiddleware(clientCompiler, {
+        // 版本4不支持这个配置
         noInfo: true,
-        publicPath: clientConfig.output.publicPath
-    }))
+        publicPath: clientConfig.output.publicPath,
+        // 设置log等级
+        logLevel: 'silent'
+    })
+
+    app.use(_devMiddleware)
     app.use(hotMiddleware(clientCompiler))
 
     clientCompiler.hooks.done.tap('clientsBuild', stats => {
@@ -76,7 +87,8 @@ const setupServer = (templatePath, cb) => {
         stats.errors.forEach(err => console.error(err))
         stats.warnings.forEach(err => console.warn(err))
         if (stats.errors.length) return
-        clientManifest = JSON.parse(readFile(devMiddleware.fileSystem), 'vue-ssr-client-manifest.json')
+        clientManifest = JSON.parse(readFile(
+            _devMiddleware.fileSystem, 'vue-ssr-client-manifest.json'))
         update()
     })
 

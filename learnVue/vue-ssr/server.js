@@ -1,5 +1,5 @@
 const Vue = require('vue')
-const server = require('express')()
+const app = require('express')()
 const { createBundleRenderer } = require('vue-server-renderer')
 const path = require('path')
 const fs = require('fs')
@@ -19,7 +19,7 @@ const createRenderer = (serverBundle, options) => {
 
 let renderer, readyPromise
 // 生产环境
-if(Prod) {
+if(isProd) {
   const serverBundle = require('./dist/vue-ssr-server-bundle.json')
   const clientManifest = require('./dist/vue-ssr-client-manifest.json')
   const template = fs.readFileSync(templatePath, 'utf8')
@@ -34,7 +34,7 @@ if(Prod) {
   // 2. client -> manifest
   // 3. 待2个文件编译完成，就可以调用createBundleRenderer -> renderer -> renderToString -> Promise
   // 1,2 -> setupServer -> webpack -> readyPromise -> 调用 createRender ->  创建renderer实例
-  readyPromise = require('./config/setup-dev-server')(templatePath, (serverBundle, options) => {
+  readyPromise = require('./config/setup-dev-server')(app, templatePath, (serverBundle, options) => {
     // 创建renderer实例
     renderer = createBundleRenderer(serverBundle, options)
   })
@@ -59,8 +59,8 @@ const render = (req, res) => {
 }
 
 // 在服务器处理函数中……
-server.get('*', isProd ? render : (req, res) => {
+app.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res))
 })
 
-server.listen(8080)
+app.listen(8080)
