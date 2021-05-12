@@ -1,26 +1,15 @@
-<!--  -->
 <template>
-  <div>
-    <h1>111</h1>
+  <div id="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
 export default {
-  data () {
-    return {
-    };
-  },
-
-  components: {},
-
-  computed: {},
-
-  mounted: {},
-
-  methods: {}
+  name: 'App',
 }
-
 </script>
-<style lang='scss' scoped>
+
+<style lang="scss" scoped>
 </style>
