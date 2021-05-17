@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1 -->
+    <!-- <script>
+        error
+        console.log(1);
+    </script>
+    <script>
+        // 会执行
+        console.log(2);
+    </script> -->
+
+    <!-- 2 -->
+    <script>
+    //运行时的错误
+    //   try {
+    //     error; // 未定义变量
+    //   } catch (e) {
+    //     console.log('我知道错误了');
+    //     console.log(e);
+    //   }
+    </script>
+
+    <script>
+    //示例：语法错误
+    //   try {
+    //     var error = ; // 大写分号
+    //   } catch (e) {
+    //     console.log('我感知不到错误');
+    //     console.log(e);
+    //   }
+    </script>
+    <!-- <script>
+        try {
+            console.log(error);
+        } catch (e) {
+            console.log(e);
+        }
+        // 异步的错误捕获不到
+        try {
+            setTimeout(() => {
+                console.log(error);
+            })
+        } catch (e) {
+            console.log('erroe:', e);
+        }
+    </script> -->
+
+    <!-- 3 -->
+    <!-- <script>
+        //window.onerror 捕获异常能力比 try-catch 稍微强点，
+        //无论是异步还是非异步错误，onerror 都能捕获到运行时错误。
+        /**
+        * @param {String}  msg    错误信息
+        * @param {String}  url    出错文件
+        * @param {Number}  row    行号
+        * @param {Number}  col    列号
+        * @param {Object}  error  错误详细信息
+        */
+        try {
+            setTimeout(() => {
+                console.log(error);
+            })
+        } catch (e) {
+            console.log('erroe:', e);
+        }
+        // 捕捉不到html中的错误
+        window.onerror = function(msg, url, row, col, error) {
+            console.log(msg);
+            // 禁止页面报红
+            return true
+        }
+    </script> -->
+
+    <!-- 4 -->
+    <!-- <img src="./xx.png" alt="">
+    <script>
+        window.addEventListener("error", (msg, url, row, col, error) => {
+            console.log(msg);
+            return true
+        }, true)
+    </script> -->
+    <!-- 以上都捕获不到Promise的错误 -->
+
+    <!-- 5 -->
+    <script>
+        // 捕获异步错误
+        window.addEventListener('unhandledreject', function(e) {
+            e.preventDefault()
+            console.log(e.reason);
+            return true
+        })
+        // 不catch就会报红
+        new Promise((resolve, reject) => {
+            reject("erroe1")
+        })
+        Promise.resolve().then(() => {
+            throw "error3"
+        })
+        Promise.reject("error2")
+
+        // 跨域的js
+        // koa
+        // const cors = require('koa-cors')
+        // app.use(cors())
+
+        // 1.navigator.sendBeacon 传送 
+
+        // 2.img.src = "1*1.gif?data=序列化" 压缩
+
+        // 3.fecth
+
+        // 4.ajax
+
+        // 工具：fundebug
+        // 接入
+        // npm 安装
+
+        // 用户录屏：sessionstack
+
+        // 容错：zanePerfor （github）
+
+        // lgwebdream
+    </script>
+</body>
+</html>
