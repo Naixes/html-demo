@@ -1,0 +1,11 @@
+:root {
+  --sinColor: black;
+}
+body {
+  background: var(--sinColor);
+}
+.test {
+  & h1 {
+    color: yellowgreen;
+  }
+}
