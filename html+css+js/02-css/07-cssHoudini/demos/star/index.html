@@ -1,0 +1,54 @@
+<!DOCTYPE >
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      body {
+        margin: 0;
+        color: #fff;
+        font-size: 24px;
+        /*    background: linear-gradient(#00111e 30%, #033d5e);*/
+        background: #000;
+      }
+      body:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        --star-density: 0.8;
+        --starry-sky-seed: 1;
+        --star-opacity: 1;
+        width: 100%;
+        height: 100%;
+        background-image: paint(starry-sky);
+      }
+
+      body:before {
+        animation: shine 1s linear alternate infinite;
+      }
+
+      @keyframes shine {
+        from {
+          --star-opacity: 1;
+        }
+        to {
+          --star-opacity: 0.4;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      if (!CSS in window || !CSS.paintWorklet) {
+        document.write(
+          'Oh no, your browser does not support CSS Houdini，please use Chrome 65+'
+        );
+      } else {
+        CSS.paintWorklet.addModule('starry-sky.js');
+      }
+    </script>
+  </body>
+</html>
