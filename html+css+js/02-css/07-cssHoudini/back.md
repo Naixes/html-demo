@@ -1,3 +1,5 @@
+<!-- 响应式 -->
+
 1.fr 单位、cap、lh、rlh、vi 和 vb
 2.repeat() 函数
 3.minimax() 函数、max-content / min-content
@@ -10,6 +12,8 @@
 9.aspect-ratio 宽高分辨率
 10.leading-trim 和 text-edge 删除字体的额外高度
 11.::marker 个性化的 ul
+
+<!-- AE 的 bodymovin 插件 -> json -> lottie -->
 
 bodymovin
 
