@@ -34,7 +34,7 @@ export default {
       fetchData,
     };
   },
-  // 只有服务端才会调用
+  // 只有服务端才会调用，预获取数据
   async serverPrefetch() {
     console.log("prefetchdata在服务端执行");
     await this.fetchData();
