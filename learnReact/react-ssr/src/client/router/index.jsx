@@ -1,8 +1,8 @@
-import Reatc from 'react'
+import React from 'react'
 import {Route, Switch} from 'react-router-dom'
 
 import Home from '../pages/Home'
-import About from '../pages/About'
+import About, { getUserInfo } from '../pages/About'
 
 export const routes = [
     {
@@ -13,7 +13,8 @@ export const routes = [
     {
         path: '/about',
         exact: true,
-        component: About
+        component: About,
+        loadData: getUserInfo,
     }
 ]
 

@@ -6,7 +6,7 @@ const baseConfig = require('./webpack.base')
 
 const serverConfig = {
     mode: 'development',
-    entry: resolve(__dirname, "../src/client/entry-server.js"),
+    entry: resolve(__dirname, "../src/client/entry-server.jsx"),
     output: {
         filename: 'server-bundle.js',
         // 指定编译规则
