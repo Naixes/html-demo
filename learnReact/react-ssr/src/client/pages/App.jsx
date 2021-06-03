@@ -1,10 +1,10 @@
 import React from 'react'
-import {BrowseRouter} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 
 import {Routes} from '../router'
 
 const App = () => {
-    return <BrowseRouter basename="/">{Routes()}</BrowseRouter>
+    return <BrowserRouter basename="/">{Routes()}</BrowserRouter>
 }
 
 export default App
