@@ -22,8 +22,10 @@ module.exports = (app) => {
     router.get(["/", "/about"], async(ctx, next) => {
         const render = templating(template)
         const jsx = await serverBundle(ctx)
+        // 匹配到的组件
         const html = renderToString(jsx)
-        ctx.body = render({html, store: `<script>window.REDUX_STORE=${JSON.stringify(ctx.window)}<script>`})
+        // 替换组件到app，将获取到的数据注入window
+        ctx.body = render({html, store: `<script>window.REDUX_STORE=${JSON.stringify(ctx.window)}</script>`})
     })
     router.get('/api/getUserInfo', ctx => {
         ctx.body = {

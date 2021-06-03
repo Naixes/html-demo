@@ -19,6 +19,7 @@ function reducer(state = initState, action) {
 }
 
 export function createClientStore() {
+    // 将服务器渲染时获取的数据设为默认值
     return createStore(reducer, window.REDUX_STORE)
 }
 

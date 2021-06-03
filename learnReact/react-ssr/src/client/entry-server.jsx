@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 import {routes, Routes} from './router'
 import {createServerStore} from './store'
 
+// 返回能匹配到路由返回相应组件的方法
 export default (ctx) => {
     return new Promise(resolve => {
         const promise = []
