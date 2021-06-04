@@ -1,0 +1,1 @@
+export {useSinStore} from './use-store'

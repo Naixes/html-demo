@@ -6,8 +6,7 @@
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
-import {useStore} from 'vuex'
-import { State } from '../store'
+import{useSinStore} from '../hooks'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
@@ -17,9 +16,7 @@ export default defineComponent({
     }
   },
   setup: () => {
-    const {state, getters} = useStore<State>()
-    console.log(getters['user/isLogin']);
-    
+    const {state, getters} = useSinStore()
     const count = ref(0)
     return { count }
   }
