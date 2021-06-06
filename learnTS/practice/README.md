@@ -11,3 +11,16 @@ esprima：给js生成ast树，其中使用到了estree库
 ioc
 
 元编程`yarn add reflect-metadata`，增强反射
+
+### 02
+
+webpack环境
+
+Loader，babel-loader麻烦，swc-loader：激进一些，对底层进行重写了，不是使用js构建，使用的rust构建，直接编译成机器码，快一些
+
+`npm i --save-dev @swc/core swc-loader`
+
+配置见代码
+
+
+
