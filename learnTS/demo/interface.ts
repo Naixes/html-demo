@@ -68,7 +68,8 @@ let mySearch: SearchFunc = function(src, sub) {
 
 // 可索引类型
 interface StringArray {
-	// 索引签名，可以是数字和字符串，可以同时使用但是数字索引的返回值必须是字符串索引返回值的子类型 
+	// 索引签名，可以是数字和字符串，可以同时使用但是数字索引的返回值必须是字符串索引返回值的子类型
+	// 所以一般使用any
 	[index: number]: string  
 }
 
@@ -108,6 +109,9 @@ class Clock implements ClockInterface {
 	currentTime: Date
 	constructor(h: number, m: number) {
 
+	}
+	tick() {
+		throw new Error("Method not implemented.")
 	}
 	setTime(d: Date) {
 		this.currentTime = d
