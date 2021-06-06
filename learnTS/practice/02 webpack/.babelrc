@@ -1,0 +1,8 @@
+{
+  "presets": [
+    // js
+    ["@babel/preset-env", { "targets": "defaults" }],
+    // ts
+    "@babel/preset-typescript"
+  ]
+}
