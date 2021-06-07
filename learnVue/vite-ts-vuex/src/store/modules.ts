@@ -6,4 +6,4 @@ const modules = {
     wechat
 }
 
-export default modules
+export {modules}

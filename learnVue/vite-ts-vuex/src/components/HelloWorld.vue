@@ -18,6 +18,11 @@ export default defineComponent({
   setup: () => {
     const {state, getters} = useSinStore()
     const count = ref(0)
+    // 代码提示
+    console.log(state.user);
+    // 代码提示
+    console.log(getters['user/isLogin']);
+    
     return { count }
   }
 })

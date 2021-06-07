@@ -1,9 +1,10 @@
 import {useStore} from 'vuex'
 import { State } from '../store'
+import { Getters } from '../store/utils'
 
 interface UseSinStore {
     state: State;
-    getters: any;
+    getters: Getters;
     dispatch: any
 }
 
