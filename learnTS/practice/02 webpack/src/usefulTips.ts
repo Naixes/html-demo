@@ -1,46 +1,3 @@
-## ts实战
-
-### 01 注入
-
-安装ts`npm i -g typescript`
-
-esprima：给js生成ast树，其中使用到了estree库
-
-安装yarn`node install -g yarn`
-
-ioc
-
-元编程`yarn add reflect-metadata`，增强反射
-
-### 02
-
-webpack环境
-
-Loader
-
-#### swc-loader配置
-
-babel-loader麻烦，swc-loader：激进一些，对底层进行重写了，不是使用js构建，使用的rust构建，直接编译成机器码，快一些
-
-`npm i --save-dev @swc/core swc-loader`
-
-*配置见代码提交记录*
-
-#### babel-loader配置
-
-js`npm install -D babel-loader @babel/core @babel/preset-env`
-
-ts`npm i -D @babel/preset-typescript`
-
-*配置见代码提交记录*
-
-> eslint，eslint-config-airbnb-typescript
-
-#### 小技巧
-
-高级类型
-
-```ts
 const sin = (name: string, age: number) => {}
 
 // 获取函数参数类型
@@ -100,33 +57,6 @@ type Final = OmitUser & PartialSelect
 type SelectPartial<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>
 type SP = SelectPartial<User, 'name'>
 
-// ===============================
-
-interface ProductIncart {
-    id: string,
-    name: string,
-    label?: string
-}
-
-// Record<K, V>，将V作为整体当成value，key类型为K，生成新的类型，对象嵌套对象
-class CarModel {
-    products: Record<string, ProductIncart> = {
-        "sin": {
-            id: "string",
-            name: "string",
-            label: "string"
-        }
-    }
-}
-// 相当于
-interface Same {
-    [key: string]: ProductIncart
-}
-
-// ==================解决旧版本的代码提示失效===================
-// 相当于type t = string & {}
-type LiteralUnion<T extends UIEvent,U=string> = T | (U & {})
-
 // ================================================
 
 // 检查参数不为null
@@ -144,7 +74,6 @@ type StringMap<T> = {
 
 function showType2(args: StringMap<{id: number, name: string}>) {
     console.log(args);
-}
 }
 
 // =========================apply=======================
@@ -184,6 +113,8 @@ class User {
 }
 
 interface IConstructor<T extends new(...args: any) => any> {
+    // 核心
+    // ioc 装载到一个容器中的话 校验 输入和输出
     type: new(...args: ConstructorParameters<T>) => InstanceType<T>
 }
 
@@ -201,5 +132,4 @@ function isString(a: unknown): a is string {
 
 type toArray<T> = T extends unknown[] ? T : T[]
 const data2: toArray<string> = Array.from('123')
-```
 
