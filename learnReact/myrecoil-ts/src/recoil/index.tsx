@@ -73,8 +73,8 @@ export function useRecoilState<T>(atom: Atomic<T>) {
   const value = useRecoilValue(atom);
   // 返回[value, setValue]
   // 使用useCallback优化函数，防止每次刷新会话具柄都改变引起子组件不必要的更新
-  return tuplify([
+  return tuplify(
     value,
-    useCallback((value: T) => atom.setState(value), [atom]),
-  ]);
+    useCallback((value: T) => atom.setState(value), [atom])
+  );
 }

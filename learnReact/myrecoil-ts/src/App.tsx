@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { atom, useRecoilValue } from './recoil';
+import { atom, useRecoilState, useRecoilValue } from './recoil';
 
 const textState = atom({
   key: 'textState',
@@ -10,7 +9,7 @@ const textState = atom({
 
 const App: FC = () => {
   // const msg = useRecoilValue(textState);
-  const [msg, setMsg] = useRecoilValue(textState);
+  const [msg, setMsg] = useRecoilState(textState);
   // input change 事件的 e 最好使用 react 的类型，ChangeEvent<HTMLInputElement>
   const click = () => {
     setMsg('update');
