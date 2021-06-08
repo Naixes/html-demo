@@ -48,6 +48,28 @@ class Atomic<T> extends Stateful<T> {
   }
 }
 
+// 自己重新维护了一套新的状态栈
+class Selector<T> extends Stateful<T> {
+  constructor(private readonly generator: SelectorGenerator<T>) {
+    // 自己维护的状态
+    super(undefined as any);
+    this.value = generator({ get: (dep: Atomic<any>) => this.addSub(dep) });
+  }
+  // 维护Atomic的变化
+  private registerDeps = new Set<Atomic<any>>();
+  private addSub(dep: Atomic<any>) {
+    if (!this.registerDeps.has(dep)) {
+      dep.subscribe(() => this.updateSelector());
+    }
+    return dep.snapshot();
+  }
+  private updateSelector() {
+    this.update(
+      this.generator({ get: (dep: Atomic<any>) => this.addSub(dep) })
+    );
+  }
+}
+
 // 暴露方法
 
 // unknow，不能交互
@@ -77,4 +99,18 @@ export function useRecoilState<T>(atom: Atomic<T>) {
     value,
     useCallback((value: T) => atom.setState(value), [atom])
   );
+}
+
+// const charCountState = selector({
+//     key: 'charCountState', // unique ID (with respect to other atoms/selectors)
+//     // selector的get，取值
+//     get: ({ get }) => {
+//         // 内部解构的get，可以获取原子的state，可以同步变
+//         const text = get(textState);
+//         return text.length;
+//     },
+// });
+type SelectorGenerator<V> = (context: { get: <T>(dep: Atomic<T>) => T }) => V;
+export function selector<T>(value: { key: string; get: SelectorGenerator<T> }) {
+  return new Selector(value.get);
 }
