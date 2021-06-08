@@ -1,3 +1,6 @@
+import { useCallback, useEffect, useState } from 'react';
+import { tuplify } from '../utils';
+
 interface Disconnect {
   disconnect: () => void;
 }
@@ -45,6 +48,8 @@ class Atomic<T> extends Stateful<T> {
   }
 }
 
+// 暴露方法
+
 // unknow，不能交互
 export function atom<T>(value: { key: string; default: T }) {
   return new Atomic<T>(value.default);
@@ -52,5 +57,24 @@ export function atom<T>(value: { key: string; default: T }) {
 
 // class作为类型
 export function useRecoilValue<T>(value: Stateful<T>) {
+  // 强制react组件更新
+  // 订阅事件
+  const [, updateState] = useState({});
+  useEffect(() => {
+    const { disconnect } = value.subscribe(() => updateState({}));
+    // 释放订阅，防止内存泄漏，所以要写在副作用中
+    return () => disconnect();
+  }, [value]);
+
   return value.snapshot();
+}
+
+export function useRecoilState<T>(atom: Atomic<T>) {
+  const value = useRecoilValue(atom);
+  // 返回[value, setValue]
+  // 使用useCallback优化函数，防止每次刷新会话具柄都改变引起子组件不必要的更新
+  return tuplify([
+    value,
+    useCallback((value: T) => atom.setState(value), [atom]),
+  ]);
 }
