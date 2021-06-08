@@ -79,7 +79,7 @@ export function atom<T>(value: { key: string; default: T }) {
 
 // class作为类型
 export function useRecoilValue<T>(value: Stateful<T>) {
-  // 强制react组件更新
+  // 强制react组件更新，源码用的数组
   // 订阅事件
   const [, updateState] = useState({});
   useEffect(() => {
