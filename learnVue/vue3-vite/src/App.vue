@@ -3,7 +3,9 @@
   <HelloWorld msg="Hello Vue 3 + Vite" />
 </template>
 
+<!-- setup的两种写法，当前是新的 -->
 <script setup>
+// 组件引入自动挂载，注意eslint问题，未使用
 import HelloWorld from './components/HelloWorld.vue'
 
 // This starter template is using Vue 3 experimental <script setup> SFCs

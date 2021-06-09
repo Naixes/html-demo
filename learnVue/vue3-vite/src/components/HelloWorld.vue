@@ -10,7 +10,7 @@
   </p>
 
   <button type="button" @click="state.count++">count is: {{ state.count }}</button>
-  <p>
+  <p class="text">
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
@@ -19,6 +19,11 @@
 <script setup>
 import { defineProps, reactive } from 'vue'
 
+const color = 'red'
+const font = {
+  size: '3em'
+}
+
 defineProps({
   msg: String
 })
@@ -26,8 +31,21 @@ defineProps({
 const state = reactive({ count: 0 })
 </script>
 
-<style scoped>
+<style>
+/* css变量 */
+/* scoped会不起作用，可以使用postcss */
+:root {
+  --varColor: yellowgreen;
+  /* vite支持不好 */
+  /* --initFn: () => {
+    console.log('sin')
+  } */
+}
 a {
-  color: #42b983;
+  color: var(--varColor);
+}
+.text {
+  color: v-bind(color);
+  font-size: v-bind("font.size")
 }
 </style>
