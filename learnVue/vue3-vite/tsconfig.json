@@ -8,6 +8,13 @@
     "strictNullChecks": true,
     "jsx": "preserve",
     "moduleResolution": "node",
+    // 官方vue-ts模版中参考
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "DOM"],
+    // 引入types，声明文件
+    "types": ["vite/client"],
 
     // 如果使用节点时有问题配置下两行，import @ 时报错
     "baseUrl": ".",
@@ -15,5 +22,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "src/**/*.tsx"]
 }

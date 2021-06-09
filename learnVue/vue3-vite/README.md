@@ -27,10 +27,17 @@ setup的两种写法
     "noImplicitThis": true,
     "strictNullChecks": true,
     "jsx": "preserve",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+
+    // 如果使用节点时有问题配置下两行，import @ 时报错
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
 }
+
 ```
 
 vite优化，不会直接报错
@@ -42,5 +49,20 @@ declare module "*.css" {
     const classes: {[key: string]: string}
     export default classes
 }
+
+declare module "*.vue" {
+    import {defineComponent, FunctionalComponent} from 'vue'
+    const component: ReturnType<typeof defineComponent> | FunctionalComponent
+    export default component
+}
 ```
 
+引入图片不需要loader，属于静态资源
+
+onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onUnmounted, onErrorCaptured, watch, watchEffect, reactive, computed, ref, defineProps, toRefs
+
+provide&inject和expose&templateRef
+
+集成官方模版：vue-ts
+
+增加包：vue-tsc（一些ts检查）, typescript -D
