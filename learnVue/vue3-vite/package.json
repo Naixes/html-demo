@@ -6,7 +6,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.0.5"
+    "@types/highcharts": "^7.0.0",
+    "highcharts": "^9.1.1",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.8"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",

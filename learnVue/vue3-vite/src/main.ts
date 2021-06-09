@@ -1,4 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import VueHighCharts from "./directive/hightCharts"
+import router from './router'
+
+const app = createApp(App)
+
+app.use(VueHighCharts)
+
+app.use(router).mount('#app')

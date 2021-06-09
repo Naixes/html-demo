@@ -10,6 +10,8 @@
         <div>loading...</div>
       </template>
     </Suspense>
+    <router-link to="/chart">chart</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
