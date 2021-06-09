@@ -4,9 +4,9 @@
 </template>
 
 <!-- setup的两种写法，当前是新的 -->
-<script setup>
+<script setup lang="ts">
 // 组件引入自动挂载，注意eslint问题，未使用
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
 
 // This starter template is using Vue 3 experimental <script setup> SFCs
 // Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md

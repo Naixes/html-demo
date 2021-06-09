@@ -16,7 +16,7 @@
   </p>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineProps, reactive } from 'vue'
 
 const color = 'red'
