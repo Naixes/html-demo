@@ -1,6 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite + TypeScript" />
+  <div>
+    <!-- 异步组件 -->
+    <Suspense>
+      <template #default>
+        <HelloWorld msg="Hello Vue 3 + Vite + TypeScript" />
+      </template>
+      <template #fallback>
+        <div>loading...</div>
+      </template>
+    </Suspense>
+  </div>
 </template>
 
 <!-- setup的两种写法，当前是新的 -->

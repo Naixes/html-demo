@@ -1,3 +1,5 @@
+## 搭建
+
 ```cmd
 # npm 6.x
 npm init @vitejs/app my-vue-app --template vue
@@ -59,6 +61,8 @@ declare module "*.vue" {
 
 引入图片不需要loader，属于静态资源
 
+## 基础
+
 onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onUnmounted, onErrorCaptured, watch, watchEffect, reactive, computed, ref, defineProps, toRefs
 
 provide&inject和expose&templateRef
@@ -66,3 +70,13 @@ provide&inject和expose&templateRef
 集成官方模版：vue-ts
 
 增加包：vue-tsc（一些ts检查）, typescript -D
+
+## 封装
+
+### 请求封装
+
+suspense，异步组件
+
+### 引入组件库
+
+安装antd
