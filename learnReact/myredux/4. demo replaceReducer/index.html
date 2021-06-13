@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diy redux</title>
+  </head>
+  <body>
+    <script type="module">
+      import { createStore, combineReducers } from './redux/index.js';
+      import counter from './reducers/counter.js';
+      import info from './reducers/info.js';
+      const reducer = combineReducers({
+        counter,
+      });
+      const store = createStore(reducer);
+      const nextReducer = combineReducers({
+        counter,
+        info,
+      });
+      store.replaceReducer(nextReducer);
+      // const state = store.getState();
+      // console.log('🐼🐼🐼🐼-->', state.counter.count);
+      store.subscribe(() => {
+        const state = store.getState();
+        console.log('🐼🐼🐼🐼-->', state.counter.count);
+        console.log('📚📚📚📚->', state.info.name);
+      });
+      store.dispatch({
+        type: 'INCREMENT',
+      });
+      store.dispatch({
+        type: 'SET_NAME',
+        name: 'xxx',
+      });
+    </script>
+  </body>
+</html>

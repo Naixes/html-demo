@@ -1,0 +1,15 @@
+{
+  "name": "myredux",
+  "version": "1.0.0",
+  "description": "flux架构",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^4.1.0"
+  }
+}
