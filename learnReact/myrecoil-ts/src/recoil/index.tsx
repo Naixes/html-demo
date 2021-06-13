@@ -60,6 +60,8 @@ class Selector<T> extends Stateful<T> {
   private addSub(dep: Atomic<any>) {
     if (!this.registerDeps.has(dep)) {
       dep.subscribe(() => this.updateSelector());
+      // 添加依赖
+      this.registerDeps.add(dep);
     }
     return dep.snapshot();
   }
