@@ -1,0 +1,31 @@
+init:
+  - name: pkginfo
+
+dev:
+  - name: shell
+    script:
+      - DEBUG=none ts-node ./src/debug.ts
+
+build:
+  - name: clean 
+    target: ./lib/
+  - name: shell
+    script:
+      - tsc --locale zh-cn -d --esModuleInterop
+
+test:
+  - name: clean 
+    target: ./lib/
+  - name: lint
+    target: ./src
+  - name: tslint
+  - name: unit
+    env: typescript
+    files: ./test/**/*.ts
+
+publish:
+  - name: shell
+    script:
+      - dn test
+      - dn build
+      - npm pu --registry=http://registry.npmjs.org
