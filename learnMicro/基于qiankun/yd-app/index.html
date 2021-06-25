@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>主站</title>
+  </head>
+  <body>
+    <div id="app1"></div>
+    <div id="app2"></div>
+    <script src="./index.js"></script>
+  </body>
+</html>
+
+<!--
+1.vue react 项目配合自己 暴露生命周期 全局的把你的项目名字 通过Window暴露出来
+2.获取子应用的HTML 填充到HTML里面 
+3.创建沙箱运行环节 Proxy 代理了 window上的内容 填了一层
+4.执行自定义的生命周期 挂载到沙箱
+5.卸载沙箱 生命周期注册流程 single-spa
+-->
