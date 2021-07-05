@@ -1,0 +1,23 @@
+{
+  "name": "yd-newbooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/koa-router": "^7.4.2",
+    "inversify": "^5.1.1",
+    "inversify-binding-decorators": "^4.0.0",
+    "inversify-koa-utils": "^1.0.0",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  }
+}
