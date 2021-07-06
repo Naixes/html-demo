@@ -91,7 +91,7 @@
     <!-- 5 -->
     <script>
         // 捕获异步错误
-        window.addEventListener('unhandledreject', function(e) {
+        window.addEventListener('unhandledrejection', function(e) {
             e.preventDefault()
             console.log(e.reason);
             return true

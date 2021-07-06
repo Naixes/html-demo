@@ -35,7 +35,7 @@ const task2 = () => {
     })
 }
 
-// 基础页面传输
+// 传统页面传输
 router.length('/test', async(ctx, next) => {
     ctx.body = await ctx.render('index')
 })

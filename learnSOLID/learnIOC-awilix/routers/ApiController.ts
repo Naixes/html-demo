@@ -7,8 +7,9 @@ class ApiController {
     private apiService: IApi
     // AOP(面向切面编程)
     // :解构，:类型
+    // awilix自动注入
     constructor({apiService}: {apiService: IApi}) {
-        // 注入
+        // 私有化
         this.apiService = apiService
     }
     @route('/list')
